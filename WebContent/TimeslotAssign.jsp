@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="java.util.*,com.tum.dbpra.model.bean.BandBean,com.tum.dbpra.model.bean.StageBean,com.tum.dbpra.model.bean.TimeslotBean,com.tum.dbpra.model.bean.FestivalBean"%>
+	import="java.util.*,tum.in.dbpra.bean.BandBean,tum.in.dbpra.bean.StageBean,tum.in.dbpra.bean.TimeslotBean,tum.in.dbpra.bean.FestivalBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

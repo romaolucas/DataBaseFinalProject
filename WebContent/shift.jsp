@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.Collections"%>
 
-<%@ page import="com.tum.dbpra.model.bean.ShiftBean"%>
-<%@ page import="com.tum.dbpra.ShiftServlet"%>
+<%@ page import="tum.in.dbpra.bean.ShiftBean"%>
+<%@ page import="tum.in.dbpra.servlet.ShiftServlet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
-<jsp:useBean id="PartBean" class="com.tum.dbpra.model.bean.ShiftBean"
+<jsp:useBean id="PartBean" class="tum.in.dbpra.bean.ShiftBean"
 	scope="request" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

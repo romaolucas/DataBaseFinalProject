@@ -66,7 +66,7 @@
                         </div>
 
                         <div id="register" class="animate form">
-                            <form  action="mysuperscript.php" autocomplete="on"> 
+                            <form method=post action="confirmRegristration" autocomplete="on"> 
                                 <h1> Sign up </h1> 
                                 <p> 
                                     <label for="firstnamesignup" class="fname" data-icon="u">Your FirstName</label>
@@ -100,6 +100,11 @@
                                     <label for="phonesignup" class="phonesignup" data-icon="&#9742;">Your Phone Number</label>
                                     <input id="phonesignup" name="phonesignup" required="required" type="text" placeholder="eg. +919836981535"/>
                                 </p>
+                                <% if(request.getAttribute("error") != null){%>
+								<p class="loginStatus"> 
+									<label for="loginmessage">Regristration failed:<%=request.getAttribute("error") %></label>
+								</p>
+								<%}%>
                                 <p class="signin button"> 
 									<input type="submit" value="Sign up"/> 
 								</p>

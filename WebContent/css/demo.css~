@@ -1,8 +1,11 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
+<<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fae8d3ef90386ef74d68612c75f0b076d806c434
-demo.css
+=======
+>>>>>>> 57750308be45683a725a38ef2fa19fc93e8f469b
+>>>>>>> f488f65ee4c19ad40058c79288fe28c549e38662
 
 @font-face {
     font-family: 'BebasNeueRegular';
@@ -169,6 +172,7 @@ a{
 }
 
 <<<<<<< HEAD
+=======
 =======
 @font-face {
     font-family: 'BebasNeueRegular';
@@ -335,5 +339,8 @@ a{
 }
 
 >>>>>>> 932f1d64884d2ff9174dc121bafeb8cf4dda03d0
-=======
+<<<<<<< HEAD
 >>>>>>> fae8d3ef90386ef74d68612c75f0b076d806c434
+=======
+>>>>>>> 57750308be45683a725a38ef2fa19fc93e8f469b
+>>>>>>> f488f65ee4c19ad40058c79288fe28c549e38662

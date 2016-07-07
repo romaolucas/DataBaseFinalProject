@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 57750308be45683a725a38ef2fa19fc93e8f469b
 demo.css
 
 @font-face {
@@ -165,6 +168,7 @@ a{
 	box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
 }
 
+<<<<<<< HEAD
 =======
 @font-face {
     font-family: 'BebasNeueRegular';
@@ -331,3 +335,5 @@ a{
 }
 
 >>>>>>> 932f1d64884d2ff9174dc121bafeb8cf4dda03d0
+=======
+>>>>>>> 57750308be45683a725a38ef2fa19fc93e8f469b

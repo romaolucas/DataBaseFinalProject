@@ -13,9 +13,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back to Organizer Dashboard</strong>
+			</a>
+			</span>
 <title>Human Resources Management</title>
 </head>
-<body>
+
 	<%
 		List<ShiftBean> allShift = new ArrayList<ShiftBean>();
 		List<String> allSectionName = new ArrayList<String>();
@@ -46,8 +49,10 @@
 					.getAttribute("allEmployeeName");
 	%>
 	<h1>Music Festival Shifts</h1>
+	
+<body>
 	<form action=shift method="post" name="searchForm">
-		Find a shift:
+		Find a shift by Section Name or Employee Name:
 		<table>
 			<tr>
 
@@ -90,6 +95,10 @@
 
 		</div>
 	</form>
+	<form action="shift" method="post">
+	Add a new shift: 
+		<input type="submit" name="add" value="Add" />
+	</form>
 
 	<br>
 	<table border="1" style="width: 100%">
@@ -120,11 +129,6 @@
 	<%
 		}
 	%>
-
-	<form action="shift" method="post">
-		<input type="submit" name="add" value="Add" />
-	</form>
-
 
 
 </body>

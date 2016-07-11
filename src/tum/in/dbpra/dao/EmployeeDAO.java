@@ -7,21 +7,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmployeeDAO extends DAO {
+import tum.in.dbpra.dbutils.PGUtils;
 
-	private String query = "";
-	private Connection con;
-	private PreparedStatement preparedStmt;
-	private ResultSet resultSet;
+public class EmployeeDAO extends DAO {
 
 	public List<String> getAllEmployeeName() throws ClassNotFoundException,
 			SQLException {
 		List<String> allEmployeeName = new ArrayList<String>();
 
-		query = "SELECT firstname, lastname FROM employee;";
-		con = getConnection();
-		preparedStmt = con.prepareStatement(query);
-		resultSet = preparedStmt.executeQuery();
+		String query = "SELECT firstname, lastname FROM employee;";
+		Connection con = getConnection();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		ResultSet resultSet = preparedStmt.executeQuery();
 
 		while (resultSet.next()) {
 			String firstname = resultSet.getString("firstname");
@@ -29,27 +26,44 @@ public class EmployeeDAO extends DAO {
 
 			allEmployeeName.add(firstname + " " + lastname);
 		}
+		resultSet.close();
+		preparedStmt.close();
+		PGUtils.closeConnection(con);
 
 		return allEmployeeName;
 	}
 
+	/**
+	 * this function retrieves the employeeID of an employee given his name :
+	 * firstname lastname
+	 * 
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public int getEmployeeIdByName(String name) throws SQLException,
 			ClassNotFoundException {
 		int id = 0;
-		String[] parts = name.split(" ");
-		String firstname = parts[0]; // 004
-		String lastname = parts[1]; // 034556
+		// the array names contains firstname and lastname
+		String[] names = name.split(" ");
+		String firstname = names[0]; // frstname
+		String lastname = names[1]; // lastname
 
-		query = "SELECT eid FROM employee WHERE firstname=? AND lastname=?;";
-		con = getConnection();
-		preparedStmt = con.prepareStatement(query);
+		String query = "SELECT eid FROM employee WHERE firstname=? AND lastname=?;";
+		Connection con = getConnection();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, firstname);
 		preparedStmt.setString(2, lastname);
 
-		resultSet = preparedStmt.executeQuery();
+		ResultSet resultSet = preparedStmt.executeQuery();
 		if (resultSet.next()) {
 			id = resultSet.getInt("eid");
 		}
+
+		resultSet.close();
+		preparedStmt.close();
+		PGUtils.closeConnection(con);
 
 		return id;
 	}

@@ -55,7 +55,7 @@
 								<input type="submit" value="Manage Bands" name="manageBands">
 							</p>
 						</form>
-						<form action="finances"></form>
+						<form action="finances">
 						<p>
 							<input type="submit" value="Manage Finances" name="finances">
 						</p>

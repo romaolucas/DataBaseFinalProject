@@ -7,23 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionDAO extends DAO {
+import tum.in.dbpra.dbutils.PGUtils;
 
-	private String query = "";
-	private Connection con;
-	private PreparedStatement preparedStmt;
-	private ResultSet resultSet;
+public class SectionDAO extends DAO {
 
 	public List<String> getAllSectionName() throws ClassNotFoundException,
 			SQLException {
 		List<String> allSectionName = new ArrayList<String>();
 
-		query = "SELECT name FROM section;";
+		String query = "SELECT name FROM section;";
 
-		con = getConnection();
+		Connection con = getConnection();
 
-		preparedStmt = con.prepareStatement(query);
-		resultSet = preparedStmt.executeQuery();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		ResultSet resultSet = preparedStmt.executeQuery();
 
 		while (resultSet.next()) {
 			allSectionName.add(resultSet.getString("name"));
@@ -36,14 +33,17 @@ public class SectionDAO extends DAO {
 			SQLException {
 		int id = 0;
 
-		query = "SELECT sectionid FROM section WHERE name=?;";
-		con = getConnection();
-		preparedStmt = con.prepareStatement(query);
+		String query = "SELECT sectionid FROM section WHERE name=?;";
+		Connection con = getConnection();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, name);
-		resultSet = preparedStmt.executeQuery();
+		ResultSet resultSet = preparedStmt.executeQuery();
 		if (resultSet.next()) {
 			id = resultSet.getInt("sectionid");
 		}
+		resultSet.close();
+		preparedStmt.close();
+		PGUtils.closeConnection(con);
 
 		return id;
 

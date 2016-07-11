@@ -3,6 +3,7 @@ package tum.in.dbpra.servlet;
 import java.io.IOException;
 import java.util.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +21,6 @@ import tum.in.dbpra.bean.ShiftBean;
 import tum.in.dbpra.dao.EmployeeDAO;
 import tum.in.dbpra.dao.SectionDAO;
 import tum.in.dbpra.dao.shiftDAO;
-
 
 @WebServlet("/shiftAdd")
 public class ShiftAddServlet extends HttpServlet {
@@ -74,18 +74,31 @@ public class ShiftAddServlet extends HttpServlet {
 
 			// shiftBean.setStartTime(new Date(System.currentTimeMillis()));
 
-			shiftBean.setStartTime((Date) formatter.parse(starttime));
+			shiftBean.setStartTime(new Timestamp(formatter.parse(starttime)
+					.getTime()));
 			// shiftBean.setEndTime(new Date(System.currentTimeMillis()));
-			shiftBean.setEndTime((Date) formatter.parse(endTime));
+			// shiftBean.setEndTime((Date) formatter.parse(endTime));
+			shiftBean.setEndTime(new Timestamp(formatter.parse(endTime)
+					.getTime()));
 
 			shiftBean.setTask(task);
 
 			int change = shiftDAO.postShift(shiftBean);
+			System.out.println("CHANGED. " + change);
 			if (change > 0) {
 				request.setAttribute("success", "You request succeed");
 
 				List<ShiftBean> allShift = shiftDAO.getAllShift();
 				request.setAttribute("allShift", allShift);
+				List<String> allSectionName = sectionDAO.getAllSectionName();
+				if (allSectionName != null && !allSectionName.isEmpty()) {
+					request.setAttribute("allSectionName", allSectionName);
+				}
+				
+				List<String> allEmployeeName = employeeDAO.getAllEmployeeName();
+				if (allEmployeeName != null && !allEmployeeName.isEmpty()) {
+					request.setAttribute("allEmployeeName", allEmployeeName);
+				}
 				JOptionPane.showMessageDialog(null,
 						"The Shift has been added successfully");
 			} else {

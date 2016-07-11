@@ -3,9 +3,12 @@ package tum.in.dbpra.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import tum.in.dbpra.bean.SponsorBean;
 import tum.in.dbpra.dbutils.PGUtils;
@@ -51,5 +54,26 @@ public class SponsorDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<SponsorBean> getAllSponsor() throws SQLException {
+		List<SponsorBean> allSponsor = new ArrayList<SponsorBean>();
+		String query = "Select provider.name, sponsor.type, sponsor.amount "
+				+ "From provider, sponsor "
+				+ "WHERE sponsor.pid = provider.pid;";
+		Connection con = PGUtils.createConnection();
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			SponsorBean sponsor = new SponsorBean();
+			sponsor.setName(rs.getString("name"));
+			sponsor.setType(rs.getString("type"));
+			sponsor.setAmount(rs.getDouble("amount"));
+			allSponsor.add(sponsor);
+		}
+		rs.close();
+		ps.close();
+		PGUtils.closeConnection(con);
+		return allSponsor;
 	}
 }

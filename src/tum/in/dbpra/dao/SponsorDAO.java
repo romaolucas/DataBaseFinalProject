@@ -76,4 +76,40 @@ public class SponsorDAO {
 		PGUtils.closeConnection(con);
 		return allSponsor;
 	}
+
+	public ArrayList<SponsorBean> getAllSponsors() throws SQLException, ClassNotFoundException {
+		
+		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
+		
+		Connection con = PGUtils.createConnection();
+		
+		PreparedStatement pstmt = con.prepareStatement(query);
+				
+		ResultSet rs = pstmt.executeQuery();
+		
+		ArrayList<SponsorBean> sponsors = new ArrayList<SponsorBean>();
+		
+		while(rs.next()) {
+			SponsorBean sponsor = new SponsorBean();
+			sponsor.setId(rs.getInt("pID"));
+			sponsor.setName(rs.getString("name"));
+			sponsor.setType(rs.getString("type"));
+			sponsor.setAmount(rs.getDouble("amount"));
+			sponsor.setPhone(rs.getString("phoneNumber"));
+			sponsor.setWebsite(rs.getString("website"));
+			sponsor.setAddress(rs.getString("address"));
+			sponsor.setEmail(rs.getString("email"));
+			sponsor.setPassword(rs.getString("password"));
+			
+			sponsors.add(sponsor);
+		}
+		
+		rs.close();
+		pstmt.close();
+		con.close();
+		
+		return sponsors;
+		
+	}
+
 }

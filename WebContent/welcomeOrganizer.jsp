@@ -55,17 +55,31 @@
 								<input type="submit" value="Manage Human resources" name="human">
 							</p>
 						</form>
-						<form action="timeslotAssign">
-							<p>
-								<input type="submit" value="Manage Bands" name="manageBands">
-							</p>
-						</form>
 						<form action="finances">
 							<p>
 								<input type="submit" value="Manage Finances" name="finances">
 							</p>
 						</form>
-
+						<form action="timeslotAssign">
+							<p>
+								<input type="submit" value="Assign Timeslots" name="manageBands">
+							</p>
+						</form>
+						<form action="timeslotviewinlines">
+							<p>
+								<input type="submit" value="View Timeslots" name="manageBands">
+							</p>
+						</form>
+						<form action="boothToSponsor">
+							<p>
+								<input type="submit" value="Assign Booth to Sponsor" name="manageBands">
+							</p>
+						</form>
+						<form action="boothView">
+							<p>
+								<input type="submit" value="View Booths" name="manageBands">
+							</p>
+						</form>
 
 					</div>
 				</div>

@@ -12,7 +12,7 @@ public class PGUtils {
 	public static final String user = "postgres";
 	// TODO: change this value to the password value of the particular database
 	// system that is currently working
-	public static final String password = "dbpra";
+	public static final String password = "251244";
 
 	// query strings
 	public static final String fetchVisitorCredentials = "select username,password from visitors where username = ? and password=?";

@@ -20,7 +20,7 @@ import tum.in.dbpra.dao.VisitorDAO;
 @WebServlet("/welcomeVisitor")
 public class VisitorLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private boolean loginSucessfull = false;
+	private boolean loginSucessfull=false;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,7 +36,7 @@ public class VisitorLogin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		
 	}
 
 	/**
@@ -46,34 +46,29 @@ public class VisitorLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			System.out.println("Password: " + password);
-			String keepLoggedin[] = request.getParameterValues("loginkeeping");
+			String username=request.getParameter("username");
+			String password=request.getParameter("password");
+			System.out.println("Password: "+password);
+			String keepLoggedin[]=request.getParameterValues("loginkeeping");
 			VisitorDAO visitorDAO = new VisitorDAO();
-			List<VisitorBean> visitorList = visitorDAO.getVisitors(username,
-					password);
-			if (visitorList.size() > 0) {
-				loginSucessfull = true;
-				request.setAttribute("visitor", visitorList);
-				HttpSession season = request.getSession();
-				season.setAttribute("username", visitorList.get(0)
-						.getUsername());
-				season.setAttribute("visitorid", visitorList.get(0)
-						.getVisitorId());
-			}
-
+			List<VisitorBean> visitorList = visitorDAO.getVisitors(username,password);
+			if(visitorList.size()>0){
+				   loginSucessfull=true;
+				   request.setAttribute("visitor", visitorList);
+				   HttpSession season=request.getSession();
+				   season.setAttribute("username", visitorList.get(0).getUsername());
+				   season.setAttribute("visitorid", visitorList.get(0).getVisitorId());	
+			}			
+			
 		} catch (Throwable e) {
 			request.setAttribute("error", e.getMessage());
 		}
 		request.setAttribute("loginStatus", loginSucessfull);
 		if (loginSucessfull) {
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/welcomeVisitor.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/welcomeVisitor.jsp");
 			dispatcher.forward(request, response);
-		} else {
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/index.jsp");
+		}else{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 			request.setAttribute("loginMessage", "Login unsucessful");
 			dispatcher.forward(request, response);
 		}

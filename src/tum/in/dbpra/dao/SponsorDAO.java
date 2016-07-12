@@ -56,6 +56,13 @@ public class SponsorDAO {
 		}
 	}
 
+	/**
+	 * this function returns all the name, type and sponsorship of all sponsor.
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+
 	public List<SponsorBean> getAllSponsor() throws SQLException {
 		List<SponsorBean> allSponsor = new ArrayList<SponsorBean>();
 		String query = "Select provider.name, sponsor.type, sponsor.amount "
@@ -77,19 +84,20 @@ public class SponsorDAO {
 		return allSponsor;
 	}
 
-	public ArrayList<SponsorBean> getAllSponsors() throws SQLException, ClassNotFoundException {
-		
+	public ArrayList<SponsorBean> getAllSponsors() throws SQLException,
+			ClassNotFoundException {
+
 		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
-		
+
 		Connection con = PGUtils.createConnection();
-		
+
 		PreparedStatement pstmt = con.prepareStatement(query);
-				
+
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		ArrayList<SponsorBean> sponsors = new ArrayList<SponsorBean>();
-		
-		while(rs.next()) {
+
+		while (rs.next()) {
 			SponsorBean sponsor = new SponsorBean();
 			sponsor.setId(rs.getInt("pID"));
 			sponsor.setName(rs.getString("name"));
@@ -100,16 +108,16 @@ public class SponsorDAO {
 			sponsor.setAddress(rs.getString("address"));
 			sponsor.setEmail(rs.getString("email"));
 			sponsor.setPassword(rs.getString("password"));
-			
+
 			sponsors.add(sponsor);
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		con.close();
-		
+
 		return sponsors;
-		
+
 	}
 
 }

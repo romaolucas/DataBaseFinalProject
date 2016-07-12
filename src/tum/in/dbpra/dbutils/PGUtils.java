@@ -9,11 +9,11 @@ public class PGUtils {
 	public static final String URL = "jdbc:postgresql:";
 	// TODO: change this value to the user id value of the particular database
 	// system that is currently working
-	public static final String database = "postgres";
+	public static final String database = "festival";
 	public static final String user = "postgres";
 	// TODO: change this value to the password value of the particular database
 	// system that is currently working
-	public static final String password = "rajat";
+	public static final String password = "dbpra";
 
 	// queries from Visitor
 	public static final String fetchVisitor = "select * from visitor where username = ? and password=?";

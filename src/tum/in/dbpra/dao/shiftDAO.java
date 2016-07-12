@@ -127,9 +127,22 @@ public class shiftDAO extends DAO {
 			filteredShift.add(shift);
 		}
 
+		resultSet.close();
+		preparedStmt.close();
+		PGUtils.closeConnection(con);
+
 		return filteredShift;
 
 	}
+
+	/**
+	 * this function retrieves shift by starttime
+	 * 
+	 * @param starttime
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 
 	public List<ShiftBean> getShiftByStarttime(Timestamp starttime)
 			throws ClassNotFoundException, SQLException {
@@ -153,8 +166,21 @@ public class shiftDAO extends DAO {
 			filteredShift.add(shift);
 		}
 
+		resultSet.close();
+		preparedStmt.close();
+		PGUtils.closeConnection(con);
+
 		return filteredShift;
 	}
+
+	/**
+	 * this function retrieves shift by Employee name
+	 * 
+	 * @param name
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 
 	public List<ShiftBean> getShiftByEmployeeName(String name)
 			throws ClassNotFoundException, SQLException {
@@ -182,9 +208,21 @@ public class shiftDAO extends DAO {
 			filteredShift.add(shift);
 		}
 
+		rs.close();
+		ps.close();
+		PGUtils.closeConnection(con);
+
 		return filteredShift;
 	}
 
+	/**
+	 * this function retrieves shift by task
+	 * 
+	 * @param name
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public List<ShiftBean> getShiftByTask(String name)
 			throws ClassNotFoundException, SQLException {
 		List<ShiftBean> filteredShift = new ArrayList<ShiftBean>();
@@ -209,6 +247,9 @@ public class shiftDAO extends DAO {
 			shift.setTask(rs.getString("task"));
 			filteredShift.add(shift);
 		}
+		rs.close();
+		ps.close();
+		PGUtils.closeConnection(con);
 
 		return filteredShift;
 	}

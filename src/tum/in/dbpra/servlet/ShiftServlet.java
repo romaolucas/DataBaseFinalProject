@@ -114,6 +114,7 @@ public class ShiftServlet extends HttpServlet {
 
 				}
 			}
+			// Check if the user choose another employee name
 			if (request.getParameter("employeeName") != ""
 					&& request.getParameter("employeeName") != null) {
 				System.out.println(request.getParameter("employeeName"));
@@ -126,7 +127,7 @@ public class ShiftServlet extends HttpServlet {
 					request.setAttribute("allShift", notFilteredShift);
 
 				} else {
-
+					// otherwise show all shifts
 					String parameter = (String) request
 							.getParameter("employeeName");
 					System.out.println("Employee: " + parameter);
@@ -140,7 +141,7 @@ public class ShiftServlet extends HttpServlet {
 				}
 
 			}
-
+			// check if the user clicked on filter
 			if (request.getParameter("filter") != null) {
 				String parameter = (String) request
 						.getParameter("searchPattern");
@@ -150,8 +151,7 @@ public class ShiftServlet extends HttpServlet {
 				filteredShift = (List<ShiftBean>) shiftDAO
 						.getShiftByTask(parameter);
 				request.setAttribute("allShift", filteredShift);
-				System.out.println("filtered");
-				System.out.println("not filtered");
+
 				// List<ShiftBean> notFilteredShift = new
 				// ArrayList<ShiftBean>();
 				//
@@ -170,13 +170,14 @@ public class ShiftServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		// check if the user clicked on add
 		if (request.getParameter("add") != null) {
-
+			// if true then redirect to shiftAdd
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/shiftAdd.jsp");
 			dispatcher.forward(request, response);
 		} else {
+			// otherwise stay on the shift page
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/shift.jsp");
 			dispatcher.forward(request, response);

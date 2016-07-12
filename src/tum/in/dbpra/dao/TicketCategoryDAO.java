@@ -14,22 +14,21 @@ public class TicketCategoryDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	TicketCategoryBean tcBean;
-
-	public List<TicketCategoryBean> getTCDetails() {
-		List<TicketCategoryBean> ticketList = new ArrayList<TicketCategoryBean>();
+	
+	public List<TicketCategoryBean> getTCDetails(){
+		List<TicketCategoryBean> ticketList =new ArrayList<TicketCategoryBean>();
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
 
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchTicketCagory);
-
+			preparedStatement = connection.prepareStatement(PGUtils.fetchTicketCagory);
+						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				do {
-					// System.out.println("orders");
+					//System.out.println("orders");
 					tcBean = new TicketCategoryBean();
 					tcBean.setId(resultSet.getInt(1));
 					tcBean.setName(resultSet.getString(2));
@@ -38,6 +37,7 @@ public class TicketCategoryDAO {
 					tcBean.setStartTime(resultSet.getDate(5));
 					tcBean.setEndTime(resultSet.getDate(6));
 					tcBean.setDescription(resultSet.getString(7));
+					tcBean.setDuration(resultSet.getInt(8));
 					ticketList.add(tcBean);
 				} while (resultSet.next());
 				resultSet.close();
@@ -52,6 +52,6 @@ public class TicketCategoryDAO {
 			PGUtils.closeConnection(connection);
 		}
 		return ticketList;
-
+		
 	}
 }

@@ -1,10 +1,14 @@
 package tum.in.dbpra.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletException;
 
 import tum.in.dbpra.bean.VisitorBean;
 import tum.in.dbpra.dbutils.PGUtils;

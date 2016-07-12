@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import tum.in.dbpra.bean.OrganizerBean;
 import tum.in.dbpra.dao.OrganizerDAO;
-
 
 @WebServlet("/welcomeOrganizer")
 public class WelcomeOrganizerServlet extends HttpServlet {
@@ -61,10 +61,12 @@ public class WelcomeOrganizerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		String organizername = "";
 		try {
 
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
+			
 			String keepLoggedin[] = request.getParameterValues("loginkeeping");
 			OrganizerDAO organizerDAO = new OrganizerDAO();
 			boolean success = organizerDAO.validate(username, password);
@@ -74,7 +76,13 @@ public class WelcomeOrganizerServlet extends HttpServlet {
 				loginSucessfull = true;
 
 				HttpSession session = request.getSession();
+				session.setAttribute("user", username);
+				session.setMaxInactiveInterval(60 * 60);
+				Cookie userEmail = new Cookie("user", username);
+				userEmail.setMaxAge(60 * 60);
+				response.addCookie(userEmail);
 				session.setAttribute("username", username);
+				organizername = username;
 
 			}
 
@@ -83,6 +91,7 @@ public class WelcomeOrganizerServlet extends HttpServlet {
 		}
 		request.setAttribute("loginStatus", loginSucessfull);
 		if (loginSucessfull) {
+			request.setAttribute("organizer", organizername);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/welcomeOrganizer.jsp");
 			dispatcher.forward(request, response);

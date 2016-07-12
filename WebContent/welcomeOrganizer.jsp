@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
-<html lang="en" class="no-js">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
-<title>Database Final Project</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="../favicon.ico">
-<link rel="stylesheet" type="text/css" href="css/demo.css" />
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
-</head>
+<%@ include file="header.jsp" %>
 <body>
+ <%
+    //allow access only if session exists
+    String user = null;
+    if(session.getAttribute("user") == null){
+    	response.sendRedirect("login-organizer.jsp");
+    }else{
+    	user = (String) session.getAttribute("user");
+    }
+    String userName = null;
+    String sessionID = null;
+    Cookie[] cookies = request.getCookies();
+    if(cookies != null){
+    	for(Cookie cookie : cookies){
+    		if(cookie.getName().equals("user")){
+    			userName = cookie.getValue();
+    		}
+    		if(cookie.getName().equals("JSESSIONID")){
+    			sessionID = cookie.getValue();
+    		}
+    	}
+    }
+    %>
 	<div class="container">
 		<!-- Codrops top bar -->
 		<div class="codrops-top">
@@ -25,7 +30,7 @@
 					<strong>Database Practical Final Project</strong>
 				</h1>
 			</header>
-			<span class="right"> <a href=" "> <strong>Back to
+			<span class="right"> <a href="index.html"> <strong>Back to
 						the Main Page</strong>
 			</a>
 			</span>
@@ -33,7 +38,7 @@
 		</div>
 		<!--/ Codrops top bar -->
 		<header>
-			<h1 style="font-size: 300%;">WELCOME ORGANIZER</h1>
+			<h1 style="font-size: 300%;">WELCOME ORGANIZER - <%=request.getAttribute("organizer") %></h1>
 
 		</header>
 		<section>
@@ -52,9 +57,9 @@
 							</p>
 						</form>
 						<form action="finances">
-						<p>
-							<input type="submit" value="Manage Finances" name="finances">
-						</p>
+							<p>
+								<input type="submit" value="Manage Finances" name="finances">
+							</p>
 						</form>
 						<br>
 						<p style="text-align:center">Bands management:</p>
@@ -86,6 +91,5 @@
 			</div>
 		</section>
 	</div>
-</body>
-</html>
+<%@ include file="footer.jsp" %>
 

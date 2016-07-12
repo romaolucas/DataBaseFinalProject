@@ -73,36 +73,47 @@ public class ShiftAddServlet extends HttpServlet {
 			shiftBean.setSectionId(sectionId);
 
 			// shiftBean.setStartTime(new Date(System.currentTimeMillis()));
+			Timestamp starttimeStamp = new Timestamp(formatter.parse(starttime)
+					.getTime());
+			Timestamp endtimeStamp = new Timestamp(formatter.parse(endTime)
+					.getTime());
+			if (starttimeStamp.before(endtimeStamp)
+					&& endtimeStamp.after(starttimeStamp)) {
+				shiftBean.setStartTime(new Timestamp(formatter.parse(starttime)
+						.getTime()));
+				// shiftBean.setEndTime(new Date(System.currentTimeMillis()));
+				// shiftBean.setEndTime((Date) formatter.parse(endTime));
+				shiftBean.setEndTime(new Timestamp(formatter.parse(endTime)
+						.getTime()));
 
-			shiftBean.setStartTime(new Timestamp(formatter.parse(starttime)
-					.getTime()));
-			// shiftBean.setEndTime(new Date(System.currentTimeMillis()));
-			// shiftBean.setEndTime((Date) formatter.parse(endTime));
-			shiftBean.setEndTime(new Timestamp(formatter.parse(endTime)
-					.getTime()));
+				shiftBean.setTask(task);
 
-			shiftBean.setTask(task);
+				int change = shiftDAO.postShift(shiftBean);
+				System.out.println("CHANGED. " + change);
+				if (change > 0) {
+					request.setAttribute("success", "You request succeed");
 
-			int change = shiftDAO.postShift(shiftBean);
-			System.out.println("CHANGED. " + change);
-			if (change > 0) {
-				request.setAttribute("success", "You request succeed");
+					List<ShiftBean> allShift = shiftDAO.getAllShift();
+					request.setAttribute("allShift", allShift);
+					List<String> allSectionName = sectionDAO
+							.getAllSectionName();
+					if (allSectionName != null && !allSectionName.isEmpty()) {
+						request.setAttribute("allSectionName", allSectionName);
+					}
 
-				List<ShiftBean> allShift = shiftDAO.getAllShift();
-				request.setAttribute("allShift", allShift);
-				List<String> allSectionName = sectionDAO.getAllSectionName();
-				if (allSectionName != null && !allSectionName.isEmpty()) {
-					request.setAttribute("allSectionName", allSectionName);
+					List<String> allEmployeeName = employeeDAO
+							.getAllEmployeeName();
+					if (allEmployeeName != null && !allEmployeeName.isEmpty()) {
+						request.setAttribute("allEmployeeName", allEmployeeName);
+					}
+					JOptionPane.showMessageDialog(null,
+							"The Shift has been added successfully");
+				} else {
+					request.setAttribute("error", "Your request failed");
 				}
-				
-				List<String> allEmployeeName = employeeDAO.getAllEmployeeName();
-				if (allEmployeeName != null && !allEmployeeName.isEmpty()) {
-					request.setAttribute("allEmployeeName", allEmployeeName);
-				}
-				JOptionPane.showMessageDialog(null,
-						"The Shift has been added successfully");
 			} else {
-				request.setAttribute("error", "Your request failed");
+				request.setAttribute("error",
+						"The end time can not be smaller than the start time");
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -111,6 +122,7 @@ public class ShiftAddServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("error", e.getMessage());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

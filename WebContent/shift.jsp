@@ -13,41 +13,51 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
 <title>Human Resources Management</title>
 </head>
+
+<%
+	List<ShiftBean> allShift = new ArrayList<ShiftBean>();
+	List<String> allSectionName = new ArrayList<String>();
+	List<String> allEmployeeName = new ArrayList<String>();
+	String[] starttimepicker = { "12:00", "13:00", "14:00", "15:00",
+			"16:00", "17:00", "18:00", "19:00", "20:00", "21:00",
+			"22:00" };
+	String[] endtimepicker = { "13:30", "14:30", "15:30", "16:30",
+			"17:30", "18:30", "19:30", "20:30", "21:30", "22:30" };
+
+	String[] columns = { "Section Name", "Employee Name", "Date",
+			"Start time", "End time", "Task" };
+%>
+<%
+	if (request.getAttribute("error") != null) {
+%>
+<h1>Shifts not found or Shift can not be added. Please check all
+	shifts or the start / end time</h1>
+<%
+	request.getAttribute("error");
+%>
+
+<%
+	} else {
+		allShift = (List<ShiftBean>) request.getAttribute("allShift");
+		allSectionName = (List<String>) request
+				.getAttribute("allSectionName");
+		allEmployeeName = (List<String>) request
+				.getAttribute("allEmployeeName");
+%>
+<h1>Music Festival Shifts</h1>
+
 <body>
 	<%
-		List<ShiftBean> allShift = new ArrayList<ShiftBean>();
-		List<String> allSectionName = new ArrayList<String>();
-		List<String> allEmployeeName = new ArrayList<String>();
-		String[] starttimepicker = { "12:00", "13:00", "14:00", "15:00",
-				"16:00", "17:00", "18:00", "19:00", "20:00", "21:00",
-				"22:00" };
-		String[] endtimepicker = { "13:30", "14:30", "15:30", "16:30",
-				"17:30", "18:30", "19:30", "20:30", "21:30", "22:30" };
-
-		String[] columns = { "Section Name", "Employee Name", "Date",
-				"Start time", "End time", "Task" };
+		if (allShift != null) {
 	%>
-	<%
-		if (request.getAttribute("error") != null) {
-	%>
-	<h1>Shifts not found</h1>
-	<%
-		request.getAttribute("error");
-	%>
-
-	<%
-		} else {
-			allShift = (List<ShiftBean>) request.getAttribute("allShift");
-			allSectionName = (List<String>) request
-					.getAttribute("allSectionName");
-			allEmployeeName = (List<String>) request
-					.getAttribute("allEmployeeName");
-	%>
-	<h1>Music Festival Shifts</h1>
 	<form action=shift method="post" name="searchForm">
-		Find a shift:
+		Find a shift by Section Name or Employee Name:
 		<table>
 			<tr>
 
@@ -90,6 +100,9 @@
 
 		</div>
 	</form>
+	<form action="shift" method="post">
+		Add a new shift: <input type="submit" name="add" value="Add" />
+	</form>
 
 	<br>
 	<table border="1" style="width: 100%">
@@ -99,7 +112,6 @@
 			<th>Start time</th>
 			<th>End time</th>
 			<th>Task</th>
-			<th>Operations</th>
 		</tr>
 		<%
 			for (ShiftBean shift : allShift) {
@@ -110,7 +122,6 @@
 			<td><%=shift.getStartTime()%></td>
 			<td><%=shift.getEndTime()%></td>
 			<td><%=shift.getTask()%></td>
-			<td><input type="submit" value="delete" /></td>
 
 		</tr>
 		<%
@@ -118,13 +129,13 @@
 		%>
 	</table>
 	<%
+		} else {
+	%>
+	<h4>There is no Shift yet</h4>
+	<%
+		}
 		}
 	%>
-
-	<form action="shift" method="post">
-		<input type="submit" name="add" value="Add" />
-	</form>
-
 
 
 </body>

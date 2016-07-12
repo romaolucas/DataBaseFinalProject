@@ -30,13 +30,9 @@ function getColumn ( selectedColumn )
 	  <form name="boothesform" method="post">
 	  <!-- <input type="hidden" name="part_column_sort" /> -->
 		<tr>
-				<td> <a href="javascript:getColumn('partkey')">Name</a></td>
-				<td> <a href="javascript:getColumn('name')">Area name</a></td>
-				<td> <a href="javascript:getColumn('type')">Size</a></td>
-				<td> <a href="javascript:getColumn('size')">Type</a></td>
-				<td> <a href="javascript:getColumn('container')">Service</a></td>
-				<td> <a href="javascript:getColumn('retailprice')">Equipment</a></td>
-				<td> <a href="javascript:getColumn('retailprice')">Sponsor</a></td>
+				<td> Name</td>
+				<td> Size in m^2</td>
+				<td> Sponsor ID</td>
 				
 		</tr>
 		<%
@@ -45,17 +41,23 @@ function getColumn ( selectedColumn )
 	%>
 	 	<tr>
 			<td><%=booth.getName()%></td>
-			<td><%=booth.getAreaID()%></td>
 			<td><%=booth.getMetersquarres()%></td>
-			<td><%=booth.getType()%></td>
-			<td><%=booth.getService()%></td>
-			<td><%=booth.getEquipment()%></td>
-			<td><%=booth.getpID()%></td>
+			<td><%if(booth.getpID()>0)%><%=booth.getpID()%><%else{%>-<%}%></td>
 		</tr>
 	
         	<% } %>
 	 </form>
+	 					
 	 </table>
+	 <form action="boothToSponsor">
+						<p>
+							<input type="submit" value="Assign New" name="viewall">
+						</p>
+						</form>
+						
+						<form>
+    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
+						</form>
         <%}
         }%>
     

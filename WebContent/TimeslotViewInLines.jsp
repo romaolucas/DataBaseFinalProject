@@ -35,6 +35,7 @@
 		if(pageContext.findAttribute("stages")!= null && ((List)pageContext.findAttribute("stages")).size() != 0)
 				stages = (List<StageBean>)pageContext.findAttribute("stages");
 		
+		//retrive Timeslots from db
 		List<TimeslotBean> timeslots = new ArrayList<TimeslotBean>();
 		if(pageContext.findAttribute("timeslots")!= null && ((List)pageContext.findAttribute("timeslots")).size() != 0)
 			timeslots = (List<TimeslotBean>)pageContext.findAttribute("timeslots");
@@ -90,9 +91,9 @@
 	       		<% } %>
 			 </select>
 			 <select name="fromMonth" onChange = "timeslotviewform.submit();">
-				<% 	Integer currStartMonth = startMonth;
-					Integer currEndMonth = endMonth;
-					
+				<% 	Integer currStartMonth = 1;//startMonth;
+					Integer currEndMonth = 12;//endMonth;
+					/*
 					if(request.getParameter("fromYear")!=null)
 						if(Integer.parseInt(request.getParameter("fromYear"))==endYear)
 							{if(startYear!=endYear) currStartMonth = 1;}
@@ -106,19 +107,20 @@
 					else
 						if(request.getParameter("fromYear")!=null && Integer.parseInt(request.getParameter("fromYear"))==endYear){}
 						else currEndMonth = 12;								
-					
+					*/
 					for (int i=currStartMonth; i<=currEndMonth; i++){ %>
+					
 					 <option <% if(prevFromMonth==i){ %>selected<% }%> value="<%=i%>"><%=Month.values()[i-1]%></option>
 	       		<% } %>
 			 </select>
 			 <select name="fromDay" onChange = "timeslotviewform.submit();">
-				<% 	Integer currStartDay = startDay;
-					
+				<% 	Integer currStartDay = 1;//startDay;
+					/*
 					if(request.getParameter("fromYear")!=null || request.getParameter("fromMonth")!=null)
 						if(Integer.parseInt(request.getParameter("fromYear"))!=startYear || Integer.parseInt(request.getParameter("fromMonth"))!=startMonth)
 							currStartDay = 1;
-				
-					Integer currEndDay = endDay;
+					*/
+					Integer currEndDay = 30;//endDay;
 					
 					if(request.getParameter("fromMonth")!=null)
 						switch(Integer.parseInt(request.getParameter("fromMonth"))){
@@ -249,7 +251,7 @@
 					case 10: %> November <%; break;
 					case 11: %> December <%; break;
 				}%>
-				<%=timeslot.getTimeBuildUp().getYear()%>
+				<%=timeslot.getTimeBuildUp().getYear()+1900%>
 			</td>
 			<td><%=timeslot.getTimeBuildUp().getHours()%>:<%=timeslot.getTimeBuildUp().getMinutes()%></td>
 			<td><%=timeslot.getTimePlay().getHours()%>:<%=timeslot.getTimePlay().getMinutes()%></td>
@@ -262,6 +264,16 @@
 	
         	<% } %>
 	 </table>
+	 </form>
+	 					<form action="timeslotAssign">
+						<p>
+							<input type="submit" value="Assign New" name="viewall">
+						</p>
+						</form>
+						
+						<form>
+    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
+						</form>
 	  </form>	
 	
 	<%}%>

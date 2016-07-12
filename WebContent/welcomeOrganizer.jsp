@@ -45,6 +45,7 @@
 					<div id="login" class="animate form">
 
 						<h1>Log in</h1>
+						<p style="text-align:center">Internal management:</p>
 						<form action="shift">
 							<p>
 								<input type="submit" value="Manage Human resources" name="human">
@@ -55,6 +56,8 @@
 							<input type="submit" value="Manage Finances" name="finances">
 						</p>
 						</form>
+						<br>
+						<p style="text-align:center">Bands management:</p>
 						<form action="timeslotAssign">
 							<p>
 								<input type="submit" value="Assign Timeslots" name="manageBands">
@@ -65,6 +68,8 @@
 								<input type="submit" value="View Timeslots" name="manageBands">
 							</p>
 						</form>
+						<br>
+						<p style="text-align:center">Providers management:</p>
 						<form action="boothToSponsor">
 							<p>
 								<input type="submit" value="Assign Booth to Sponsor" name="manageBands">

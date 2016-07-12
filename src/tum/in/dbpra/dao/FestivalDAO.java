@@ -10,7 +10,7 @@ import tum.in.dbpra.bean.FestivalBean;
 
 public class FestivalDAO extends DAO {
 	public void getAllData(FestivalBean festival)
-			throws CustomerNotFoundException, SQLException,
+			throws FestivalNotFoundException, SQLException,
 			ClassNotFoundException {
 
 		String query = "SELECT * FROM festival;";
@@ -29,7 +29,7 @@ public class FestivalDAO extends DAO {
 			festival.setEndTime(rs.getTime("endTime"));
 
 		} else {
-			throw new CustomerNotFoundException("There is no Festval in db!");
+			throw new FestivalNotFoundException("There is no Festval in db!");
 		}
 
 		rs.close();
@@ -38,13 +38,13 @@ public class FestivalDAO extends DAO {
 
 	}
 
-	public static class CustomerNotFoundException extends Throwable {
+	public static class FestivalNotFoundException extends Throwable {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
-		CustomerNotFoundException(String message) {
+		FestivalNotFoundException(String message) {
 			super(message);
 		}
 	}

@@ -41,6 +41,16 @@
 		
 		
       </form>
+
+	 					<form action="boothView">
+						<p>
+							<input type="submit" value="View All" name="viewall">
+						</p>
+						</form>
+						
+						<form>
+    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
+						</form>
 	
         <%
         }%>

@@ -1,35 +1,136 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="UTF-8" />
-        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
-        <title>Database Final Project</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <link rel="shortcut icon" href="../favicon.ico"> 
-        <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
-    </head>
-    <body>
-        <div class="container">
-            <!-- Codrops top bar -->
-            <div class="codrops-top"><header>
-              <h1><strong>Database Practical Final Project</strong></h1></header>			
-               </span>
-                <div class="clr"></div>
-            </div><!--/ Codrops top bar -->
-            <header>
-                <h1 style="font-size: 300%;">Music Festival Page </h1>
-			</header>
-            <section>				
-                <a href="login-provider.jsp" ><h3 style="font-size: 100%;"> Provider </h3> </a>
-                <a href="login-visitor.jsp"> <h3 style="font-size: 100%;"> Visitor</h3> </a>
-                <a href="login-organizer.jsp"> <h3 style="font-size: 100%;"> Organizer </h3> </a>
-            </section>
-        </div>
-    </body>
+<html>
+<title>Music Festival Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+<body>
+
+<!-- Navbar -->
+<ul class="w3-navbar w3-blue w3-card-2 w3-top w3-left-align w3-large">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><a href="#" class="w3-padding-large w3-white">Home</a></li>
+  <li class="w3-hide-small"><a href="login-provider.jsp" class="w3-padding-large w3-hover-white">Provider</a></li>
+  <li class="w3-hide-small"><a href="login-visitor.jsp" class="w3-padding-large w3-hover-white">Visitor</a></li>
+  <li class="w3-hide-small"><a href="login-organizer.jsp" class="w3-padding-large w3-hover-white">Organizer</a></li>
+</ul>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:51px">
+  <ul class="w3-navbar w3-left-align w3-large w3-black">
+    <li><a class="w3-padding-large" href="#">Link 1</a></li>
+    <li><a class="w3-padding-large" href="#">Link 2</a></li>
+    <li><a class="w3-padding-large" href="#">Link 3</a></li>
+    <li><a class="w3-padding-large" href="#">Link 4</a></li>
+  </ul>
+</div>
+
+<!-- Header -->
+<div class="w3-container w3-blue w3-center w3-padding-128">
+  <h1 class="w3-margin w3-jumbo">Music Festival Page</h1>
+  <p class="w3-xlarge">Welcome to the official page of our music festival</p>
+  <button class="w3-btn w3-padding-16 w3-large w3-margin-top" onClick="document.getElementById('getstarted').scrollIntoView()">
+  		Get Started
+  </button>
+</div>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content" id="getstarted">
+    <div class="w3-twothird">
+      <h1>Overview</h1>
+      <h5 class="w3-padding-32">
+      This is an annual outdoor electronic music festival that occurs 
+      in March in the city of Munich, Germany. 
+      </h5>
+
+      <p class="w3-text-grey">
+      The festival spans across 
+      three days and was founded in 1999. It is held in 
+      multiple locations across Munich such as Odeansplatz.
+      It was a one-day festival from 1999 to 2006, 
+      eventually making its way to a two-day weekender from 2007 to 2010,
+       and since then has become a three-day festival. 
+       In 2012, a record 155,000 people attended the festival.
+        In 2013, for the first time in the festival's history, 
+        the festival took place across two consecutive weekends 
+        welcoming a combined attendance of 330,000 people.
+         In 2014, the festival returned to its original one weekend format, 
+         selling out pre sale tickets in a matter of four minutes. 
+         The most recent edition of Ultra, in 2016, 
+         welcomed 165,000 people to the festival.</p>
+    </div>
+
+    <div class="w3-third w3-center">
+      <i class="fa fa-anchor w3-padding-64 w3-text-blue"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+      <i class="fa fa-coffee w3-padding-64 w3-text-blue w3-margin-right"></i>
+    </div>
+
+    <div class="w3-twothird">
+      <h1>Services</h1>
+      <h5 class="w3-padding-32">International bands perform every year in the festival.</h5>
+
+      <p class="w3-text-grey">
+      Stages and booths are all over the festival areas. Booths sell all kinds of products, 
+      including souvenires from the festival and from the bands. The areas also offer a variaty
+       of social services. 
+      </p>
+    
+      <p class="w3-text-grey">
+      If you are a band or sponsor, please click on the provider tab to get started.
+      </p>
+      <p class="w3-text-grey">
+      If you are a visitor, please click on the visitor tab to get started.
+      </p>
+      <p class="w3-text-grey">
+      If you are one of the organizers, please click on the organizer tab to get started.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+  <div class="w3-xlarge w3-padding-32">
+   <a href="https://de-de.facebook.com/Ultra/" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
+   <a href="https://twitter.com/ultra?lang=de" class="w3-hover-text-light-blue"><i class="fa fa-twitter"></i></a>
+ </div>
+ <p>Powered by <a href="http://db.in.tum.de/teaching/ss16/imlab/?lang=de" target="_blank">Database Praktikum 2016 Team 1</a></p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+</body>
 </html>
+

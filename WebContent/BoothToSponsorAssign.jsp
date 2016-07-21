@@ -5,14 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Order</title>
+<title>Assign Booth</title>
 </head>
 <body>
 	<% if (request.getAttribute("error") != null) { %>
-	<h1>Order not found!</h1>
+	<h1>Try again!</h1>
 	<%= request.getAttribute("error") %>
 
 	<% } else { 
+		//retrive Boothes and Sponsors from db to fill the drop down menus
 		List<BoothBean> boothes = new ArrayList<BoothBean>();
 		List<SponsorBean> sponsors = new ArrayList<SponsorBean>();
 		if(pageContext.findAttribute("boothes")!= null && ((List)pageContext.findAttribute("boothes")).size() != 0)
@@ -24,36 +25,32 @@
 	  
 		Sponsors:
 			<select name="sponsors">
-				<% for (SponsorBean sponsor: sponsors){ %>
+				<% //create drop down menu for Sponsor
+					for (SponsorBean sponsor: sponsors){ %>
 				 <option value="<%=sponsor.getId()%>"><%=sponsor.getName()%></option>
         		<% } %>
 	        </select>
 					
 		Boothes:
 			<select name="boothes">
-				<% for (BoothBean booth: boothes){ %>
+				<%  //create drop down menu for Booth
+					for (BoothBean booth: boothes){ %>
 				 <option value="<%=booth.getSectionID()%>"><%=booth.getName()%></option>
         		<% } %>
 	        </select>
 	        
-	        
+	    <%//Submit button%>    
 		<input type="submit" value="Assign" name="assignBoothToSponsor"/>
 		
 		
       </form>
-
+	<% //button for navigation to "View Boothes" page %>
 	 					<form action="boothView">
 						<p>
 							<input type="submit" value="View All" name="viewall">
 						</p>
 						</form>
-						
-						<form>
-    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
-						</form>
-	
-        <%
-        }%>
+		<%}%>
 	
 </body>
 </html>

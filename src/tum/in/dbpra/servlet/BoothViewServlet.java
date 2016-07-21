@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 import tum.in.dbpra.bean.BoothBean;
 import tum.in.dbpra.dao.BoothDAO;
@@ -36,7 +35,8 @@ public class BoothViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-        	BoothDAO boothDAO = new BoothDAO();
+			//set values for Booth drop down
+			BoothDAO boothDAO = new BoothDAO();
         	ArrayList<BoothBean> boothes = boothDAO.getAllBoothes();
         	request.setAttribute("boothes", boothes);
         	

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@ page import="java.util.List, tum.in.dbpra.bean.ProductBean" %>
+ <%@ page import="java.util.List, tum.in.dbpra.bean.SaleBean" %>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
@@ -102,74 +102,60 @@
                 <div class="clr"></div>
             </div><!--/ Codrops top bar -->
             <header>
-                <h1 style="font-size: 300%;">Product Management</h1>
+                <h1 style="font-size: 300%;">Sales Management</h1>
 			</header>
              			<div class="productclass">
-                            <% List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
+                            <% List<SaleBean> sales = (List<SaleBean>) request.getAttribute("sales");
                                 int pid = (Integer) request.getAttribute("pid");
-                                if (products.size() == 0) {                            
+                                double total = 0.0;
+                                double totalProduct = 0.0;
+                                if (sales.size() == 0) {                            
                             %>
-                                <strong>There aren't any product registered </strong>
+                                <strong>There aren't any sale yet </strong>
                             <% } else { %>
                             	<strong>This is the list of your products: </strong>
+                                <% boolean diffProd = false;
+                                   int i = 0;
+                                   while (i < sales.size()) {
+                                    if (i == 0 || !sales.get(i).getProductName().equals(sales.get(i - 1).getProductName())) {
+                                    %>
                                 <table border="2" style="margin-left: auto; margin-right: auto;">
                                     <tr>
-                                        <th> Name </th>
-                                        <th> Price </th>
-                                        <th> Category </th>
-                                        <th> Quantity </th>
-                                    </tr>
-                                    
-                                    <% for (int i = 0; i < products.size(); i++) { %>
-                                    <tr>
-                                        <td> <%= products.get(i).getName() %> </td>
-                                        <td> <%= products.get(i).getPrice() %> </td>
-                                        <td> <%= products.get(i).getCategory() %> </td>
-                                        <td> <%= products.get(i).getQuantity() %> </td>
+                                        <th> Product Name </th>
+                                        <th> Section </th>
+                                        <th> Sold Quantity </th>
+                                        <th> Income </th>
                                     </tr>
                                     <% } %>
-                                </table>
+                                    <tr>
+                                        <td> <%= sales.get(i).getProductName() %> </td>
+                                        <td> <%= sales.get(i).getSection() %> </td>
+                                        <td> <%= sales.get(i).getSoldquantity() %> </td>
+                                        <td> <%= sales.get(i).getIncome() %> </td>
+                                    </tr>
+                                    <% total += sales.get(i).getIncome();
+                                        if (i == 0 || sales.get(i).getProductName().equals(sales.get(i - 1).getProductName())) {
+                                            totalProduct += sales.get(i).getIncome();
+                                        }
+                                        else {
+                
+                                    %>
+                                    <tr> Total for this product: <%= totalProduct %></tr>
+                                    </table>
+                                    <% totalProduct = sales.get(i).getIncome();
+                                    } %> 
+                                    <% i++; 
+                                    } 
+                                    %>
+                                    <tr> Total for this product: <%= totalProduct %></tr>
+                                    </table>
+                                    <br /><br />
+                                    Total income: <%= total %>
+                                    <% } %>
                            </div>
                                 <br>
                                 <br>
-                           <div class="productclass">
-                                <strong>Would you like to edit the quantity of a specific product? </strong>
-                                <form action="productManagement" method="post" autocomplete="on">
-                                    <p>
-                                    <input type="hidden" name="pid" value="<%= pid %>"/>
-                                    <input type="hidden" name="change" value="y"/>
-                                    <label for="prodName" class="name">Product name </label><br>
-                                    <select name="name">
-                                        <% for (int i = 0; i < products.size(); i++) { %>
-                                            <option value="<%= products.get(i).getName() %>"> <%= products.get(i).getName() %> </option>
-                                        <% } %>
-                                    </select>
-                                    <br>
-                                    <label for="quantity" class=quantity"> Quantity</label><br>
-                                    <input type="text" name="quantity" required="required" />
-                                    </p>
-                                    <p>
-                                    <input type="submit" value="Change"/>
-                                    </p>
-                                </form>
-                            <% } %>
-                            </div>
-                            <br><br>
-                            <div class="productclass">
-                               <p class="change_link">
-									<strong>Would you like to add a new product?</strong><br>
-                                    Click <a href="product-add.jsp?pid=<%= pid %>" class="to_register"><u>here</u></a>
-								</p>
-							</div>
-							<br><br>
-							<div class="productclass">
-								<strong>Would you like to see your sales statistics?</strong><br>
-								Click <a href="./salesManagement?pid=<%= pid %>"><u>here</u></a>
-							</div>
-							<br>
-							<br>
-            </form>
-        </div>
+                                   </div>
     </body>
 </html>
 

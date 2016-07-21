@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import tum.in.dbpra.bean.RFIDTicketBean;
 import tum.in.dbpra.bean.TicketBean;
 import tum.in.dbpra.dbutils.PGUtils;
@@ -36,8 +34,8 @@ public class TicketDAO {
 					ticketBean = new TicketBean();
 					ticketBean.setTickeID(resultSet.getInt(1));
 					ticketBean.setName(resultSet.getString(2));
-					ticketBean.setPrice(resultSet.getDouble(4));
 					ticketBean.setPurchaseDate(resultSet.getDate(3));
+					ticketBean.setPrice(resultSet.getDouble(4));
 					ticketBean.setActivationDate(resultSet.getDate(5));
 					ticketList.add(ticketBean);
 				} while (resultSet.next());
@@ -78,6 +76,7 @@ public class TicketDAO {
 			for(int i=0;i<quantity;i++){
 				updatedRow=preparedStatement.executeUpdate();
 				if(updatedRow<1){
+					connection.rollback();
 					break;
 				}else{
 					status=true;
@@ -88,11 +87,12 @@ public class TicketDAO {
 			}catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("Ticket buy failed"+e.getMessage());
-								
+				status=false;
+												
 			}finally {
 				PGUtils.closeConnection(connection);
 			}
-		
+		System.out.println("The value of status:"+status);
 		return status;	
 	}
 }

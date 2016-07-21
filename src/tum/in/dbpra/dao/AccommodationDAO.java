@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tum.in.dbpra.bean.AccommodationBean;
-import tum.in.dbpra.bean.VisitorBean;
 import tum.in.dbpra.dbutils.PGUtils;
 
 public class AccommodationDAO {
@@ -34,10 +33,9 @@ public class AccommodationDAO {
 					//System.out.println("orders");
 					acbean = new AccommodationBean();
 					acbean.setRoomno(resultSet.getInt(1));
-					System.out.println("In room no");
 					acbean.setAddress(resultSet.getString(2));
 					acbean.setRent(resultSet.getDouble(3));
-					acbean.setCapasity(resultSet.getInt(4));
+					acbean.setCapacity(resultSet.getInt(4));
 					acbean.setPets(resultSet.getBoolean(5));
 					acbean.setSmoking(resultSet.getBoolean(6));
 					acbean.setStartdate(resultSet.getDate(7));
@@ -59,21 +57,20 @@ public class AccommodationDAO {
 		
 	}
 	
-	public List<AccommodationBean> getRoomByCapasity(int number){
+	public List<AccommodationBean> getRoomByCapacity(int number){
 		List<AccommodationBean> roomList =new ArrayList<AccommodationBean>();
 		try{
 			
 			connection=PGUtils.createConnection();
-			preparedStatement=connection.prepareStatement(PGUtils.fetchRoomByCapasity);	
+			preparedStatement=connection.prepareStatement(PGUtils.fetchRoomByCapacity);	
 			preparedStatement.setInt(1, number);
 			resultSet=preparedStatement.executeQuery();
 			while (resultSet.next()){
 				acbean = new AccommodationBean();
-				//System.out.println("in resultset of getRoomByCapasity:"+resultSet.getInt(1));
 				acbean.setRoomno(resultSet.getInt(1));
 				acbean.setAddress(resultSet.getString(2));
 				acbean.setRent(resultSet.getDouble(3));
-				acbean.setCapasity(resultSet.getInt(4));
+				acbean.setCapacity(resultSet.getInt(4));
 				acbean.setPets(resultSet.getBoolean(5));
 				acbean.setSmoking(resultSet.getBoolean(6));
 				acbean.setCheckinDate(resultSet.getDate(7));

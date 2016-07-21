@@ -23,7 +23,7 @@ public class TicketCategoryDAO {
 
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchTicketCagory);
+			preparedStatement = connection.prepareStatement(PGUtils.fetchTicketCategory);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

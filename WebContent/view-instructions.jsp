@@ -16,6 +16,24 @@
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+	<style>
+	.instructionclass {
+	    border-radius: 5px;
+	    background-color: #f2f2f2;
+	    padding: 20px;
+	}
+	table {
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+	th, td {
+	    padding: 8px;
+	    text-align: center;
+	    border-bottom: 1px solid #ddd;
+	}
+	tr{background-color:white}
+	tr:hover{background-color:#f5f5f5}
+	</style>
 	</head>
 	<body>
 	    <%
@@ -63,6 +81,7 @@
                 <!-- <h3 style="font-size: 300%;">User = <%=user%></h3> -->
 		</header>
 		<form>
+		<div class="instructionclass">
 			<%String noinstructions = (String) request.getAttribute("noinstructions");%>
 			<%if(noinstructions.equals("yes")){%>
 				<strong>You have no instructions</strong>
@@ -73,7 +92,7 @@
 				<a href="add-instruction.jsp"><u>here</u></a> to add another instruction
 		        <br>
 			<%}else{%>
-				<strong>Your previous instructions</strong>
+				<strong>This is the list of your previous instructions:</strong>
 				<br>
 				<% List<InstructionBean> instructions = (List<InstructionBean>) request.getAttribute("instructions");%>
 				<table border="2" style="margin-left: auto; margin-right: auto;">
@@ -105,12 +124,16 @@
 			            </tr>
 					<%}%>
 				</table>
-				<br>
-				Click 
-				<a href="add-instruction.jsp"><u>here</u></a> to add another instruction
+				</div>
+				<br><br>
+				<div class="instructionclass">
+				<strong>Would you like to add a new instruction?</strong><br>
+				Click <a href="add-instruction.jsp"><u>here</u></a>
+		        </div>
 		        <br>
 			<%}%>
 		</form>
 	</div>
     </body>
 </html>
+

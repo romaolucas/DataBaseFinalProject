@@ -12,6 +12,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <span>
+                    <a href="welcomeOrganizer.jsp">
+                        <strong>Back to Organizer Dashboard</strong>
+                    </a>
+                </span>
 <title>Insert title here</title>
 </head>
 <body>
@@ -82,13 +87,12 @@
 					}
 				%>
 
-			</select> <input type="text" name="task" size="80" /> <input type=submit
+			</select> <input type="text" name="task" size="80" required/> <input type=submit
 				value="Add">
 		</form>
 
 	</fieldset>
 	
-
 
 </body>
 </html>

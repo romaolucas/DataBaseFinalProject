@@ -69,6 +69,8 @@ public class ShiftAddServlet extends HttpServlet {
 			int employeeId = employeeDAO.getEmployeeIdByName(employeeName);
 
 			ShiftBean shiftBean = new ShiftBean();
+			shiftBean.setEmployeeName(employeeName);
+			shiftBean.setSectionName(sectionName);
 			shiftBean.setEid(employeeId);
 			shiftBean.setSectionId(sectionId);
 
@@ -107,13 +109,20 @@ public class ShiftAddServlet extends HttpServlet {
 						request.setAttribute("allEmployeeName", allEmployeeName);
 					}
 					JOptionPane.showMessageDialog(null,
-							"The Shift has been added successfully");
+							"The Shift with following information has been assigned to "
+									+ employeeName + ":" + " Section Name"
+									+ sectionName + " Start time: "
+									+ shiftBean.getStartTime().toString()
+									+ " End time: "
+									+ shiftBean.getEndTime().toString());
 				} else {
 					request.setAttribute("error", "Your request failed");
 				}
 			} else {
 				request.setAttribute("error",
-						"The end time can not be smaller than the start time");
+						"The end time " + endtimeStamp.toString()
+								+ " can not be smaller than the start time "
+								+ starttimeStamp.toString());
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -126,6 +135,8 @@ public class ShiftAddServlet extends HttpServlet {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Throwable e) {
+			request.setAttribute("error", e.getMessage());
 		}
 
 		RequestDispatcher dispatcher = request

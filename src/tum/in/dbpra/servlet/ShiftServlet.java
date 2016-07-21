@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import tum.in.dbpra.bean.*;
 import tum.in.dbpra.dao.EmployeeDAO;
 import tum.in.dbpra.dao.SectionDAO;
+import tum.in.dbpra.dao.SectionDAO.SectionNotFoundException;
 import tum.in.dbpra.dao.shiftDAO;
 
 @WebServlet("/shift")
@@ -91,9 +92,7 @@ public class ShiftServlet extends HttpServlet {
 
 			if (request.getParameter("sectionName") != ""
 					&& request.getParameter("sectionName") != null) {
-				System.out.println(request.getParameter("sectionName"));
 				if (request.getParameter("sectionName").equals("All")) {
-					System.out.println("not filtered");
 					List<ShiftBean> notFilteredShift = new ArrayList<ShiftBean>();
 
 					notFilteredShift = (List<ShiftBean>) shiftDAO.getAllShift();
@@ -104,22 +103,23 @@ public class ShiftServlet extends HttpServlet {
 
 					String parameter = (String) request
 							.getParameter("sectionName");
-					System.out.println("Section: " + parameter);
 					List<ShiftBean> filteredShift = new ArrayList<ShiftBean>();
 
 					filteredShift = (List<ShiftBean>) shiftDAO
 							.getShiftBySectionName(parameter);
 					request.setAttribute("allShift", filteredShift);
-					System.out.println("filtered");
+					if (filteredShift.isEmpty()) {
+						request.setAttribute("empty",
+								"There is no shift yet assgined to this Section: "
+										+ parameter);
+					}
 
 				}
 			}
 			// Check if the user choose another employee name
 			if (request.getParameter("employeeName") != ""
 					&& request.getParameter("employeeName") != null) {
-				System.out.println(request.getParameter("employeeName"));
 				if (request.getParameter("employeeName").equals("All")) {
-					System.out.println("not filtered");
 					List<ShiftBean> notFilteredShift = new ArrayList<ShiftBean>();
 
 					notFilteredShift = (List<ShiftBean>) shiftDAO.getAllShift();
@@ -130,13 +130,16 @@ public class ShiftServlet extends HttpServlet {
 					// otherwise show all shifts
 					String parameter = (String) request
 							.getParameter("employeeName");
-					System.out.println("Employee: " + parameter);
 					List<ShiftBean> filteredShift = new ArrayList<ShiftBean>();
 
 					filteredShift = (List<ShiftBean>) shiftDAO
 							.getShiftByEmployeeName(parameter);
 					request.setAttribute("allShift", filteredShift);
-					System.out.println("filtered");
+					if (filteredShift.isEmpty()) {
+						request.setAttribute("empty",
+								"There is no shift yet assgined to this employee: "
+										+ parameter);
+					}
 
 				}
 
@@ -145,19 +148,16 @@ public class ShiftServlet extends HttpServlet {
 			if (request.getParameter("filter") != null) {
 				String parameter = (String) request
 						.getParameter("searchPattern");
-				System.out.println("Pattern: " + parameter);
 				List<ShiftBean> filteredShift = new ArrayList<ShiftBean>();
 
 				filteredShift = (List<ShiftBean>) shiftDAO
 						.getShiftByTask(parameter);
 				request.setAttribute("allShift", filteredShift);
-
-				// List<ShiftBean> notFilteredShift = new
-				// ArrayList<ShiftBean>();
-				//
-				// notFilteredShift = (List<ShiftBean>) shiftDAO.getAllShift();
-				//
-				// request.setAttribute("allShift", notFilteredShift);
+				if (filteredShift.isEmpty()) {
+					request.setAttribute("empty",
+							"There is no shift yet assgined with a task matching to: "
+									+ parameter);
+				}
 
 			} else {
 				// todo
@@ -167,6 +167,9 @@ public class ShiftServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

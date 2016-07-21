@@ -13,7 +13,7 @@ import java.util.List;
 import tum.in.dbpra.bean.SponsorBean;
 import tum.in.dbpra.dbutils.PGUtils;
 
-public class SponsorDAO {
+public class SponsorDAO extends DAO {
 	public void submitSponsorApp(SponsorBean sponsor, String comment) {
 		String getAppId = "select max(applicationid) from application";
 		String insertSponsor = "insert into sponsor values (?, ?, ?)";
@@ -56,45 +56,21 @@ public class SponsorDAO {
 		}
 	}
 
-	/**
-	 * this function returns all the name, type and sponsorship of all sponsor.
-	 * 
-	 * @return
-	 * @throws SQLException
-	 */
-
-	public List<SponsorBean> getAllSponsor() throws SQLException {
-		List<SponsorBean> allSponsor = new ArrayList<SponsorBean>();
-		String query = "Select provider.name, sponsor.type, sponsor.amount "
-				+ "From provider, sponsor "
-				+ "WHERE sponsor.pid = provider.pid;";
-		Connection con = PGUtils.createConnection();
-		PreparedStatement ps = con.prepareStatement(query);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			SponsorBean sponsor = new SponsorBean();
-			sponsor.setName(rs.getString("name"));
-			sponsor.setType(rs.getString("type"));
-			sponsor.setAmount(rs.getDouble("amount"));
-			allSponsor.add(sponsor);
-		}
-		rs.close();
-		ps.close();
-		PGUtils.closeConnection(con);
-		return allSponsor;
-	}
-
-	public ArrayList<SponsorBean> getAllSponsors() throws SQLException,
+	public ArrayList<SponsorBean> getAllSponsor() throws SQLException,
 			ClassNotFoundException {
 
+		// query
 		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
 
-		Connection con = PGUtils.createConnection();
+		// set connection
+		// Connection con = PGUtils.createConnection();
+		Connection con = getConnection();
 
+		// set PS
 		PreparedStatement pstmt = con.prepareStatement(query);
 
+		// retrieve results of the query
 		ResultSet rs = pstmt.executeQuery();
-
 		ArrayList<SponsorBean> sponsors = new ArrayList<SponsorBean>();
 
 		while (rs.next()) {
@@ -112,6 +88,7 @@ public class SponsorDAO {
 			sponsors.add(sponsor);
 		}
 
+		// close everything
 		rs.close();
 		pstmt.close();
 		con.close();

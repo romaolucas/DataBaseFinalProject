@@ -5,6 +5,14 @@ import java.util.Date;
 public class AccommodationBean {
 	private int	roomno;
 	private Date checkinDate;
+	private String address;
+	private Double rent;
+	private int capacity;
+	private boolean smoking;
+	private boolean pets;
+	private boolean booked;
+	private  Date startdate;
+	private  Date endDate;
 	/**
 	 * @return the checkinDate
 	 */
@@ -67,16 +75,16 @@ public class AccommodationBean {
 		this.rent = rent;
 	}
 	/**
-	 * @return the capasity
+	 * @return the capacity
 	 */
-	public int getCapasity() {
-		return capasity;
+	public int getCapacity() {
+		return capacity;
 	}
 	/**
-	 * @param capasity the capasity to set
+	 * @param capacity the capacity to set
 	 */
-	public void setCapasity(int capasity) {
-		this.capasity = capasity;
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 	/**
 	 * @return the smoking
@@ -138,14 +146,6 @@ public class AccommodationBean {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	private String address;
-	private Double rent;
-	private int capasity;
-	private boolean smoking;
-	private boolean pets;
-	private boolean booked;
-	private  Date startdate;
-	private  Date endDate;
 	
 
 }

@@ -20,7 +20,7 @@ import tum.in.dbpra.dao.VisitorDAO;
 @WebServlet("/welcomeVisitor")
 public class VisitorLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private boolean loginSucessfull=false;
+	private boolean loginSuccessful=false;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -43,17 +43,16 @@ public class VisitorLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String username=request.getParameter("username");
 			String password=request.getParameter("password");
 			System.out.println("Password: "+password);
-			String keepLoggedin[]=request.getParameterValues("loginkeeping");
+			request.getParameterValues("loginkeeping");
 			VisitorDAO visitorDAO = new VisitorDAO();
 			List<VisitorBean> visitorList = visitorDAO.getVisitors(username,password);
 			if(visitorList.size()>0){
-				   loginSucessfull=true;
+				   loginSuccessful=true;
 				   request.setAttribute("visitor", visitorList);
 				   HttpSession season=request.getSession();
 				   season.setAttribute("username", visitorList.get(0).getUsername());
@@ -63,8 +62,8 @@ public class VisitorLogin extends HttpServlet {
 		} catch (Throwable e) {
 			request.setAttribute("error", e.getMessage());
 		}
-		request.setAttribute("loginStatus", loginSucessfull);
-		if (loginSucessfull) {
+		request.setAttribute("loginStatus", loginSuccessful);
+		if (loginSuccessful) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/welcomeVisitor.jsp");
 			dispatcher.forward(request, response);
 		}else{

@@ -5,6 +5,9 @@ import java.util.Date;
 public class TicketBean {
 	
 	private int tickeID;
+	private String name;
+	private Date purchaseDate;
+	private Double price;
 	/**
 	 * @return the activationDate
 	 */
@@ -66,9 +69,6 @@ public class TicketBean {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	private String name;
-	private Date purchaseDate;
-	private Double price;
 	
 
 }

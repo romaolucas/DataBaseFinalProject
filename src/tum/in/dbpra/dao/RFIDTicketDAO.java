@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tum.in.dbpra.bean.RFIDTicketBean;
-import tum.in.dbpra.bean.TicketCategoryBean;
 import tum.in.dbpra.dbutils.PGUtils;
 
 public class RFIDTicketDAO {
@@ -32,7 +31,6 @@ public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 	resultSet = preparedStatement.executeQuery();
 	if (resultSet.next()) {
 		do {
-			System.out.println("In rfid ");
 			rfidTicketBean = new RFIDTicketBean();
 			rfidTicketBean.setStatus(resultSet.getBoolean(1));
 			rfidTicketBean.setBalance(resultSet.getInt(2));

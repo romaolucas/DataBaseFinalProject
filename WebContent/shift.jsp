@@ -13,10 +13,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back
-			to Organizer Dashboard</strong>
-</a>
-</span>
+ <span class="right">
+                    <a href="welcomeOrganizer.jsp">
+                        <strong>Back to Organizer Dashboard</strong>
+                    </a>
+                </span>
 <title>Human Resources Management</title>
 </head>
 
@@ -33,14 +34,16 @@
 	String[] columns = { "Section Name", "Employee Name", "Date",
 			"Start time", "End time", "Task" };
 %>
+<h1>Music Festival Shifts</h1>
 <%
 	if (request.getAttribute("error") != null) {
 %>
-<h1>Shifts not found or Shift can not be added. Please check all
-	shifts or the start / end time</h1>
-<%
-	request.getAttribute("error");
+	<br>
+	<font color="red">Error:  
+<%=
+	request.getAttribute("error")
 %>
+	</font>
 
 <%
 	} else {
@@ -50,7 +53,7 @@
 		allEmployeeName = (List<String>) request
 				.getAttribute("allEmployeeName");
 %>
-<h1>Music Festival Shifts</h1>
+
 
 <body>
 	<%
@@ -105,6 +108,7 @@
 	</form>
 
 	<br>
+	
 	<table border="1" style="width: 100%">
 		<tr>
 			<th>Section Name</th>
@@ -113,6 +117,10 @@
 			<th>End time</th>
 			<th>Task</th>
 		</tr>
+		
+		<%if(request.getAttribute("empty")!= null){ %>
+		<h4><%=request.getAttribute("empty") %></h4>
+	<%} %>
 		<%
 			for (ShiftBean shift : allShift) {
 		%>
@@ -136,7 +144,6 @@
 		}
 		}
 	%>
-
-
+					
 </body>
 </html>

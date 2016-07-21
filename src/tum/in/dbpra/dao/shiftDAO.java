@@ -8,10 +8,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
 import tum.in.dbpra.bean.ShiftBean;
+import tum.in.dbpra.dao.SectionDAO.SectionNotFoundException;
 import tum.in.dbpra.dbutils.PGUtils;
 
 public class shiftDAO extends DAO {
@@ -61,35 +64,79 @@ public class shiftDAO extends DAO {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws ShiftNotFoundException
 	 */
 	public int postShift(ShiftBean shift) throws ClassNotFoundException,
-			SQLException {
-		int change = 0;
-		String query = "INSERT INTO shift VALUES (?, ? , ?, ?, ?);";
-
+			SQLException, ShiftNotFoundException {
+		int rowChanged = 0;
+		boolean add = true;
+		boolean isOverlaping = false;
 		Connection con = getConnection();
 		con.setAutoCommit(false);
-		PreparedStatement preparedStmt = con.prepareStatement(query);
-		preparedStmt.setInt(1, shift.getSectionId());
-		preparedStmt.setInt(2, shift.getEid());
-		long millisStart = shift.getStartTime().getTime();
-		preparedStmt.setTimestamp(3, new Timestamp(millisStart));
-		long millisEnd = shift.getEndTime().getTime();
-		preparedStmt.setTimestamp(4, new Timestamp(millisEnd));
-		preparedStmt.setString(5, shift.getTask());
-		change = preparedStmt.executeUpdate();
+		String query = "select * from shift"
+				+ " where eid=? order by starttime;";
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setInt(1, shift.getEid());
+		ResultSet rs = ps.executeQuery();
+		// check if there are some shifts assigned to the employee
+		if (rs.next()) {
+			List<ShiftBean> allShift = new ArrayList<ShiftBean>();
+			do {
+				ShiftBean shiftBean = new ShiftBean();
+				shiftBean.setStartTime(rs.getTimestamp("starttime"));
+				shiftBean.setEndTime(rs.getTimestamp("endtime"));
+				allShift.add(shiftBean);
+			} while (rs.next());
+			for (int i = 0; i < allShift.size(); i++) {
+				// StartA and EndA are beginning and the end of the shift the
+				// user wants to assign
+				Timestamp startA = shift.getStartTime();
+				Timestamp endA = shift.getEndTime();
+				// Start B and EndB are beginning and the end of the shift the
+				// employee has already assigned to
+				Timestamp startB = allShift.get(i).getStartTime();
+				Timestamp endB = allShift.get(i).getEndTime();
 
-		if (change > 0) {
-			con.commit();
-		} else {
-			con.rollback();
+				// there is overlaping when startA <= endB and endA >= startB
+
+				boolean isStartABeforeEndB = startA.before(endB);
+				boolean isEndAAfterStartB = endA.after(startB);
+
+				isOverlaping = isStartABeforeEndB && isEndAAfterStartB;
+				if (isOverlaping) {
+					add = false;
+					throw new ShiftNotFoundException("The employee "
+							+ shift.getEmployeeName()
+							+ " is already booked from " + startB.toString()
+							+ " to " + endB.toString() + "\n"
+							+ "Please assign him a new shift");
+				}
+
+			}
+
+		}
+		if (add) {
+			long millisStart = shift.getStartTime().getTime();
+
+			long millisEnd = shift.getEndTime().getTime();
+			String insertQuery = "INSERT INTO shift VALUES (?, ? , ?, ?, ?);";
+			PreparedStatement preparedStmt = con.prepareStatement(insertQuery);
+			preparedStmt.setInt(1, shift.getSectionId());
+			preparedStmt.setInt(2, shift.getEid());
+			preparedStmt.setTimestamp(3, new Timestamp(millisStart));
+			preparedStmt.setTimestamp(4, new Timestamp(millisEnd));
+			preparedStmt.setString(5, shift.getTask());
+			rowChanged = preparedStmt.executeUpdate();
+
+			if (rowChanged > 0) {
+				con.commit();
+			} else {
+				con.rollback();
+			}
+
 		}
 
-		preparedStmt.close();
-		PGUtils.closeConnection(con);
-
-		return change;
-
+		return rowChanged;
 	}
 
 	/**
@@ -101,9 +148,11 @@ public class shiftDAO extends DAO {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws SectionNotFoundException
 	 */
 	public List<ShiftBean> getShiftBySectionName(String sectionName)
-			throws ClassNotFoundException, SQLException {
+			throws ClassNotFoundException, SQLException,
+			SectionNotFoundException {
 		List<ShiftBean> filteredShift = new ArrayList<ShiftBean>();
 		SectionDAO sectionDAO = new SectionDAO();
 
@@ -252,6 +301,17 @@ public class shiftDAO extends DAO {
 		PGUtils.closeConnection(con);
 
 		return filteredShift;
+	}
+
+	public static class ShiftNotFoundException extends Throwable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		ShiftNotFoundException(String message) {
+			super(message);
+		}
 	}
 
 }

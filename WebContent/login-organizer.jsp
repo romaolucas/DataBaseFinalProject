@@ -32,7 +32,7 @@
 								<label for="username" class="uname" data-icon="u"> Your
 									email or username </label> <input id="username" name="username"
 									required="required" type="text"
-									placeholder="myusername or mymail@mail.com" />
+									placeholder="myusername" />
 							</p>
 							<p>
 								<label for="password" class="youpasswd" data-icon="p">

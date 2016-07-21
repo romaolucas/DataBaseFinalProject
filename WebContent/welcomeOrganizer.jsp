@@ -29,17 +29,20 @@
 				<h1>
 					<strong>Database Practical Final Project</strong>
 				</h1>
+				
 			</header>
-			<span class="right"> <a href="index.html"> <strong>Back to
-						the Main Page</strong>
-			</a>
-			</span>
+			<span class="right">
+                    </a>
+                    <form action="logoutOrganizer" method="post">
+                    <input type="submit" value="Logout">
+                    </form>
+                </span>
 			<div class="clr"></div>
 		</div>
 		<!--/ Codrops top bar -->
 		<header>
-			<h1 style="font-size: 300%;">WELCOME ORGANIZER - <%=request.getAttribute("organizer") %></h1>
-
+			<h1 style="font-size: 300%;">WELCOME ORGANIZER - <%=userName%></h1>
+	<%-- <%=request.getAttribute("organizer") %> --%>
 		</header>
 		<section>
 			<div id="container_demo">

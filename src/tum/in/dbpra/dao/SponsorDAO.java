@@ -11,10 +11,11 @@ import java.util.Date;
 import java.util.List;
 
 import tum.in.dbpra.bean.SponsorBean;
+
 //import tum.in.dbpra.dbutils.PGUtils;
 
-public class SponsorDAO extends DAO{
-	
+public class SponsorDAO extends DAO {
+
 	public void submitSponsorApp(SponsorBean sponsor, String comment) {
 		String getAppId = "select max(applicationid) from application";
 		String insertSponsor = "insert into sponsor values (?, ?, ?)";
@@ -24,7 +25,7 @@ public class SponsorDAO extends DAO{
 		Statement stmt;
 		ResultSet rs;
 		try {
-			//con = PGUtils.createConnection();
+			// con = PGUtils.createConnection();
 			con = getConnection();
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
@@ -52,7 +53,7 @@ public class SponsorDAO extends DAO{
 			con.commit();
 			psSponsor.close();
 			psApp.close();
-			//PGUtils.closeConnection(con);
+			// PGUtils.closeConnection(con);
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,22 +65,23 @@ public class SponsorDAO extends DAO{
 	 * 
 	 * @return
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 */
 
-	public ArrayList<SponsorBean> getAllSponsor() throws SQLException, ClassNotFoundException {
+	public ArrayList<SponsorBean> getAllSponsor() throws SQLException,
+			ClassNotFoundException {
 
-		//query
+		// query
 		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
 
-		//set connection
-		//Connection con = PGUtils.createConnection();
+		// set connection
+		// Connection con = PGUtils.createConnection();
 		Connection con = getConnection();
-		
-		//set PS
+
+		// set PS
 		PreparedStatement pstmt = con.prepareStatement(query);
 
-		//retrieve results of the query
+		// retrieve results of the query
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<SponsorBean> sponsors = new ArrayList<SponsorBean>();
 
@@ -97,8 +99,7 @@ public class SponsorDAO extends DAO{
 
 			sponsors.add(sponsor);
 		}
-
-		//close everything
+		// close everything
 		rs.close();
 		pstmt.close();
 		con.close();

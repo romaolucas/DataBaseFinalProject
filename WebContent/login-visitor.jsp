@@ -12,13 +12,13 @@
         <link rel="shortcut icon" href="../favicon.ico"> 
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
     </head>
     <body>
         <div class="container">
             <!-- Codrops top bar -->
             <div class="codrops-top"><header>
-              <h1><strong>Database Practical Final Project</strong></h1></header>			
+              <h1><strong>Database Practical Final Project</strong></h1></header>           
                   <span class="right">
                     <a href=" ">
                         <strong>Back to the Main Page</strong>
@@ -28,8 +28,8 @@
             </div><!--/ Codrops top bar -->
             <header>
                 <h1 style="font-size: 300%;">Visitor Login and Registration Form </h1>
-			</header>
-            <section>				
+            </header>
+            <section>               
                 <div id="container_demo" >
                     <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
                     <a class="hiddenanchor" id="toregister"></a>
@@ -47,21 +47,21 @@
                                     <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
                                 </p>
                                 <p class="keeplogin"> 
-									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
-									<label for="loginkeeping">Keep me logged in</label>
-								</p>
-								<% if(request.getAttribute("loginMessage") != null){%>
-								<p class="loginStatus"> 
-									<label for="loginmessage">Login failed,please check username/password</label>
-								</p>
-								<%}%>
+                                    <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+                                    <label for="loginkeeping">Keep me logged in</label>
+                                </p>
+                                <% if(request.getAttribute("loginMessage") != null){%>
+                                <p class="loginStatus"> 
+                                    <label for="loginmessage">Login failed,please check username/password</label>
+                                </p>
+                                <%}%>
                                 <p class="login button"> 
                                     <input type="submit" value="Login" /> 
-								</p>
+                                </p>
                                 <p class="change_link">
-									Not registred yet ?
-									<a href="#toregister" class="to_register">Register Now</a>
-								</p>
+                                    Not registred yet ?
+                                    <a href="#toregister" class="to_register">Register Now</a>
+                                </p>
                             </form>
                         </div>
 
@@ -101,20 +101,19 @@
                                     <input id="phonesignup" name="phonesignup" required="required" type="text" placeholder="eg. +919836981535"/>
                                 </p>
                                 <% if(request.getAttribute("error") != null){%>
-								<p class="loginStatus"> 
-									<label for="loginmessage">Regristration failed:<%=request.getAttribute("error") %></label>
-								</p>
-								<%}%>
+                                <p ><label for="Registermessage">Regristration failed:<%=request.getAttribute("error") %></label>
+                                </p>
+                                <%}%>
                                 <p class="signin button"> 
-									<input type="submit" value="Sign up"/> 
-								</p>
+                                    <input type="submit" value="Sign up"/> 
+                                </p>
                                 <p class="change_link">  
-									Already a member ?
-									<a href="#tologin" class="to_register"> Go and log in </a>
-								</p>
+                                    Already a member ?
+                                    <a href="#tologin" class="to_register"> Go and log in </a>
+                                </p>
                             </form>
                         </div>
-						
+                        
                     </div>
                 </div>  
             </section>

@@ -9,11 +9,11 @@ public class PGUtils {
 	public static final String URL = "jdbc:postgresql:";
 	// TODO: change this value to the user id value of the particular database
 	// system that is currently working
-	public static final String database = "festival";
+	public static final String database = "postgres";
 	public static final String user = "postgres";
 	// TODO: change this value to the password value of the particular database
 	// system that is currently working
-	public static final String password = "dbpra";
+	public static final String password = "pallabi09";
 
 	// queries from Visitor
 	public static final String fetchVisitor = "select * from visitor where username = ? and password=?";
@@ -33,6 +33,11 @@ public class PGUtils {
 	public static final String insertIntoTicket = "insert into ticket(ticketid,visitorid,rfid,categoryid,purchasedate) values ((select max(ticketid) from ticket)+1,?,?,?,now())";
 	public static final String updateRFIDComments = "update wristband set comments=comments||? where rfid=?";
 	public static final String fetchPurchase = "select p.name,p.category,pr.totalprice,pr.paymentdate,pr.quantity from product as p,purchase as pr where rfid=? and p.productid=pr.productid";
+	public static final String fetchTimeslot ="select b.pid, p.name, b.style, b.country, b.charge, s.sectionid, t.timebuildup, t.timeplay, t.timefinish, t.timegone from provider p, band b, stage s, timeslot t where b.pid=t.pid and s.sectionid=t.sectionid and p.pid=t.pid";
+	public static final String insertIntoBandselection = "insert into BandSelection (VisitorID, BandID, Name, Style, Country, timeplay, timefinish) values (?,?,?,?,?,?,?)";
+	public static final String fetchBandselection = "select VisitorID, BandID, Name, Style, Country, timeplay, timefinish from Bandselection";
+	public static final String deleteFromBandselection = "delete from bandselection where visitorid = ? and bandid = ?";
+	public static final String fetchActivityLog = "select * from enters";
 
 	// queries from Provider
 	public static final String fetchProviderCredentials = "select * from provider where email = ? and password = ?";

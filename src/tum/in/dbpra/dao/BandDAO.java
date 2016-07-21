@@ -10,17 +10,19 @@ import tum.in.dbpra.bean.BandBean;
 
 
 public class BandDAO extends DAO {
-	public ArrayList<BandBean> getAllBands() throws SQLException,
-			ClassNotFoundException {
+	public ArrayList<BandBean> getAllBands() throws SQLException, BandNotFoundException, ClassNotFoundException {
 
-		String query = "SELECT * FROM Band b,Provider p WHERE b.pID=p.pID;";
+		//query
+		String query = "SELECT * FROM Band b,Provider p WHERE b.pID = p.pID;";
 
+		//set connection
 		Connection con = getConnection();
 
+		//set Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
 
+		//retrieve results of query
 		ResultSet rs = pstmt.executeQuery();
-
 		ArrayList<BandBean> bands = new ArrayList<BandBean>();
 
 		while (rs.next()) {
@@ -39,6 +41,7 @@ public class BandDAO extends DAO {
 			bands.add(band);
 		}
 
+		//close everything
 		rs.close();
 		pstmt.close();
 		con.close();
@@ -47,32 +50,7 @@ public class BandDAO extends DAO {
 
 	}
 
-	public Integer getBandIdByName(String name) throws BandNotFoundException,
-			SQLException, ClassNotFoundException {
-
-		String query = "SELECT pid FROM provider WHERE name = ?;";
-
-		Connection con = getConnection();
-
-		PreparedStatement pstmt = con.prepareStatement(query);
-
-		pstmt.setString(1, name);
-
-		ResultSet rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			return rs.getInt("pid");
-		} else {
-			throw new BandNotFoundException("There is no Band with name "
-					+ name + "!");
-		}
-
-		// rs.close();
-		// pstmt.close();
-		// con.close();
-
-	}
-
+	
 	public static class BandNotFoundException extends Throwable {
 		/**
 		 * 

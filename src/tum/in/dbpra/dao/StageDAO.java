@@ -11,7 +11,7 @@ import tum.in.dbpra.bean.StageBean;
 
 public class StageDAO extends DAO {
 	public ArrayList<StageBean> getAllStages() throws SQLException,
-			ClassNotFoundException {
+			ClassNotFoundException, StageNotFoundException {
 
 		String query = "SELECT * FROM Stage st, Section se WHERE st.sectionID=se.sectionID;";
 
@@ -39,32 +39,6 @@ public class StageDAO extends DAO {
 		con.close();
 
 		return stages;
-
-	}
-
-	public Integer getStageIdByName(String name) throws StageNotFoundException,
-			SQLException, ClassNotFoundException {
-
-		String query = "SELECT sectionID FROM section WHERE name = ?;";
-
-		Connection con = getConnection();
-
-		PreparedStatement pstmt = con.prepareStatement(query);
-
-		pstmt.setString(1, name);
-
-		ResultSet rs = pstmt.executeQuery();
-
-		if (rs.next()) {
-			return rs.getInt("sectionID");
-		} else {
-			throw new StageNotFoundException("There is no Stage with name "
-					+ name + "!");
-		}
-
-		// rs.close();
-		// pstmt.close();
-		// con.close();
 
 	}
 

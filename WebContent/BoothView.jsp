@@ -5,13 +5,6 @@
 <html>
 <head>
 <script language="JavaScript" type="text/javascript">
-
-function getColumn ( selectedColumn )
-{
-  document.partsform.part_column_sort.value = selectedColumn ;
-  document.partsform.submit() ;
-}
-
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Part</title>
@@ -26,6 +19,7 @@ function getColumn ( selectedColumn )
 			   List<BoothBean> boothes = (List<BoothBean>)pageContext.findAttribute("boothes");
 			   %>
 		
+	<%//interface of table %>	
 	<table border="1">
 	  <form name="boothesform" method="post">
 	  <!-- <input type="hidden" name="part_column_sort" /> -->
@@ -37,6 +31,7 @@ function getColumn ( selectedColumn )
 		</tr>
 		<%
 	    
+		//Boothes themselfs
 		for (BoothBean booth: boothes){
 	%>
 	 	<tr>
@@ -49,15 +44,13 @@ function getColumn ( selectedColumn )
 	 </form>
 	 					
 	 </table>
+	 
+	 <% //button to navigate to "Assign Timeslot page"%>
 	 <form action="boothToSponsor">
 						<p>
 							<input type="submit" value="Assign New" name="viewall">
 						</p>
-						</form>
-						
-						<form>
-    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
-						</form>
+	</form>
         <%}
         }%>
     

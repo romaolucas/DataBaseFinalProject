@@ -26,17 +26,17 @@ import tum.in.dbpra.dao.StageDAO;
 import tum.in.dbpra.dao.TimeslotDAO;
 
 /**
- * Servlet implementation class TimeslotServlet
+ * Servlet implementation class TimeslotSearchServlet
  */
-@WebServlet("/timeslotviewinlines")
-public class TimeslotViewInLinesServlet extends HttpServlet {
+@WebServlet("/timeslotsearch")
+public class TimeslotSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TimeslotViewInLinesServlet() {
+    public TimeslotSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -63,8 +63,6 @@ public class TimeslotViewInLinesServlet extends HttpServlet {
         	request.setAttribute("festival", festivalBean);
         	
         	//collect information about needed timeslots
-        	String stageName = null;
-        	String bandName = null;
         	Integer stageID = null;
         	Integer bandID = null;
         	Timestamp fromTime = null;
@@ -76,11 +74,11 @@ public class TimeslotViewInLinesServlet extends HttpServlet {
         	Integer fromDay = null;
         	Integer tillDay = null;
         	
-        	if(request.getParameter("stages")!=null && !request.getParameter("stages").equals("any")) stageName = request.getParameter("stages");
-        	if(stageName!=null) stageID = stageDao.getStageIdByName(stageName);
+        	if(request.getParameter("stages")!=null && !request.getParameter("stages").equals("any"))
+        		stageID = Integer.parseInt(request.getParameter("stages"));
         	
-        	if(request.getParameter("bands")!=null && !request.getParameter("bands").equals("any")) bandName = request.getParameter("bands");
-        	if(bandName!=null) bandID = bandDao.getBandIdByName(bandName);
+        	if(request.getParameter("bands")!=null && !request.getParameter("bands").equals("any"))
+        		bandID = Integer.parseInt(request.getParameter("bands"));
         	
         	if(request.getParameter("fromYear")!=null || request.getParameter("fromMonth")!=null || request.getParameter("fromDay")!=null){
         		fromTime = new Timestamp(1, 1, 1, 0, 0, 0, 0);
@@ -117,8 +115,8 @@ public class TimeslotViewInLinesServlet extends HttpServlet {
         	
         	
         	//save chosen attributes
-        	request.setAttribute("prevStage", stageName);
-        	request.setAttribute("prevBand", bandName);
+        	request.setAttribute("prevStage", stageID);
+        	request.setAttribute("prevBand", bandID);
         	request.setAttribute("prevFromYear", fromYear);
         	request.setAttribute("prevTillYear", tillYear);
         	request.setAttribute("prevFromMonth", fromMonth);
@@ -132,7 +130,7 @@ public class TimeslotViewInLinesServlet extends HttpServlet {
     		request.setAttribute("error", e.toString() + e.getMessage());
     	}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/TimeslotViewInLines.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/TimeslotSearch.jsp");
 		dispatcher.forward(request, response);
 		
 		

@@ -1,14 +1,11 @@
+
 package tum.in.dbpra.dao;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.ServletException;
 
 import tum.in.dbpra.bean.VisitorBean;
 import tum.in.dbpra.dbutils.PGUtils;
@@ -21,21 +18,21 @@ public class VisitorDAO {
 
 	public List<VisitorBean> getVisitors(String username, String password) {
 		List<VisitorBean> visitorList = new ArrayList<VisitorBean>();
-
+		
+		
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
 
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchVisitor);
+			preparedStatement = connection.prepareStatement(PGUtils.fetchVisitor);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				do {
-					// System.out.println("orders");
+					//System.out.println("orders");
 					visitorBean = new VisitorBean();
 					visitorBean.setVisitorId(resultSet.getInt(1));
 					visitorBean.setFirstName(resultSet.getString(2));
@@ -60,5 +57,5 @@ public class VisitorDAO {
 		}
 		return visitorList;
 	}
-
+	
 }

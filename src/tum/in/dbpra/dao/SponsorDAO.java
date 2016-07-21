@@ -11,9 +11,11 @@ import java.util.Date;
 import java.util.List;
 
 import tum.in.dbpra.bean.SponsorBean;
-import tum.in.dbpra.dbutils.PGUtils;
+
+//import tum.in.dbpra.dbutils.PGUtils;
 
 public class SponsorDAO extends DAO {
+
 	public void submitSponsorApp(SponsorBean sponsor, String comment) {
 		String getAppId = "select max(applicationid) from application";
 		String insertSponsor = "insert into sponsor values (?, ?, ?)";
@@ -23,7 +25,8 @@ public class SponsorDAO extends DAO {
 		Statement stmt;
 		ResultSet rs;
 		try {
-			con = PGUtils.createConnection();
+			// con = PGUtils.createConnection();
+			con = getConnection();
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(getAppId);
@@ -50,11 +53,20 @@ public class SponsorDAO extends DAO {
 			con.commit();
 			psSponsor.close();
 			psApp.close();
-			PGUtils.closeConnection(con);
+			// PGUtils.closeConnection(con);
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * this function returns all the name, type and sponsorship of all sponsor.
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 
 	public ArrayList<SponsorBean> getAllSponsor() throws SQLException,
 			ClassNotFoundException {
@@ -87,7 +99,6 @@ public class SponsorDAO extends DAO {
 
 			sponsors.add(sponsor);
 		}
-
 		// close everything
 		rs.close();
 		pstmt.close();

@@ -71,7 +71,7 @@
 								<input type="submit" value="Assign Timeslots" name="manageBands">
 							</p>
 						</form>
-						<form action="timeslotviewinlines">
+						<form action="timeslotsearch">
 							<p>
 								<input type="submit" value="View Timeslots" name="manageBands">
 							</p>

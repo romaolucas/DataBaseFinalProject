@@ -13,12 +13,16 @@ public class FestivalDAO extends DAO {
 			throws FestivalNotFoundException, SQLException,
 			ClassNotFoundException {
 
+		//query
 		String query = "SELECT * FROM festival;";
 
+		//set connection
 		Connection con = getConnection();
 
+		//set PS
 		PreparedStatement pstmt = con.prepareStatement(query);
 
+		//retrieve results of the query
 		ResultSet rs = pstmt.executeQuery();
 
 		if (rs.next()) {
@@ -32,6 +36,7 @@ public class FestivalDAO extends DAO {
 			throw new FestivalNotFoundException("There is no Festval in db!");
 		}
 
+		//close everything
 		rs.close();
 		pstmt.close();
 		con.close();

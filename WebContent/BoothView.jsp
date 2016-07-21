@@ -7,6 +7,10 @@
 <script language="JavaScript" type="text/javascript">
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
 <title>Part</title>
 </head>
 <body>

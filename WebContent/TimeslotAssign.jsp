@@ -5,12 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Part</title>
+<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
+<title>Timeslot assignment</title>
 </head>
 <body>
 
 	<% if (request.getAttribute("error") != null) { %>
-	<h1>Band not found!</h1>
+	<h1>Try again!</h1>
 	<%= request.getAttribute("error") %>
 	<% }
 	else  {
@@ -48,12 +52,12 @@
 			}	
 		
 		//set previously choosen attributes(if they exist)
-		String prevStage = "";
-		if(pageContext.findAttribute("prevStage")!= null && ((String)pageContext.findAttribute("prevStage")).length() != 0)
-			prevStage = (String)pageContext.findAttribute("prevStage");
-		String prevBand = "";
-		if(pageContext.findAttribute("prevBand")!= null && ((String)pageContext.findAttribute("prevBand")).length() != 0)
-			prevBand = (String)pageContext.findAttribute("prevBand");%>
+		Integer prevStage = null;
+		if(pageContext.findAttribute("prevStage")!= null)
+			prevStage = Integer.parseInt(pageContext.findAttribute("prevStage").toString());
+		Integer prevBand = null;
+		if(pageContext.findAttribute("prevBand")!= null)
+			prevBand = Integer.parseInt(pageContext.findAttribute("prevBand").toString());%>
 		
 	
 	  <form name="timeslotform" method="post">
@@ -68,15 +72,17 @@
 			  <tr>
 					<td>
 						<select name="bands">
-							<% for (BandBean band: bands){ %>
-							 <option <% if(prevBand.equals(band.getName())){ %>selected<% }%> value="<%=band.getName()%>"><%=band.getName()%></option>
+							<% //create drop down menu for Bands
+							for (BandBean band: bands){ %>
+							 <option <% if(prevBand==band.getpID()){ %>selected<% }%> value="<%=band.getpID()%>"><%=band.getName()%></option>
 			        		<% } %>
 				        </select>
 					</td>
 					<td>
 						<select name="stages" onChange = "timeslotform.submit();">
-							<% for (StageBean stage: stages){ %>
-							 <option <% if(prevStage.equals(stage.getName())){ %>selected<% }%> value="<%=stage.getName()%>"><%=stage.getName()%></option>
+							<%  //create drop down menu for Stages
+							for (StageBean stage: stages){ %>
+							 <option <% if(prevStage==stage.getSectionID()){ %>selected<% }%> value="<%=stage.getSectionID()%>"><%=stage.getName()%></option>
 			        		<% } %>
 				        </select>
 					</td>
@@ -84,13 +90,16 @@
 						<table border="1">
 							<tr>
 								<td></td>
-								<%for (int i = festival.getStartDate().getDate(); i <= festival.getEndDate().getDate(); i++){%>
+								<% //show festival dates
+								for (int i = festival.getStartDate().getDate(); i <= festival.getEndDate().getDate(); i++){%>
 									<td><%=i%> <%=Month.values()[startMonth-1]%></td><%}%>
 							</tr>
-						<%for (int i = festival.getStartTime().getHours(); i <= festival.getEndTime().getHours() - 1; i++) {%>
+						<%//show festival hours
+						for (int i = festival.getStartTime().getHours(); i <= festival.getEndTime().getHours() - 1; i++) {%>
 							<tr>
 								<td><%=i%>:00</td>
-								<%for (int j = festival.getStartDate().getDate(); j <= festival.getEndDate().getDate(); j++) {%>
+								<%//show checkbox for each possible timeslot
+								for (int j = festival.getStartDate().getDate(); j <= festival.getEndDate().getDate(); j++) {%>
 								<td><input type="checkbox" <%if (booked[i][j]) {%> disabled <%}%> name="timecell" value="<%=i%>_<%=j%>"></td><%}%>
 							</tr>
 						<%}%>
@@ -101,21 +110,17 @@
 		<%}%>
 		        
 		</table>
-		
+		<%//Submit button%>
 		<input type="submit" value="Assign" name="Assign"/>
-		
+		<% //button for navigation to "Search timeslot" page%>
 		</form>
-						<form action="timeslotviewinlines">
+						<form action="timeslotsearch">
 						<p>
-							<input type="submit" value="View All" name="viewall">
+							<input type="submit" value="Search Timeslot" name="viewall">
 						</p>
 						</form>
-						
-						<form>
-    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
-						</form>
-		
-      </form>
+					
+     	</form>
 	
        
         

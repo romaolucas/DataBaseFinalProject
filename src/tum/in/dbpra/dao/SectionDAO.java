@@ -15,7 +15,7 @@ public class SectionDAO extends DAO {
 			SQLException {
 		List<String> allSectionName = new ArrayList<String>();
 
-		String query = "SELECT name FROM section;";
+		String query = "SELECT name FROM section order by name;";
 
 		Connection con = getConnection();
 
@@ -29,8 +29,8 @@ public class SectionDAO extends DAO {
 		return allSectionName;
 	}
 
-	public int getSectionIdByName(String name) throws ClassNotFoundException,
-			SQLException {
+	public int getSectionIdByName(String name) throws SectionNotFoundException,
+			ClassNotFoundException, SQLException {
 		int id = 0;
 
 		String query = "SELECT sectionid FROM section WHERE name=?;";
@@ -40,6 +40,8 @@ public class SectionDAO extends DAO {
 		ResultSet resultSet = preparedStmt.executeQuery();
 		if (resultSet.next()) {
 			id = resultSet.getInt("sectionid");
+		} else {
+			throw new SectionNotFoundException("Section not found");
 		}
 		resultSet.close();
 		preparedStmt.close();
@@ -49,4 +51,14 @@ public class SectionDAO extends DAO {
 
 	}
 
+	public static class SectionNotFoundException extends Throwable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		SectionNotFoundException(String message) {
+			super(message);
+		}
+	}
 }

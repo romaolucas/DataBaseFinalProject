@@ -12,17 +12,20 @@ import tum.in.dbpra.bean.SponsorBean;
 public class BoothDAO extends DAO{
 	public ArrayList<BoothBean> getFreeBoothes() throws SQLException, ClassNotFoundException {
 		
+		//create customized query
 		String query = "SELECT * FROM booth b " +
 				"	INNER JOIN section s ON b.sectionID=s.sectionID " +
 				"	FULL OUTER JOIN representation a ON b.sectionID = a.sectionID" +
 				"	WHERE a.pid is null;";
 		
+		//set connection
 		Connection con = getConnection();
 		
+		//set Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
 				
+		//retrieve results of query
 		ResultSet rs = pstmt.executeQuery();
-		
 		ArrayList<BoothBean> boothes = new ArrayList<BoothBean>();
 		
 		while(rs.next()) {
@@ -38,6 +41,7 @@ public class BoothDAO extends DAO{
 			boothes.add(booth);
 		}
 		
+		//close everything
 		rs.close();
 		pstmt.close();
 		con.close();
@@ -48,35 +52,55 @@ public class BoothDAO extends DAO{
 
 	public Boolean assignBooth(SponsorBean sponsor, BoothBean booth) throws SQLException, ClassNotFoundException{
 
+		//variable to check is query successfully executed
+		Integer affectedRowCount = 0;
+		
+		//create customized query
 		String query = "INSERT INTO representation (pid, sectionid) VALUES (?, ?);";
 		
+		//set connection
 		Connection con = getConnection();
+		con.setAutoCommit(false);
 		
+		//set variables to Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
-		
 		pstmt.setInt(1, sponsor.getId());
 		pstmt.setInt(2, booth.getSectionID());
 		
+		//try to execute the query
+		try{
+			affectedRowCount = pstmt.executeUpdate();
+		}
+		catch(Exception e){}
 		
-		Integer effectedRowCount = pstmt.executeUpdate();
+		//if query is successful commit it, otherwise rollback it
+		if (affectedRowCount > 0) {
+			con.commit();
+		} else {
+			con.rollback();
+		}
 		
+		//close everything
 		pstmt.close();
 		con.close();
 		
-		if (effectedRowCount>0) return true;
+		if (affectedRowCount>0) return true;
 		return false;
 	}	
 
 	public ArrayList<BoothBean> getAllBoothes() throws SQLException, ClassNotFoundException {
 		
+		//create customized query
 		String query = "SELECT * FROM booth b INNER JOIN section s ON b.sectionID=s.sectionID FULL OUTER JOIN representation a ON b.sectionID = a.sectionID;";
 		
+		//set connection
 		Connection con = getConnection();
 		
+		//set variables to Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
 				
+		//retrieve results of query
 		ResultSet rs = pstmt.executeQuery();
-		
 		ArrayList<BoothBean> boothes = new ArrayList<BoothBean>();
 		
 		while(rs.next()) {
@@ -93,6 +117,7 @@ public class BoothDAO extends DAO{
 			boothes.add(booth);
 		}
 		
+		//close everything
 		rs.close();
 		pstmt.close();
 		con.close();

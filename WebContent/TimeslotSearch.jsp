@@ -6,12 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Part</title>
+<span class="right"> <a href="welcomeOrganizer.jsp "> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
+<title>Timeslot search</title>
 </head>
 <body>
 
 	<% if (request.getAttribute("error") != null) { %>
-		<h1>Band not found!</h1> <%= request.getAttribute("error") %><% }
+		<h1>Timeslots are not found!</h1> <%= request.getAttribute("error") %><% }
 	else  {
 		
 		//retrieve Festival from db to fill From Date and Till Date drop down menus
@@ -41,12 +45,12 @@
 			timeslots = (List<TimeslotBean>)pageContext.findAttribute("timeslots");
 		
 		//set previously choosen attributes(if they exist)
-		String prevStage = "";
-		if(pageContext.findAttribute("prevStage")!= null && ((String)pageContext.findAttribute("prevStage")).length() != 0)
-			prevStage = (String)pageContext.findAttribute("prevStage");
-		String prevBand = "";
-		if(pageContext.findAttribute("prevBand")!= null && ((String)pageContext.findAttribute("prevBand")).length() != 0)
-			prevBand = (String)pageContext.findAttribute("prevBand");
+		Integer prevStage = null;
+		if(pageContext.findAttribute("prevStage")!= null)
+			prevStage = Integer.parseInt(pageContext.findAttribute("prevStage").toString());
+		Integer prevBand = null;
+		if(pageContext.findAttribute("prevBand")!= null)
+			prevBand = Integer.parseInt(pageContext.findAttribute("prevBand").toString());
 		Integer prevFromYear = 1;
 		if(pageContext.findAttribute("prevFromYear")!= null)
 			prevFromYear = (Integer)pageContext.findAttribute("prevFromYear");
@@ -68,22 +72,26 @@
 		
 		%>
 		<form name="timeslotviewform" method="post">
+		<% //drop down menu for Bands %>
 		Bands:
 			 <select name="bands" onChange = "timeslotviewform.submit();">
 			 	<option value="any">Any</option>
 				<% for (BandBean band: bands){ %>
-					<option <% if(prevBand.equals(band.getName())){ %>selected<% }%> value="<%=band.getName()%>"><%=band.getName()%></option>
+					<option <% if(prevBand==band.getpID()){ %>selected<% }%> value="<%=band.getpID()%>"><%=band.getName()%></option>
 			    <% } %>
 		    </select>
 			  		
+		<% //drop down menu for Stages %>
 		Stages:
 			<select name="stages" onChange = "timeslotviewform.submit();">
 				<option value="any">Any</option>
 				<% for (StageBean stage: stages){ %>
-					 <option <% if(prevStage.equals(stage.getName())){ %>selected<% }%> value="<%=stage.getName()%>"><%=stage.getName()%></option>
+					 <option <% if(prevStage==stage.getSectionID()){ %>selected<% }%> value="<%=stage.getSectionID()%>"><%=stage.getName()%></option>
 	       		<% } %>
 			 </select>
 		<br>
+		
+		<% //drop down menu for FROM year, month, day %>
 		From:
 			<select name="fromYear" onChange = "timeslotviewform.submit();">
 				<% for (int i=startYear; i<=endYear; i++){ %>
@@ -93,21 +101,7 @@
 			 <select name="fromMonth" onChange = "timeslotviewform.submit();">
 				<% 	Integer currStartMonth = 1;//startMonth;
 					Integer currEndMonth = 12;//endMonth;
-					/*
-					if(request.getParameter("fromYear")!=null)
-						if(Integer.parseInt(request.getParameter("fromYear"))==endYear)
-							{if(startYear!=endYear) currStartMonth = 1;}
-						else
-							if(Integer.parseInt(request.getParameter("fromYear"))==startYear)
-							{}
-							else currStartMonth = 1;
-					
-					if(request.getParameter("fromYear")==null || (request.getParameter("fromYear")!=null && Integer.parseInt(request.getParameter("fromYear"))==startYear))
-						{if(startYear!=endYear) currEndMonth = 12;}
-					else
-						if(request.getParameter("fromYear")!=null && Integer.parseInt(request.getParameter("fromYear"))==endYear){}
-						else currEndMonth = 12;								
-					*/
+
 					for (int i=currStartMonth; i<=currEndMonth; i++){ %>
 					
 					 <option <% if(prevFromMonth==i){ %>selected<% }%> value="<%=i%>"><%=Month.values()[i-1]%></option>
@@ -115,11 +109,6 @@
 			 </select>
 			 <select name="fromDay" onChange = "timeslotviewform.submit();">
 				<% 	Integer currStartDay = 1;//startDay;
-					/*
-					if(request.getParameter("fromYear")!=null || request.getParameter("fromMonth")!=null)
-						if(Integer.parseInt(request.getParameter("fromYear"))!=startYear || Integer.parseInt(request.getParameter("fromMonth"))!=startMonth)
-							currStartDay = 1;
-					*/
 					Integer currEndDay = 30;//endDay;
 					
 					if(request.getParameter("fromMonth")!=null)
@@ -151,6 +140,8 @@
 	       		<% } %>
 			 </select>
 		<br>	 
+		
+		<% //drop down menu for TILL year, month, day %>
 		Till:
 			<select name="tillYear" onChange = "timeslotviewform.submit();">
 				<% for (int i=startYear; i<=endYear; i++){ %>
@@ -158,24 +149,7 @@
 	       		<% } %>
 			</select>	
 			<select name="tillMonth" onChange = "timeslotviewform.submit();">
-				<% 	/*currStartMonth = startMonth;
-					currEndMonth = endMonth;
-					
-					if(request.getParameter("tillYear")!=null)
-						if(Integer.parseInt(request.getParameter("tillYear"))==endYear)
-							{if(startYear!=endYear) currStartMonth = 1;}
-						else
-							if(Integer.parseInt(request.getParameter("tillYear"))==startYear)
-							{}
-							else currStartMonth = 1;
-					
-					if(request.getParameter("tillYear")==null || (request.getParameter("tillYear")!=null && Integer.parseInt(request.getParameter("tillYear"))==startYear))
-						{if(startYear!=endYear) currEndMonth = 12;}
-					else
-						if(request.getParameter("tillYear")!=null && Integer.parseInt(request.getParameter("tillYear"))==endYear){}
-						else currEndMonth = 12;		*/
-						
-						currStartMonth = 1;
+				<% 		currStartMonth = 1;
 						currEndMonth = 12;
 					
 					for (int i=currStartMonth; i<=currEndMonth; i++){ %>
@@ -218,21 +192,22 @@
 	       		<% } %>
 			 </select>
 		 
-		
+	<%//interface of table %>	
 	<table border="1">
 	  <input type="hidden" name="timeslot_column_sort" />
 		<!-- Headings of table -->
 		<tr>
-				<td> <a href="javascript:getColumn('retailprice')">Date</a></td>
-				<td> <a href="javascript:getColumn('partkey')">Time to Build Up</a></td>
-				<td> <a href="javascript:getColumn('name')">Time to Play</a></td>
-				<td> <a href="javascript:getColumn('type')">Type to Finish</a></td>
-				<td> <a href="javascript:getColumn('size')">Time to Gone</a></td>
-				<td> <a href="javascript:getColumn('retailprice')">Band</a></td>
-				<td> <a href="javascript:getColumn('retailprice')">Stage</a></td>
+				<td> Date </td>
+				<td> Time to Build Up </td>
+				<td> Time to Play </td>
+				<td> Type to Finish </td>
+				<td> Time to Gone </td>
+				<td> Band </td>
+				<td> Stage </td>
 		</tr>
 		<%
-	    
+		
+	    //timeslots themselfs
 		for (TimeslotBean timeslot: timeslots){%>
 	 	<tr>
 			<td>
@@ -264,15 +239,13 @@
 	
         	<% } %>
 	 </table>
+	 
+	 <% //button to navigate to "Assign Timeslot page"%>
 	 </form>
 	 					<form action="timeslotAssign">
 						<p>
 							<input type="submit" value="Assign New" name="viewall">
 						</p>
-						</form>
-						
-						<form>
-    					<input type="button" value="Back" name="back" onClick="javascript:history.back(1)">
 						</form>
 	  </form>	
 	

@@ -1,0 +1,40 @@
+			//set values for Band drop down
+			BandDAO bandDao = new BandDAO();
+        	ArrayList<BandBean> bands = bandDao.getAllBands();
+        	request.setAttribute("bands", bands);
+        	
+        
+        	//set values for Stage drop down
+        	StageDAO stageDao = new StageDAO();
+        	ArrayList<StageBean> stages = stageDao.getAllStages();
+        	request.setAttribute("stages", stages);
+        	
+        	
+        	//retrieve data about Festival(dates)
+        	FestivalDAO festivalDAO = new FestivalDAO();
+        	FestivalBean festivalBean = new FestivalBean();
+        	festivalDAO.getAllData(festivalBean);
+        	request.setAttribute("festival", festivalBean);
+        	
+        	
+        	//collect information about needed timeslots
+        	Integer stageID = stages.get(0).getSectionID();
+        	Integer bandID = bands.get(0).getpID();
+        	//System.out.println(bandID+" "+stageID);
+        	
+        	//find needed timeslots
+        	TimeslotDAO timeslotDao = new TimeslotDAO();
+        	TimeslotBean timeslotBean = new TimeslotBean();
+        	timeslotBean.setSectionID(stageID);
+        	ArrayList<TimeslotBean> timeslots = timeslotDao.getTimeSlotsByStage(stageID);
+        	request.setAttribute("bookedTimeslots", timeslots);
+        	
+        	
+    	} catch (Throwable e) {
+    		e.printStackTrace();
+    		request.setAttribute("error", e.toString() + e.getMessage());
+    	}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/TimeslotAssign.jsp");
+		dispatcher.forward(request, response);
+		

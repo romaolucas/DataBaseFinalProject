@@ -5,14 +5,6 @@ public class SponsorBean extends ProviderBean {
 	private double amount;
 	private String type;
 	
-	/*private Integer pID;
-	private String name;
-	private String phoneNumber;
-	private String website;
-	private String address;
-	private String email;
-	private String password;*/
-
 	public SponsorBean() {
 		super();
 	}

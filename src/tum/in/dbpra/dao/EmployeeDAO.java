@@ -15,7 +15,7 @@ public class EmployeeDAO extends DAO {
 			SQLException {
 		List<String> allEmployeeName = new ArrayList<String>();
 
-		String query = "SELECT firstname, lastname FROM employee;";
+		String query = "SELECT firstname, lastname FROM employee order by firstname;";
 		Connection con = getConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		ResultSet resultSet = preparedStmt.executeQuery();

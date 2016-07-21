@@ -37,12 +37,14 @@ public class BoothToSponsorServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-        	BoothDAO boothDAO = new BoothDAO();
+			//set values for Booth drop down
+		    BoothDAO boothDAO = new BoothDAO();
         	ArrayList<BoothBean> boothes = boothDAO.getFreeBoothes();
         	request.setAttribute("boothes", boothes);
         	
+        	//set values for Sponsor drop down
         	SponsorDAO sponsorDAO = new SponsorDAO();
-        	ArrayList<SponsorBean> sponsors = sponsorDAO.getAllSponsors();
+        	ArrayList<SponsorBean> sponsors = sponsorDAO.getAllSponsor();
         	request.setAttribute("sponsors", sponsors);
     	
     	} catch (Throwable e) {
@@ -59,14 +61,17 @@ public class BoothToSponsorServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-        	BoothDAO boothDAO = new BoothDAO();
+			//set values for Booth drop down
+			BoothDAO boothDAO = new BoothDAO();
         	BoothBean booth = new BoothBean();
         	booth.setSectionID(Integer.parseInt(request.getParameter("boothes")));
         	
+        	//set values for Sponsor drop down
         	SponsorDAO sponsorDAO = new SponsorDAO();
         	SponsorBean sponsor = new SponsorBean();
         	sponsor.setId(Integer.parseInt(request.getParameter("sponsors")));
         
+        	//assign Booth to sponsor
         	if(boothDAO.assignBooth(sponsor, booth))
         		JOptionPane.showMessageDialog(null, "Booth was successfully assigned to chosen Sponsor!");
         	else JOptionPane.showMessageDialog(null, "Unfortunately booth can't be assigned to chosen Sponsor!");

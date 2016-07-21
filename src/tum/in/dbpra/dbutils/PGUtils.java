@@ -22,12 +22,12 @@ public class PGUtils {
 	public static final String fetchRoomDetails = "	select a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,r.checkindate,r.checkoutdate"
 			+ " from Reservation as r,Accommodation as a	where r.VisitorID=? and r.roomid=a.roomid";
 
-	public static final String fetchRoomByCapasity = "with CurrentReservation(roomid,checkindate,checkoutdate) as "
+	public static final String fetchRoomByCapacity = "with CurrentReservation(roomid,checkindate,checkoutdate) as "
 			+ "(select roomid,checkindate,checkoutdate from reservation where checkoutdate>now())"
 			+ "  SELECT a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,cr.checkindate,cr.checkoutdate "
 			+ "FROM accommodation as a LEFT OUTER JOIN CurrentReservation as cr ON (a.roomid = cr.roomid) where a.capacity=?";
 
-	public static final String fetchTicketCagory = "select * from ticketcategory order by price";
+	public static final String fetchTicketCategory = "select * from ticketcategory order by price";
 	public static final String fetchRFIDDetails = "select w.status,w.balance,w.activationtime,w.rfid from wristband as w where w.rfid in (select rfid from ticket where visitorid =? ) and w.status=true";
 	public static final String fetchTicketByVisitor = "select t.ticketid,tc.name,t.purchasedate,tc.price,t.activationTime from ticketcategory as tc,ticket as t where t.visitorid=? and tc.categoryid=t.categoryid";
 	public static final String insertIntoTicket = "insert into ticket(ticketid,visitorid,rfid,categoryid,purchasedate) values ((select max(ticketid) from ticket)+1,?,?,?,now())";

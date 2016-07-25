@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import tum.in.dbpra.bean.TimeslotBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 public class TimeslotDAO extends DAO {
 	
@@ -20,7 +21,7 @@ public class TimeslotDAO extends DAO {
 		
 		//declare variables
 		Integer insertions = 0;
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		con.setAutoCommit(false);
 		PreparedStatement pstmt = null;
 		TimeslotBean timeslot = null;
@@ -100,7 +101,7 @@ public class TimeslotDAO extends DAO {
 		String query = "SELECT * FROM timeslot WHERE sectionID = ?;";
 
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		
 		//set variables to Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
@@ -169,7 +170,7 @@ public class TimeslotDAO extends DAO {
 		}
 		
 		//set connection
-		Connection conn = getConnection();
+		Connection conn = PGUtils.createConnection();
 		
 		//set variables to Prepared Statement
 		PreparedStatement pstmt = conn.prepareStatement(query);

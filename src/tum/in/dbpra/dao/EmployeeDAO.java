@@ -16,7 +16,7 @@ public class EmployeeDAO extends DAO {
 		List<String> allEmployeeName = new ArrayList<String>();
 
 		String query = "SELECT firstname, lastname FROM employee order by firstname;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		ResultSet resultSet = preparedStmt.executeQuery();
 
@@ -51,7 +51,7 @@ public class EmployeeDAO extends DAO {
 		String lastname = names[1]; // lastname
 
 		String query = "SELECT eid FROM employee WHERE firstname=? AND lastname=?;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, firstname);
 		preparedStmt.setString(2, lastname);

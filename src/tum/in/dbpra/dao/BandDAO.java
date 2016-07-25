@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import tum.in.dbpra.bean.BandBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 
 public class BandDAO extends DAO {
@@ -16,7 +17,8 @@ public class BandDAO extends DAO {
 		String query = "SELECT * FROM Band b,Provider p WHERE b.pID = p.pID;";
 
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
+
 
 		//set Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);

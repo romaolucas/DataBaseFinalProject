@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import tum.in.dbpra.bean.StageBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 
 public class StageDAO extends DAO {
@@ -15,7 +16,7 @@ public class StageDAO extends DAO {
 
 		String query = "SELECT * FROM Stage st, Section se WHERE st.sectionID=se.sectionID;";
 
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		PreparedStatement pstmt = con.prepareStatement(query);
 

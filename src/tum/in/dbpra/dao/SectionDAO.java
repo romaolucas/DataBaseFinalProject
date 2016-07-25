@@ -17,7 +17,7 @@ public class SectionDAO extends DAO {
 
 		String query = "SELECT name FROM section order by name;";
 
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		ResultSet resultSet = preparedStmt.executeQuery();
@@ -34,7 +34,7 @@ public class SectionDAO extends DAO {
 		int id = 0;
 
 		String query = "SELECT sectionid FROM section WHERE name=?;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, name);
 		ResultSet resultSet = preparedStmt.executeQuery();

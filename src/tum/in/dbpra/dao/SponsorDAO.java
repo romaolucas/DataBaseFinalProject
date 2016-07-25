@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import tum.in.dbpra.bean.SponsorBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 //import tum.in.dbpra.dbutils.PGUtils;
 
@@ -25,8 +26,7 @@ public class SponsorDAO extends DAO {
 		Statement stmt;
 		ResultSet rs;
 		try {
-			// con = PGUtils.createConnection();
-			con = getConnection();
+			con = PGUtils.createConnection();
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(getAppId);
@@ -75,8 +75,7 @@ public class SponsorDAO extends DAO {
 		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
 
 		// set connection
-		// Connection con = PGUtils.createConnection();
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		// set PS
 		PreparedStatement pstmt = con.prepareStatement(query);

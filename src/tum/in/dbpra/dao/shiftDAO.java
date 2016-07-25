@@ -33,7 +33,7 @@ public class shiftDAO extends DAO {
 
 		// query = "SELECT * FROM shift;";
 		String query = "SELECT section.name, employee.firstname, employee.lastname, shift.starttime, shift.endtime, shift.task FROM section, shift, employee WHERE section.sectionid = shift.sectionid AND employee.eid = shift.eid;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		ResultSet resultSet = preparedStmt.executeQuery();
 
@@ -71,7 +71,7 @@ public class shiftDAO extends DAO {
 		int rowChanged = 0;
 		boolean add = true;
 		boolean isOverlaping = false;
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		con.setAutoCommit(false);
 		String query = "select * from shift"
 				+ " where eid=? order by starttime;";
@@ -160,7 +160,7 @@ public class shiftDAO extends DAO {
 
 		String query = "SELECT section.name, employee.firstname, employee.lastname, shift.starttime, shift.endtime, shift.task FROM section, shift, employee WHERE section.sectionid = shift.sectionid AND shift.sectionid = ? AND employee.eid = shift.eid;";
 		System.out.println("QUERY: " + query);
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setInt(1, sectionID);
 		ResultSet resultSet = preparedStmt.executeQuery();
@@ -199,7 +199,7 @@ public class shiftDAO extends DAO {
 
 		String query = "SELECT section.name, employee.firstname, employee.lastname, shift.starttime, shift.endtime, shift.task FROM section, shift, employee WHERE section.sectionid = shift.sectionid AND shift.starttime = ? AND employee.eid = shift.eid;";
 
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setTimestamp(1, starttime);
 		ResultSet resultSet = preparedStmt.executeQuery();
@@ -238,7 +238,7 @@ public class shiftDAO extends DAO {
 				+ "FROM section, employee, shift "
 				+ "WHERE section.sectionid = shift.sectionid AND employee.eid = shift.eid "
 				+ "AND employee.firstname=? " + "AND employee.lastname=?;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		String[] names = name.split(" ");
 		String firstname = names[0];
@@ -279,7 +279,7 @@ public class shiftDAO extends DAO {
 				+ "FROM section, shift, employee "
 				+ "WHERE section.sectionid = shift.sectionid AND employee.eid = shift.eid "
 				+ "AND LOWER(shift.task) LIKE LOWER(?);";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, "%" + name + "%");
 

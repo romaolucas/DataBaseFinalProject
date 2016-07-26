@@ -21,7 +21,8 @@ public class BandDAOProvider {
 		Statement stmt;
 		ResultSet rs;
 		try {
-			con = PGUtils.createConnection();
+			//creates connection to the database
+            con = PGUtils.createConnection();
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(getAppId);
@@ -30,12 +31,14 @@ public class BandDAOProvider {
 				applicationid = Integer.parseInt(rs.getString("max")) + 1;
 			rs.close();
 			stmt.close();
+            //inserts the band
 			psBand = con.prepareStatement(insertBand);
 			psBand.setInt(1, band.getId());
 			psBand.setString(2, band.getStyle());
 			psBand.setDouble(3, band.getCharge());
 			psBand.setString(4, band.getCountry());
 			psBand.executeUpdate();
+            //inserts the application, by default its status is in process
 			psApp = con.prepareStatement(insertApplication);
 			psApp.setInt(1, applicationid);
 			psApp.setInt(2, band.getId());

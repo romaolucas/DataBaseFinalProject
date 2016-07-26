@@ -63,6 +63,7 @@ public class ProviderLoginServlet extends HttpServlet {
 						.hasApplication(providerList.get(0));
 				request.setAttribute("providers", providerList);
 				request.setAttribute("application", hasApplication);
+                //creates the session for the user
 				HttpSession session = request.getSession();
 				session.setAttribute("email", providerList.get(0).getEmail());
 				session.setMaxInactiveInterval(60 * 60);
@@ -76,6 +77,7 @@ public class ProviderLoginServlet extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 
 		}
+        //checks whether the login was successfull or not
 		request.setAttribute("loginStatus", loginSuccessful);
 		if (loginSuccessful) {
 			RequestDispatcher dispatcher = request

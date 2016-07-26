@@ -54,7 +54,8 @@ public class AddProductServlet extends HttpServlet {
 		ProductBean product = new ProductBean(name, price, category, quantity);
 		ProductDAO dao = new ProductDAO();
 		dao.addProduct(pid, product);
-		List<ProductBean> products = dao.getProducts(pid);
+		//updates the list of products
+        List<ProductBean> products = dao.getProducts(pid);
 		request.setAttribute("products", products);
 		request.setAttribute("pid", pid);
 		RequestDispatcher dispatcher = request

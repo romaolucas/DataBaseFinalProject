@@ -37,8 +37,6 @@ public class ProductManagement extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Logger log = Logger.getLogger(ProductManagement.class);
-		log.info("here in prod management");
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		ProductDAO dao = new ProductDAO();
 		List<ProductBean> products = dao.getProducts(pid);
@@ -61,7 +59,8 @@ public class ProductManagement extends HttpServlet {
 		String name = request.getParameter("name");
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		ProductDAO dao = new ProductDAO();
+		// updates the product and get a new list of products
+        ProductDAO dao = new ProductDAO();
 		boolean wasUpdated = dao.updateProduct(email, name, quantity);
 		List<ProductBean> products = dao.getProducts(pid);
 		request.setAttribute("products", products);

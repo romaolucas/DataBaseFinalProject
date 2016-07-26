@@ -25,10 +25,10 @@ public class TimetableDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchTimeslot ="select b.pid, p.name, b.style, b.country, b.charge, s.sectionid, t.timebuildup, t.timeplay, t.timefinish, t.timegone from provider p, band b, stage s, timeslot t where b.pid=t.pid and s.sectionid=t.sectionid and p.pid=t.pid";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchTimeslot);
+			preparedStatement = connection.prepareStatement(fetchTimeslot);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
@@ -67,8 +67,8 @@ public class TimetableDAO {
 			try {
 				connection = PGUtils.createConnection();
 				connection.setAutoCommit(false);
-
-				preparedStatement = connection.prepareStatement(PGUtils.insertIntoBandselection);
+				String insertIntoBandselection = "insert into BandSelection (VisitorID, BandID, Name, Style, Country, timeplay, timefinish) values (?,?,?,?,?,?,?)";
+				preparedStatement = connection.prepareStatement(insertIntoBandselection);
 				for(int i=0; i<ID.length; i++){
 					preparedStatement.setInt(1, visitorID);
 					preparedStatement.setInt(2, ttList.get(Integer.parseInt(ID[i])).getId());
@@ -110,8 +110,8 @@ public class TimetableDAO {
 			try {
 				connection = PGUtils.createConnection();
 				connection.setAutoCommit(false);
-
-				preparedStatement = connection.prepareStatement(PGUtils.deleteFromBandselection);
+				String deleteFromBandselection = "delete from bandselection where visitorid = ? and bandid = ?";
+				preparedStatement = connection.prepareStatement(deleteFromBandselection);
 				for(int i=0; i<ID.length; i++){
 					preparedStatement.setInt(1, visitorID);
 					preparedStatement.setInt(2, bsList.get(Integer.parseInt(ID[i])).getBandID());
@@ -144,10 +144,10 @@ public class TimetableDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchBandselection = "select VisitorID, BandID, Name, Style, Country, timeplay, timefinish from Bandselection";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchBandselection);
+			preparedStatement = connection.prepareStatement(fetchBandselection);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

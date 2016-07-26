@@ -20,11 +20,12 @@ public class AccommodationDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchRoomDetails = "	select a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,r.checkindate,r.checkoutdate"
+					+ " from Reservation as r,Accommodation as a	where r.VisitorID=? and r.roomid=a.roomid";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
 			System.out.println("Visitor id:"+visitorID);
-			preparedStatement = connection.prepareStatement(PGUtils.fetchRoomDetails);
+			preparedStatement = connection.prepareStatement(fetchRoomDetails);
 			preparedStatement.setInt(1, visitorID);
 			
 			resultSet = preparedStatement.executeQuery();
@@ -61,8 +62,12 @@ public class AccommodationDAO {
 		List<AccommodationBean> roomList =new ArrayList<AccommodationBean>();
 		try{
 			
+			String fetchRoomByCapacity = "with CurrentReservation(roomid,checkindate,checkoutdate) as "
+					+ "(select roomid,checkindate,checkoutdate from reservation where checkoutdate>now())"
+					+ "  SELECT a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,cr.checkindate,cr.checkoutdate "
+					+ "FROM accommodation as a LEFT OUTER JOIN CurrentReservation as cr ON (a.roomid = cr.roomid) where a.capacity=?";
 			connection=PGUtils.createConnection();
-			preparedStatement=connection.prepareStatement(PGUtils.fetchRoomByCapacity);	
+			preparedStatement=connection.prepareStatement(fetchRoomByCapacity);	
 			preparedStatement.setInt(1, number);
 			resultSet=preparedStatement.executeQuery();
 			while (resultSet.next()){

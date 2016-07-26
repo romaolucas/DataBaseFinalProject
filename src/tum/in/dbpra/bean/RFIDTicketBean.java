@@ -1,7 +1,7 @@
 package tum.in.dbpra.bean;
 
 import java.util.Date;
-
+//Details of RFID
 public class RFIDTicketBean {
 private boolean status;
 private double balance;

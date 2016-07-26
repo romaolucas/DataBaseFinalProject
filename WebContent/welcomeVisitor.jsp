@@ -43,6 +43,8 @@
 <div style="margin-left:25%;padding:1px 16px;height:1000px;"><br><br>
   	<h2 id="home" align="center">Accommodation details of you!</h2><br><br>
   	<%
+  	//Main jsp of visitor,set session and call ddifferent DAO
+  	//to show data,DAO not moved to servlet as it need to change the whole structure
   	String vid=session.getAttribute("visitorid").toString();
   	if(vid!=null){
   		int visitorid=Integer.parseInt(vid); 

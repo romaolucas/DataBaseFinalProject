@@ -29,6 +29,49 @@
 	});
 	</script><link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
 </head>
+<style type="text/css">
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: rgba(26,89,120,0.9);
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+	border:1px solid black;
+}
+
+#cssTable td 
+{
+    text-align:center; 
+    vertical-align:middle;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+</style>
 <body>
 <ul class="box">
 	<li><a class="active" href="#home">View and Manage Rooms</a></li>
@@ -41,9 +84,9 @@
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:1000px;"><br><br>
-  	<h2 id="home" align="center">Accommodation details of you!</h2><br><br>
+  	<h2 id="home" align="center"><b>Accommodation details of you!</b></h2><br><br>
   	<%
-  	//Main jsp of visitor,set session and call ddifferent DAO
+  	//Main jsp of visitor,set session and call different DAO
   	//to show data,DAO not moved to servlet as it need to change the whole structure
   	String vid=session.getAttribute("visitorid").toString();
   	if(vid!=null){
@@ -88,10 +131,10 @@
 		}  %>
 		</table>
 		<br><br>
-		<h1 align="center"> Search room :</h1>
+		<h1 align="center"><b> Search room :</b></h1>
 		<table id="mytab" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">
 			<tr>
-				<td>Search Room by Capacity</td>
+				<td><b>Search Room by Capacity</b></td>
 				<td><form method="post" action="welcomeVisitor.jsp">
 			    	<select name="sell">
 			    		<option value="1">1</option>
@@ -143,7 +186,7 @@
 		}%>       
 		</table><br><br>
 
-		<div><h2 id="viewTickets" align="center">Ticket Details</h2><br><br>
+		<div><h2 id="viewTickets" align="center"><b>Ticket Details</b></h2><br><br>
 		<table id="roomtab" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 			<tr class="tabletitle">
 				<td class="tabletitle">Name</td>
@@ -171,7 +214,7 @@
 	  			<tr><td>** No Ticket found ** </td></tr>      
 	  		<%}%>
 		</table><br><br>
-		<h1 align="center">Buy Ticket</h1><br>
+		<h1 align="center"><b>Buy Ticket</b></h1><br>
 		<table id="buyTicket" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 			<tr class="tabletitle">
 				<form method="post" action="#">
@@ -214,7 +257,7 @@
 	    </table> <br><br><br> 
 		</div>
 
-		<div><h2 id="RFID" align="center">Your Wristband RFID Details</h2><br>
+		<div><h2 id="RFID" align="center"><b>Your Wristband RFID Details</b></h2><br>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 			<tr class="tabletitle">
 				<td class="tabletitle">Status</td>
@@ -254,7 +297,7 @@
 		</table><br><br>
 		</div>
 
-		<div><h2 id="RFID" align="center">Your ticket buying details:</h2>
+		<div><h2 id="RFID" align="center"><b>Your ticket buying details:</b></h2>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 			<tr class="tabletitle">
 				<td class="tabletitle">Ticket No</td>
@@ -282,8 +325,8 @@
 		</table><br><br>
 		</div>
 
-		<div><br><br><h2 id="Shopping" align="center">Your Shopping and Purchase Details</h2><br><br>
-		<h2 id="RFID" align="center">Product List Table</h2>
+		<div><br><br><h2 id="Shopping" align="center"><b>Your Shopping and Purchase Details</b></h2><br><br>
+		<h2 id="RFID" align="center"><b>Product List Table</b></h2>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 		<tr class="tabletitle">
 			<td class="tabletitle">Name</td>
@@ -311,8 +354,8 @@
 		</table><br><br>
 		</div>
 
-		<div><br><br><h2 id="timetable" align="center">Timetable Details</h2><br><br>
-		<h2 id="RFID" align="center">Timetable</h2>
+		<div><br><br><h2 id="timetable" align="center"><b>Timetable Details</b></h2><br><br>
+		<h2 id="RFID" align="center"><b>Timetable</b></h2>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 		<tr class="tabletitle">
 			<td class="tabletitle">ID</td>
@@ -371,8 +414,8 @@
 		
 		
 		</div>
-		<div><br><br><h2 id="timetable" align="center">Customized Timetable</h2><br><br>
-		<h2 id="RFID" align="center">Timetable</h2>
+		<div><br><br><h2 id="timetable" align="center"><b>Customized Timetable</b></h2><br><br>
+		<h2 id="RFID" align="center"><b>Timetable</b></h2>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 		<tr class="tabletitle">
 			<td class="tabletitle">Visitor ID</td>
@@ -429,7 +472,7 @@
 		</table><br><br>
 		</div>
 		
-		<div><br><br><h2 id="activity" align="center">Activity Log</h2><br><br>
+		<div><br><br><h2 id="activity" align="center"><b>Activity Log</b></h2><br><br>
 		<h2 id="RFID" align="center">Log</h2>
 		<table id="rfidStatus" align="center" border="1" width="50%" cellspacing="0" cellpadding="4">  
 		<tr class="tabletitle">
@@ -440,11 +483,11 @@
 		</tr>
 		<%
 		ActivityLogDAO alDAO=new ActivityLogDAO();
-		List<ActivityLogBean> alList = alDAO.getActivityLog();
+		List<ActivityLogBean> alList = alDAO.getActivityLog(visitorid);
 		if(alList!=null){
 			for (int i = 0; i<alList.size(); i++) {%>
 		    <tr>
-		    	<td> <%= alList.get(i).getRfid() %></td>  
+		    	<td> <%= alList.get(i).getRfid() %></td>
 		    	<td> <%= alList.get(i).getStageid() %></td>
 		    	<td> <%= alList.get(i).getEntertime() %></td>
 		    	<td> <%= alList.get(i).getExittime() %></td>

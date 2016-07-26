@@ -1,7 +1,6 @@
 1) Make sure you have an internet connection for index.html to appear properly, since we got the styling from a couple of websites;
 2) Export the dump using: sudo -u USERNAME psql DBNAME < dump_team1.txt
-3) For visitor section, please import table data using .tbl files
-4) Use the following Login-Password pairs for different modes:
+3) Use the following Login-Password pairs for different modes:
 
 Visitors: Ntesla/Mankind
 

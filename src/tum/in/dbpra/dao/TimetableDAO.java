@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-
-import tum.in.dbpra.bean.RFIDTicketBean;
 import tum.in.dbpra.bean.TimetableBean;
 import tum.in.dbpra.bean.BandSelectionBean;
 import tum.in.dbpra.dbutils.PGUtils;
@@ -19,15 +16,14 @@ public class TimetableDAO {
 	TimetableBean ttBean;
 	BandSelectionBean bsBean;
 	Boolean status=false;
-	
+	//Fetch all timetable details
 	public List<TimetableBean> getTimetableDetails(){
 		List<TimetableBean> timetableList =new ArrayList<TimetableBean>();
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Query to fetch all timeslots details
 			String fetchTimeslot ="select b.pid, p.name, b.style, b.country, b.charge, s.sectionid, t.timebuildup, t.timeplay, t.timefinish, t.timegone from provider p, band b, stage s, timeslot t where b.pid=t.pid and s.sectionid=t.sectionid and p.pid=t.pid";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(fetchTimeslot);
 						
 			resultSet = preparedStatement.executeQuery();
@@ -59,7 +55,7 @@ public class TimetableDAO {
 		}
 		return timetableList;		
 	}
-	
+	//Making customized timetable for the logged in visitor
 	public boolean custTimetable(int visitorID, List<TimetableBean> ttList, String[] ID,int noOfSelection){
 		
 		 int updatedRow=0;
@@ -67,6 +63,7 @@ public class TimetableDAO {
 			try {
 				connection = PGUtils.createConnection();
 				connection.setAutoCommit(false);
+				//Query to insert customized data into database
 				String insertIntoBandselection = "insert into BandSelection (VisitorID, BandID, Name, Style, Country, timeplay, timefinish) values (?,?,?,?,?,?,?)";
 				preparedStatement = connection.prepareStatement(insertIntoBandselection);
 				for(int i=0; i<ID.length; i++){
@@ -86,9 +83,6 @@ public class TimetableDAO {
 						}
 				}
 				
-//				for(int i=0;i<noOfSelection;i++){
-//					
-//					}
 				connection.commit();
 				
 				}catch (Exception e) {
@@ -102,7 +96,7 @@ public class TimetableDAO {
 			System.out.println("The value of status:"+status);
 			return status;	
 		}
-	
+	//Function to remove details from customized timetable
 	public boolean delRowTimetable(int visitorID, List<BandSelectionBean> bsList, String[] ID,int noOfSelection){
 		
 		 int updatedRow=0;
@@ -110,6 +104,7 @@ public class TimetableDAO {
 			try {
 				connection = PGUtils.createConnection();
 				connection.setAutoCommit(false);
+				//Query to delete row from customized timetable
 				String deleteFromBandselection = "delete from bandselection where visitorid = ? and bandid = ?";
 				preparedStatement = connection.prepareStatement(deleteFromBandselection);
 				for(int i=0; i<ID.length; i++){
@@ -138,15 +133,14 @@ public class TimetableDAO {
 			return status;	
 		}
 	
-	
+	//Function to display customized timetable 
 	public List<BandSelectionBean> getBandSelection(){
 		List<BandSelectionBean> bandselectionList =new ArrayList<BandSelectionBean>();
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Query to fetch the customized timetable data
 			String fetchBandselection = "select VisitorID, BandID, Name, Style, Country, timeplay, timefinish from Bandselection";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(fetchBandselection);
 						
 			resultSet = preparedStatement.executeQuery();

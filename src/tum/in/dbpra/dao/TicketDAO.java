@@ -21,16 +21,14 @@ public class TicketDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Query to fetch details of all purchased ticket by the logged in visitor
 			String fetchTicketByVisitor = "select t.ticketid,tc.name,t.purchasedate,tc.price,t.activationTime from ticketcategory as tc,ticket as t where t.visitorid=? and tc.categoryid=t.categoryid";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(fetchTicketByVisitor);
 			preparedStatement.setInt(1, visitorID);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				do {
-					//System.out.println("orders");
 					ticketBean = new TicketBean();
 					ticketBean.setTickeID(resultSet.getInt(1));
 					ticketBean.setName(resultSet.getString(2));
@@ -53,7 +51,7 @@ public class TicketDAO {
 		return ticketList;
 		
 	}
-	//buy ticket as per visior input,transaction handled 
+	//buy ticket as per visitor input,transaction handled 
 	public boolean buyTickets(int visitorID,int quantity,int categoryID){
 		
 	 int updatedRow=0;
@@ -61,13 +59,11 @@ public class TicketDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-			
+			//Query to insert purchased ticket details into ticket table
 			String insertIntoTicket = "insert into ticket(ticketid,visitorid,rfid,categoryid,purchasedate) values ((select max(ticketid) from ticket)+1,?,?,?,now())";
 			RFIDTicketDAO RFIDDAO=new RFIDTicketDAO();
 			List<RFIDTicketBean> rfList = RFIDDAO.getRFIDDetails(visitorID);
 			int rfid=rfList.get(0).getRfid();
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(insertIntoTicket);
 			preparedStatement.setInt(1, visitorID);
 			preparedStatement.setInt(2, rfid);

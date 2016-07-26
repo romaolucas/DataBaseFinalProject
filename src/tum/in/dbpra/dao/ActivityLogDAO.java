@@ -15,16 +15,15 @@ public class ActivityLogDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	ActivityLogBean activityLogBean;
-         //show activity 
-	public List<ActivityLogBean> getActivityLog() {
+    //show activity of logged in visitor
+	public List<ActivityLogBean> getActivityLog(int visitorID) {
 		List<ActivityLogBean> visitorList = new ArrayList<ActivityLogBean>();		
 		
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-			String fetchActivityLog = "select * from enters";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
+			//Query to fetch activity log of logged in visitor
+			String fetchActivityLog = "select * from enters where rfid in (select rfid from ticket where visitorid = "+visitorID+")";
 			preparedStatement = connection.prepareStatement(fetchActivityLog);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

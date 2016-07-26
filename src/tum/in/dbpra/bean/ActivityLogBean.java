@@ -1,7 +1,7 @@
 package tum.in.dbpra.bean;
 
 import java.util.Date;
-
+//Details for activity of visitor
 public class ActivityLogBean {
 	private int rfid;
 	private int stageid;

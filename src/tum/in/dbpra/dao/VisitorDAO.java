@@ -15,7 +15,7 @@ public class VisitorDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	VisitorBean visitorBean;
-       //fetch and auth visitor basedd on username and password
+    //fetch and authenticate visitor based on username and password
 	public List<VisitorBean> getVisitors(String username, String password) {
 		List<VisitorBean> visitorList = new ArrayList<VisitorBean>();
 		
@@ -23,9 +23,8 @@ public class VisitorDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Fetching visitor login data
 			String fetchVisitor = "select * from visitor where username = ? and password=?";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(fetchVisitor);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);

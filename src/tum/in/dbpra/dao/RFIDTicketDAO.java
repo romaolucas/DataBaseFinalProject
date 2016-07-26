@@ -22,9 +22,8 @@ public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 	try{
 		connection=PGUtils.createConnection();
 	connection.setAutoCommit(false);
+	//Query to fetch RFID details based on the logged in visitor and for active RFIDs
 	String fetchRFIDDetails = "select w.status,w.balance,w.activationtime,w.rfid from wristband as w where w.rfid in (select rfid from ticket where visitorid =? ) and w.status=true";
-	// Fetch supplier key from the supplier table using the supplier
-	// name that user provides as input
 	preparedStatement = connection.prepareStatement(fetchRFIDDetails);
 	preparedStatement.setInt(1, visitorID);
 	
@@ -53,7 +52,7 @@ public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 return RFIDList;
 
 }
-//update appending comments from visitor for disable request
+//updating comments by appending status in case of disabling request for RFID
 public boolean updateDisableComment(int rfid,String comments){
    	
 	int updatedRow=0;

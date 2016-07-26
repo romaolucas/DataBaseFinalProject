@@ -14,21 +14,19 @@ public class TicketCategoryDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	TicketCategoryBean tcBean;
-	//get all diff ticket order by their price
+	//get all different ticket order by their price
 	public List<TicketCategoryBean> getTCDetails(){
 		List<TicketCategoryBean> ticketList =new ArrayList<TicketCategoryBean>();
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Query to fetch all tickets order by their price
 			String fetchTicketCategory = "select * from ticketcategory order by price";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			preparedStatement = connection.prepareStatement(fetchTicketCategory);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				do {
-					//System.out.println("orders");
 					tcBean = new TicketCategoryBean();
 					tcBean.setId(resultSet.getInt(1));
 					tcBean.setName(resultSet.getString(2));

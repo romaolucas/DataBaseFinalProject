@@ -20,10 +20,9 @@ public class AccommodationDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
+			//Query to fetch room details booked by the logged in visitor
 			String fetchRoomDetails = "	select a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,r.checkindate,r.checkoutdate"
 					+ " from Reservation as r,Accommodation as a	where r.VisitorID=? and r.roomid=a.roomid";
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
 			System.out.println("Visitor id:"+visitorID);
 			preparedStatement = connection.prepareStatement(fetchRoomDetails);
 			preparedStatement.setInt(1, visitorID);
@@ -57,7 +56,7 @@ public class AccommodationDAO {
 		return roomList;
 		
 	}
-	//search room by capacity as per user input use left outer join
+	//search room by capacity as per user input using left outer join
 	public List<AccommodationBean> getRoomByCapacity(int number){
 		List<AccommodationBean> roomList =new ArrayList<AccommodationBean>();
 		try{

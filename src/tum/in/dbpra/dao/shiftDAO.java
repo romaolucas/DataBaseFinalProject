@@ -31,7 +31,6 @@ public class shiftDAO extends DAO {
 			SQLException {
 		List<ShiftBean> allShift = new ArrayList<ShiftBean>();
 
-		// query = "SELECT * FROM shift;";
 		String query = "SELECT section.name, employee.firstname, employee.lastname, shift.starttime, shift.endtime, shift.task FROM section, shift, employee WHERE section.sectionid = shift.sectionid AND employee.eid = shift.eid;";
 		Connection con = PGUtils.createConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -58,7 +57,7 @@ public class shiftDAO extends DAO {
 	}
 
 	/**
-	 * this function create a new entry in the table shift
+	 * this function creates a new entry in the table shift
 	 * 
 	 * @param shift
 	 * @return
@@ -78,15 +77,18 @@ public class shiftDAO extends DAO {
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, shift.getEid());
 		ResultSet rs = ps.executeQuery();
-		// check if there are some shifts assigned to the employee
+		// check if there are some shifts assigned to the employee with id eid
+		// at the starttime
 		if (rs.next()) {
 			List<ShiftBean> allShift = new ArrayList<ShiftBean>();
 			do {
 				ShiftBean shiftBean = new ShiftBean();
 				shiftBean.setStartTime(rs.getTimestamp("starttime"));
 				shiftBean.setEndTime(rs.getTimestamp("endtime"));
+				// stores in allShift all shifts of the current employee
 				allShift.add(shiftBean);
 			} while (rs.next());
+			// here check if the new to add shift overlapps with an existing one
 			for (int i = 0; i < allShift.size(); i++) {
 				// StartA and EndA are beginning and the end of the shift the
 				// user wants to assign
@@ -97,7 +99,7 @@ public class shiftDAO extends DAO {
 				Timestamp startB = allShift.get(i).getStartTime();
 				Timestamp endB = allShift.get(i).getEndTime();
 
-				// there is overlaping when startA <= endB and endA >= startB
+				// there is overlapping when startA <= endB and endA >= startB
 
 				boolean isStartABeforeEndB = startA.before(endB);
 				boolean isEndAAfterStartB = endA.after(startB);
@@ -115,6 +117,7 @@ public class shiftDAO extends DAO {
 			}
 
 		}
+
 		if (add) {
 			long millisStart = shift.getStartTime().getTime();
 
@@ -240,6 +243,8 @@ public class shiftDAO extends DAO {
 				+ "AND employee.firstname=? " + "AND employee.lastname=?;";
 		Connection con = PGUtils.createConnection();
 		PreparedStatement ps = con.prepareStatement(query);
+		// since in the DB lastname and firstname are stored in two different
+		// fields, we need to parse the name choose by the user
 		String[] names = name.split(" ");
 		String firstname = names[0];
 		String lastname = names[1];
@@ -265,7 +270,7 @@ public class shiftDAO extends DAO {
 	}
 
 	/**
-	 * this function retrieves shift by task
+	 * this function retrieves shift by task here we use like statement
 	 * 
 	 * @param name
 	 * @return

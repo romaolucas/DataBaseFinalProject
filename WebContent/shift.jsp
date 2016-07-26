@@ -13,15 +13,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <span class="right">
-                    <a href="welcomeOrganizer.jsp">
-                        <strong>Back to Organizer Dashboard</strong>
-                    </a>
-                </span>
+<span class="right"> <a href="welcomeOrganizer.jsp"> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
 <title>Human Resources Management</title>
 </head>
 
 <%
+	//Initialize some variables and lists usefull to display data on the page
 	List<ShiftBean> allShift = new ArrayList<ShiftBean>();
 	List<String> allSectionName = new ArrayList<String>();
 	List<String> allEmployeeName = new ArrayList<String>();
@@ -38,18 +38,18 @@
 <%
 	if (request.getAttribute("error") != null) {
 %>
-	<br>
-	<font color="red">Error:  
-<%=
-	request.getAttribute("error")
-%>
-	</font>
+<br>
+<font color="red">Error: <%=request.getAttribute("error")%>
+</font>
 
 <%
 	} else {
+		//retrieve already existing shifts to display them in a table
 		allShift = (List<ShiftBean>) request.getAttribute("allShift");
+		//retrieve all section names to fill the dropdown list
 		allSectionName = (List<String>) request
 				.getAttribute("allSectionName");
+		//retrieve all employee names to fill the dropdown list
 		allEmployeeName = (List<String>) request
 				.getAttribute("allEmployeeName");
 %>
@@ -57,7 +57,8 @@
 
 <body>
 	<%
-		if (allShift != null) {
+		// only if there are already some shifts then show the table containing the shifts and search/filter panel
+			if (allShift != null) {
 	%>
 	<form action=shift method="post" name="searchForm">
 		Find a shift by Section Name or Employee Name:
@@ -108,7 +109,7 @@
 	</form>
 
 	<br>
-	
+
 	<table border="1" style="width: 100%">
 		<tr>
 			<th>Section Name</th>
@@ -117,10 +118,14 @@
 			<th>End time</th>
 			<th>Task</th>
 		</tr>
-		
-		<%if(request.getAttribute("empty")!= null){ %>
-		<h4><%=request.getAttribute("empty") %></h4>
-	<%} %>
+
+		<%
+			if (request.getAttribute("empty") != null) {
+		%>
+		<h4><%=request.getAttribute("empty")%></h4>
+		<%
+			}
+		%>
 		<%
 			for (ShiftBean shift : allShift) {
 		%>
@@ -144,6 +149,6 @@
 		}
 		}
 	%>
-					
+
 </body>
 </html>

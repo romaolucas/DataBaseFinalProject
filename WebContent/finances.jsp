@@ -13,11 +13,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<span>
-                    <a href="welcomeOrganizer.jsp">
-                        <strong>Back to Organizer Dashboard</strong>
-                    </a>
-                </span>
+<span> <a href="welcomeOrganizer.jsp"> <strong>Back
+			to Organizer Dashboard</strong>
+</a>
+</span>
 <title>Music Festival Finances</title>
 </head>
 <body>
@@ -36,6 +35,7 @@
 
 	<%
 		}
+		//only if there are already some sponsors in the DB then show then in a form of a table
 
 		if (request.getAttribute("allSponsor") != null) {
 			allSponsor = (List<SponsorBean>) request
@@ -61,15 +61,15 @@
 			<td><%=sponsor.getAmount()%></td>
 		</tr>
 
-		
+
 
 		<%
 			}
 		%>
 		<tr>
-		
+
 		</tr>
-		
+
 		<tr>
 			<td colspan="2"><center>Total amount</center></td>
 			<td><b><%=totalAmount%></b></td>

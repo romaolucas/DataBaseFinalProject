@@ -1,7 +1,7 @@
 package tum.in.dbpra.bean;
 
 import java.util.Date;
-
+//Details about the accomodation
 public class AccommodationBean {
 	private int	roomno;
 	private Date checkinDate;

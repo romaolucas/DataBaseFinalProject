@@ -14,7 +14,7 @@ public class AccommodationDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	AccommodationBean acbean;
-	
+	//get all the room booked by visitor
 	public List<AccommodationBean> getAccomodation(int visitorID){
 		List<AccommodationBean> roomList =new ArrayList<AccommodationBean>();
 		try {
@@ -57,11 +57,11 @@ public class AccommodationDAO {
 		return roomList;
 		
 	}
-	
+	//search room by capacity as per user input use left outer join
 	public List<AccommodationBean> getRoomByCapacity(int number){
 		List<AccommodationBean> roomList =new ArrayList<AccommodationBean>();
 		try{
-			
+			//Query to display all the booked(future) and non booked room 
 			String fetchRoomByCapacity = "with CurrentReservation(roomid,checkindate,checkoutdate) as "
 					+ "(select roomid,checkindate,checkoutdate from reservation where checkoutdate>now())"
 					+ "  SELECT a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,cr.checkindate,cr.checkoutdate "

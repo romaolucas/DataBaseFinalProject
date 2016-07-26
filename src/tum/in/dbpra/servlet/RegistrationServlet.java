@@ -15,6 +15,7 @@ import tum.in.dbpra.dbutils.PGUtils;
  * Servlet implementation class RegistrationServlet
  */
 @WebServlet("/confirmRegistration")
+//For new user registration
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean registrationSuccessful=false;
@@ -43,9 +44,9 @@ public class RegistrationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		try {
+			//query to insert visitor data into the database
 			String insertVisitor = "INSERT INTO visitor(visitorid, firstname, lastname, username, password, address,phone, email)"
 					+ "VALUES (9, ?, ?, ?, ?, ?, ? ,?);";
 			String firstname=request.getParameter("firstnamesignup");

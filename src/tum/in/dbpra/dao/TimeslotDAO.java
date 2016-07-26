@@ -55,6 +55,7 @@ public class TimeslotDAO extends DAO {
 			//try to execute query
 			try{
 				affectedRowCount = pstmt.executeUpdate();
+				//System.out.println("!");				
 			}catch(Exception e){
 				//if it violates db rules rollback only this query till the savepoint
 				con.rollback(my_savepoint);

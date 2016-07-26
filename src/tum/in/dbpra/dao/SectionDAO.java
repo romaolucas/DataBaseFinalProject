@@ -15,17 +15,27 @@ public class SectionDAO extends DAO {
 			SQLException {
 		List<String> allSectionName = new ArrayList<String>();
 
+		//create customized query
 		String query = "SELECT name FROM section order by name;";
 
+		//set connection
 		Connection con = PGUtils.createConnection();
 
+		//set Prepared Statement
 		PreparedStatement preparedStmt = con.prepareStatement(query);
+						
+		//retrieve results of query
 		ResultSet resultSet = preparedStmt.executeQuery();
 
 		while (resultSet.next()) {
 			allSectionName.add(resultSet.getString("name"));
 		}
+		
+		//close everything
+		resultSet.close();
+		preparedStmt.close();
 		PGUtils.closeConnection(con);
+
 		return allSectionName;
 	}
 
@@ -33,16 +43,25 @@ public class SectionDAO extends DAO {
 			ClassNotFoundException, SQLException {
 		int id = 0;
 
+		//create customized query
 		String query = "SELECT sectionid FROM section WHERE name=?;";
+		
+		//set connection
 		Connection con = PGUtils.createConnection();
+		
+		//set Prepared Statement
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, name);
+						
+		//retrieve results of query
 		ResultSet resultSet = preparedStmt.executeQuery();
 		if (resultSet.next()) {
 			id = resultSet.getInt("sectionid");
 		} else {
 			throw new SectionNotFoundException("Section not found");
 		}
+		
+		//close everything
 		resultSet.close();
 		preparedStmt.close();
 		PGUtils.closeConnection(con);

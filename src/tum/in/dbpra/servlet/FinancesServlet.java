@@ -35,8 +35,8 @@ public class FinancesServlet extends HttpServlet {
 
 		try {
 			SponsorDAO sponsorDAO = new SponsorDAO();
-
 			List<SponsorBean> allSponsor = sponsorDAO.getAllSponsor();
+			//retrieve, if there are any sponsors in db
 			if (allSponsor != null && allSponsor.size() > 0) {
 				request.setAttribute("allSponsor", allSponsor);
 			}

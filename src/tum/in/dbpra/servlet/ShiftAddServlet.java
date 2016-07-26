@@ -54,6 +54,8 @@ public class ShiftAddServlet extends HttpServlet {
 		SectionDAO sectionDAO = new SectionDAO();
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		shiftDAO shiftDAO = new shiftDAO();
+		
+		//retrieve all data about the shift from the form
 		String sectionName = (String) request.getParameter("sectionName");
 		String employeeName = (String) request.getParameter("employeeName");
 		String starttime = (String) request.getParameter("date") + " "
@@ -68,6 +70,7 @@ public class ShiftAddServlet extends HttpServlet {
 			int sectionId = sectionDAO.getSectionIdByName(sectionName);
 			int employeeId = employeeDAO.getEmployeeIdByName(employeeName);
 
+			//save everything in ShiftBean
 			ShiftBean shiftBean = new ShiftBean();
 			shiftBean.setEmployeeName(employeeName);
 			shiftBean.setSectionName(sectionName);
@@ -87,6 +90,7 @@ public class ShiftAddServlet extends HttpServlet {
 
 				shiftBean.setTask(task);
 
+				//try to add shift to the db
 				int change = shiftDAO.postShift(shiftBean);
 				System.out.println("CHANGED. " + change);
 				if (change > 0) {

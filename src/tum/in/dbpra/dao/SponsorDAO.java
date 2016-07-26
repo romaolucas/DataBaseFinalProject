@@ -54,10 +54,10 @@ public class SponsorDAO extends DAO {
 				psApp.setString(4, "");
 			psApp.executeUpdate();
 			con.commit();
+			rs.close();
 			psSponsor.close();
 			psApp.close();
-			// PGUtils.closeConnection(con);
-			con.close();
+			PGUtils.closeConnection(con);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

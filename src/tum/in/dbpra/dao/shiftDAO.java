@@ -138,6 +138,10 @@ public class shiftDAO extends DAO {
 			}
 
 		}
+		rs.close();
+		ps.close();
+		PGUtils.closeConnection(con);
+
 
 		return rowChanged;
 	}

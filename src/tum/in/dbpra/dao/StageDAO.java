@@ -14,12 +14,16 @@ public class StageDAO extends DAO {
 	public ArrayList<StageBean> getAllStages() throws SQLException,
 			ClassNotFoundException, StageNotFoundException {
 
+		//create customized query
 		String query = "SELECT * FROM Stage st, Section se WHERE st.sectionID=se.sectionID;";
 
+		//set connection
 		Connection con = PGUtils.createConnection();
 
+		//set Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
 
+		//retrieve results of query
 		ResultSet rs = pstmt.executeQuery();
 
 		ArrayList<StageBean> stages = new ArrayList<StageBean>();
@@ -35,6 +39,7 @@ public class StageDAO extends DAO {
 			stages.add(stage);
 		}
 
+		//close everything
 		rs.close();
 		pstmt.close();
 		PGUtils.closeConnection(con);

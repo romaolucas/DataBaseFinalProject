@@ -50,23 +50,32 @@ public class ProviderLoginServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Logger log = Logger.getLogger(ProviderLoginServlet.class);
+			//Get email and password from the form
 			String email = request.getParameter("username");
 			String password = request.getParameter("password");
+			//Get info about the keepLoggedin - not really used so far
 			String keepLoggedin[] = request.getParameterValues("loginkeeping");
+			//Create a providerDAO
 			ProviderDAO providerDAO = new ProviderDAO();
+			//Use ProviderDAO to use the getProviders method using the following arguments
 			List<ProviderBean> providerList = providerDAO.getProviders(email,
 					password);
 			log.info(Integer.toString(providerList.size()));
 			if (providerList.size() > 0) {
+				//If the returned list size is positive, then we have that provider in DB - login successful -
 				loginSuccessful = true;
+				//Check if provider has application
 				boolean hasApplication = providerDAO
 						.hasApplication(providerList.get(0));
+				//Set those attributes in the request
 				request.setAttribute("providers", providerList);
 				request.setAttribute("application", hasApplication);
-                //creates the session for the user
+				//Create the session
 				HttpSession session = request.getSession();
 				session.setAttribute("email", providerList.get(0).getEmail());
+				//Set max inactive interval to 1 hour
 				session.setMaxInactiveInterval(60 * 60);
+				//Create cookies using email
 				Cookie userEmail = new Cookie("email", providerList.get(0)
 						.getEmail());
 				userEmail.setMaxAge(60 * 60);
@@ -77,14 +86,15 @@ public class ProviderLoginServlet extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 
 		}
-        //checks whether the login was successfull or not
 		request.setAttribute("loginStatus", loginSuccessful);
 		if (loginSuccessful) {
+			//If login is successful, direct to welcome page
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/welcome-provider.jsp");
 			dispatcher.forward(request, response);
 			// response.sendRedirect("welcome-provider.jsp");
 		} else {
+			//If login is not successful, direct to the same login page
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/login-provider.jsp");
 			request.setAttribute("loginMessage", "Login unsuccessful");

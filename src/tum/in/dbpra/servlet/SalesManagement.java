@@ -38,6 +38,7 @@ public class SalesManagement extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		SaleDAO dao = new SaleDAO();
+		//retrieve from db all sales for certain provider 
 		List<SaleBean> sales = dao.getSalesForProvider(pid);
 		request.setAttribute("pid", pid);
 		request.setAttribute("sales", sales);

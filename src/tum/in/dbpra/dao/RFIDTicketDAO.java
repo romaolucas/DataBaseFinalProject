@@ -21,10 +21,10 @@ public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 	try{
 		connection=PGUtils.createConnection();
 	connection.setAutoCommit(false);
-
+	String fetchRFIDDetails = "select w.status,w.balance,w.activationtime,w.rfid from wristband as w where w.rfid in (select rfid from ticket where visitorid =? ) and w.status=true";
 	// Fetch supplier key from the supplier table using the supplier
 	// name that user provides as input
-	preparedStatement = connection.prepareStatement(PGUtils.fetchRFIDDetails);
+	preparedStatement = connection.prepareStatement(fetchRFIDDetails);
 	preparedStatement.setInt(1, visitorID);
 	
 				
@@ -60,10 +60,10 @@ public boolean updateDisableComment(int rfid,String comments){
 	try{
 		connection=PGUtils.createConnection();
 	connection.setAutoCommit(false);
-
+	String updateRFIDComments = "update wristband set comments=comments||? where rfid=?";
 	// Fetch supplier key from the supplier table using the supplier
 	// name that user provides as input
-	preparedStatement = connection.prepareStatement(PGUtils.updateRFIDComments);
+	preparedStatement = connection.prepareStatement(updateRFIDComments);
 	preparedStatement.setInt(2, rfid);
 	preparedStatement.setString(1, comments);
 	updatedRow=preparedStatement.executeUpdate();

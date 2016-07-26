@@ -237,7 +237,7 @@
 				 	<td><input name="rfidComments" type="text"> </td>
 				 	<td><input type="Submit" value="Submit"></td></tr> 
 				 	</form>
-				 	<% String comments=request.getParameter("rfidComments");	System.out.println("Comments:"+comments);			    
+				 	<% String comments=request.getParameter("rfidComments");		    
 				 	if(comments!=null){
 						comments="::"+comments;
 					 	if(RFIDDAO.updateDisableComment(rfid, comments)){%>

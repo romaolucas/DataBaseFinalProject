@@ -23,10 +23,10 @@ public class VisitorDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchVisitor = "select * from visitor where username = ? and password=?";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchVisitor);
+			preparedStatement = connection.prepareStatement(fetchVisitor);
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 			resultSet = preparedStatement.executeQuery();

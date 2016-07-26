@@ -15,30 +15,6 @@ public class PGUtils {
 	// system that is currently working
 	public static final String password = "pallabi09";
 
-	// queries from Visitor
-	public static final String fetchVisitor = "select * from visitor where username = ? and password=?";
-	public static final String insertVisitor = "INSERT INTO visitor(visitorid, firstname, lastname, username, password, address,phone, email)"
-			+ "VALUES (9, ?, ?, ?, ?, ?, ? ,?);";
-	public static final String fetchRoomDetails = "	select a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,r.checkindate,r.checkoutdate"
-			+ " from Reservation as r,Accommodation as a	where r.VisitorID=? and r.roomid=a.roomid";
-
-	public static final String fetchRoomByCapacity = "with CurrentReservation(roomid,checkindate,checkoutdate) as "
-			+ "(select roomid,checkindate,checkoutdate from reservation where checkoutdate>now())"
-			+ "  SELECT a.roomno,a.address,a.rent,a.capacity,a.pets,a.smoking,cr.checkindate,cr.checkoutdate "
-			+ "FROM accommodation as a LEFT OUTER JOIN CurrentReservation as cr ON (a.roomid = cr.roomid) where a.capacity=?";
-
-	public static final String fetchTicketCategory = "select * from ticketcategory order by price";
-	public static final String fetchRFIDDetails = "select w.status,w.balance,w.activationtime,w.rfid from wristband as w where w.rfid in (select rfid from ticket where visitorid =? ) and w.status=true";
-	public static final String fetchTicketByVisitor = "select t.ticketid,tc.name,t.purchasedate,tc.price,t.activationTime from ticketcategory as tc,ticket as t where t.visitorid=? and tc.categoryid=t.categoryid";
-	public static final String insertIntoTicket = "insert into ticket(ticketid,visitorid,rfid,categoryid,purchasedate) values ((select max(ticketid) from ticket)+1,?,?,?,now())";
-	public static final String updateRFIDComments = "update wristband set comments=comments||? where rfid=?";
-	public static final String fetchPurchase = "select p.name,p.category,pr.totalprice,pr.paymentdate,pr.quantity from product as p,purchase as pr where rfid=? and p.productid=pr.productid";
-	public static final String fetchTimeslot ="select b.pid, p.name, b.style, b.country, b.charge, s.sectionid, t.timebuildup, t.timeplay, t.timefinish, t.timegone from provider p, band b, stage s, timeslot t where b.pid=t.pid and s.sectionid=t.sectionid and p.pid=t.pid";
-	public static final String insertIntoBandselection = "insert into BandSelection (VisitorID, BandID, Name, Style, Country, timeplay, timefinish) values (?,?,?,?,?,?,?)";
-	public static final String fetchBandselection = "select VisitorID, BandID, Name, Style, Country, timeplay, timefinish from Bandselection";
-	public static final String deleteFromBandselection = "delete from bandselection where visitorid = ? and bandid = ?";
-	public static final String fetchActivityLog = "select * from enters";
-
 	// queries from Provider
 	public static final String fetchProviderCredentials = "select * from provider where email = ? and password = ?";
 	public static final String fetchProviderCredentialsByEmail = "select * from provider where email = ?";

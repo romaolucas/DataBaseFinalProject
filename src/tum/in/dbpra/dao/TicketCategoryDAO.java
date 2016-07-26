@@ -20,10 +20,10 @@ public class TicketCategoryDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchTicketCategory = "select * from ticketcategory order by price";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchTicketCategory);
+			preparedStatement = connection.prepareStatement(fetchTicketCategory);
 						
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

@@ -46,6 +46,8 @@ public class RegistrationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String insertVisitor = "INSERT INTO visitor(visitorid, firstname, lastname, username, password, address,phone, email)"
+					+ "VALUES (9, ?, ?, ?, ?, ?, ? ,?);";
 			String firstname=request.getParameter("firstnamesignup");
 			System.out.println("Fistname:"+firstname);
 			String lastname=request.getParameter("lastnamesignup");
@@ -58,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
 			
 			connection=PGUtils.createConnection();
 			
-			preparedStatement=connection.prepareStatement(PGUtils.insertVisitor);
+			preparedStatement=connection.prepareStatement(insertVisitor);
 			preparedStatement.setString(1, firstname);
 			preparedStatement.setString(2, lastname);
 			preparedStatement.setString(3, username);

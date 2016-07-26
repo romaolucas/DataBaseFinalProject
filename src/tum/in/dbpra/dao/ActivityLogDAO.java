@@ -22,10 +22,10 @@ public class ActivityLogDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchActivityLog = "select * from enters";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchActivityLog);
+			preparedStatement = connection.prepareStatement(fetchActivityLog);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				do {

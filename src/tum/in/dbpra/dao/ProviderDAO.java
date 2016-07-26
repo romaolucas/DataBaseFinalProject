@@ -276,11 +276,10 @@ public class ProviderDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchTimeSlots = "select * from timeslot where pid = ?";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchTimeSlots);
+			preparedStatement = connection.prepareStatement(fetchTimeSlots);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

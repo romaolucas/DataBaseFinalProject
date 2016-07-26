@@ -22,13 +22,13 @@ public class ProductPurchaseDAO {
 		connection = PGUtils.createConnection();
 		connection.setAutoCommit(false);
 
-		
+		String fetchPurchase = "select p.name,p.category,pr.totalprice,pr.paymentdate,pr.quantity from product as p,purchase as pr where rfid=? and p.productid=pr.productid";
 		RFIDTicketDAO RFIDDAO=new RFIDTicketDAO();
 		List<RFIDTicketBean> rfList = RFIDDAO.getRFIDDetails(visitorID);
 		int rfid=rfList.get(0).getRfid();
 		// Fetch supplier key from the supplier table using the supplier
 		// name that user provides as input
-		preparedStatement = connection.prepareStatement(PGUtils.fetchPurchase);
+		preparedStatement = connection.prepareStatement(fetchPurchase);
 		preparedStatement.setInt(1, rfid);
 		
 		resultSet = preparedStatement.executeQuery();

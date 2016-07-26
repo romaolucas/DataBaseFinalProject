@@ -14,7 +14,7 @@ public class TicketCategoryDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	TicketCategoryBean tcBean;
-	
+	//get all diff ticket order by their price
 	public List<TicketCategoryBean> getTCDetails(){
 		List<TicketCategoryBean> ticketList =new ArrayList<TicketCategoryBean>();
 		try {

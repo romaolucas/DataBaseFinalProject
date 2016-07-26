@@ -15,7 +15,7 @@ public class ActivityLogDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	ActivityLogBean activityLogBean;
-
+         //show activity 
 	public List<ActivityLogBean> getActivityLog() {
 		List<ActivityLogBean> visitorList = new ArrayList<ActivityLogBean>();		
 		

@@ -15,7 +15,7 @@ public class TicketDAO {
 	ResultSet resultSet;
 	TicketBean ticketBean;
 	Boolean status=false;
-	
+	//get all the ticket brought by visitor
 	public List<TicketBean> getTicketbyVisitor(int visitorID){
 		List<TicketBean> ticketList =new ArrayList<TicketBean>();
 		try {
@@ -53,7 +53,7 @@ public class TicketDAO {
 		return ticketList;
 		
 	}
-	
+	//buy ticket as per visior input,transaction handled 
 	public boolean buyTickets(int visitorID,int quantity,int categoryID){
 		
 	 int updatedRow=0;

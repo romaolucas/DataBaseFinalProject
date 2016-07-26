@@ -52,10 +52,10 @@ public class SubmitApplication extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		boolean isBand = true;
-		Logger log = Logger.getLogger(SubmitApplication.class);
 		String comment = request.getParameter("comment");
 		if ("sponsor".equals(request.getParameter("category")))
 			isBand = false;
+        //submits the information depending on which category was selected
 		if (isBand) {
 			String style = request.getParameter("style");
 			double charge = Double.parseDouble(request.getParameter("charge"));
@@ -78,10 +78,10 @@ public class SubmitApplication extends HttpServlet {
 			ProviderDAO pdao = new ProviderDAO();
 			List<ProviderBean> providers = pdao.getProviders(pid);
 			request.setAttribute("providers", providers);
-			log.info("name: " + providers.get(0).getName());
 			request.setAttribute("application", hasApplication);
 		}
-		ProviderDAO pdao = new ProviderDAO();
+		//gets the provider to be passed to the welcome page
+        ProviderDAO pdao = new ProviderDAO();
 		List<ProviderBean> providers = pdao.getProviders(pid);
 		boolean hasApplication = true;
 		providers.get(0).setApplicationStatus(AppStatus.IN_PROCESS);

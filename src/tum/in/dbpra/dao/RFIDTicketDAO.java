@@ -15,6 +15,7 @@ PreparedStatement preparedStatement;
 RFIDTicketBean rfidTicketBean;
 ResultSet resultSet;
 
+//get active RFID of visitor 
 public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 	List<RFIDTicketBean> RFIDList =new ArrayList<RFIDTicketBean>();
 
@@ -52,7 +53,7 @@ public List<RFIDTicketBean> getRFIDDetails(int visitorID){
 return RFIDList;
 
 }
-
+//update appending comments from visitor for disable request
 public boolean updateDisableComment(int rfid,String comments){
    	
 	int updatedRow=0;

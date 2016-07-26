@@ -25,7 +25,7 @@ public class SectionDAO extends DAO {
 		while (resultSet.next()) {
 			allSectionName.add(resultSet.getString("name"));
 		}
-		closeConnection(con);
+		PGUtils.closeConnection(con);
 		return allSectionName;
 	}
 

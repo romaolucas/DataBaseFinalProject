@@ -20,6 +20,7 @@ public class OrganizerDAO extends DAO {
 		return sb;
 	}
 
+	//to login an organizer that is already in db
 	public boolean validate(String username, String password)
 			throws ClassNotFoundException, SQLException,
 			NoSuchAlgorithmException {
@@ -38,7 +39,7 @@ public class OrganizerDAO extends DAO {
 
 		resultSet.close();
 		preparedStmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 
 		return success;
 	}

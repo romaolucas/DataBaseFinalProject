@@ -45,7 +45,7 @@ public class VisitorLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			//Auth servlet for visitor,and set id to sesson
+			//Auth servlet for visitor,and set id to session
 			String username=request.getParameter("username");
 			String password=request.getParameter("password");
 			request.getParameterValues("loginkeeping");

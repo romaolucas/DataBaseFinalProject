@@ -46,8 +46,8 @@ public class BandDAO extends DAO {
 		//close everything
 		rs.close();
 		pstmt.close();
-		con.close();
-
+		PGUtils.closeConnection(con);
+		
 		return bands;
 
 	}

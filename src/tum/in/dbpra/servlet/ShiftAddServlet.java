@@ -74,7 +74,6 @@ public class ShiftAddServlet extends HttpServlet {
 			shiftBean.setEid(employeeId);
 			shiftBean.setSectionId(sectionId);
 
-			// shiftBean.setStartTime(new Date(System.currentTimeMillis()));
 			Timestamp starttimeStamp = new Timestamp(formatter.parse(starttime)
 					.getTime());
 			Timestamp endtimeStamp = new Timestamp(formatter.parse(endTime)
@@ -83,8 +82,6 @@ public class ShiftAddServlet extends HttpServlet {
 					&& endtimeStamp.after(starttimeStamp)) {
 				shiftBean.setStartTime(new Timestamp(formatter.parse(starttime)
 						.getTime()));
-				// shiftBean.setEndTime(new Date(System.currentTimeMillis()));
-				// shiftBean.setEndTime((Date) formatter.parse(endTime));
 				shiftBean.setEndTime(new Timestamp(formatter.parse(endTime)
 						.getTime()));
 

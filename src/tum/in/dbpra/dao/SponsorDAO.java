@@ -56,8 +56,7 @@ public class SponsorDAO extends DAO {
 			con.commit();
 			psSponsor.close();
 			psApp.close();
-			// PGUtils.closeConnection(con);
-			con.close();
+			PGUtils.closeConnection(con);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,7 +103,7 @@ public class SponsorDAO extends DAO {
 		// close everything
 		rs.close();
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 
 		return sponsors;
 

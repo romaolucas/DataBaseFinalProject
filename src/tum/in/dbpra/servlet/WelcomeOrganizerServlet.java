@@ -38,20 +38,6 @@ public class WelcomeOrganizerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher;
-		//
-		// if (request.getParameter("human") != null) {
-		// dispatcher = request.getRequestDispatcher("/shift.jsp");
-		// dispatcher.forward(request, response);
-		//
-		// } else if (request.getParameter("bands") != null) {
-		// dispatcher = request.getRequestDispatcher("/timeslotAssign.jsp");
-		// dispatcher.forward(request, response);
-		//
-		// } else if (request.getParameter("finances") != null) {
-		// dispatcher = request.getRequestDispatcher("/finance.jsp");
-		// dispatcher.forward(request, response);
-		//
-		// }
 
 	}
 

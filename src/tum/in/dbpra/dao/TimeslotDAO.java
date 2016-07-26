@@ -87,7 +87,7 @@ public class TimeslotDAO extends DAO {
 		
 		//close everything
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 
 		if(answer==0)
 			return true;

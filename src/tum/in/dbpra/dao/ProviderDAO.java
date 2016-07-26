@@ -75,25 +75,33 @@ public class ProviderDAO {
     /* List<ProviderBean> getProviders:
      *  get the provider with the respective criterion
      * */
+	//This gets providers from the database that have the desired email AND password
 	public List<ProviderBean> getProviders(String email, String password) {
+		
 		Connection connection = null;
 		ProviderBean providerBean;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		List<ProviderBean> providerList = new ArrayList<ProviderBean>();
+		 String fetchProviderCredentials = "select * from provider where email = ? and password = ?";
+			
 		try {
+			//Create connection
 			connection = PGUtils.createConnection();
+			//Begin transaction
 			connection.setAutoCommit(false);
 
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
+			// Fetch the provider who has the desired email AND password
 			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchProviderCredentials);
+					.prepareStatement(fetchProviderCredentials);
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, getPasswordMD5(password).toString());
 			resultSet = preparedStatement.executeQuery();
+			//If our resultset has content
 			if (resultSet.next()) {
+				//That means we have one provider in the list in our case
 				do {
+					//Prepare the bean by setting the attributes to the retrieved info in DB
 					providerBean = new ProviderBean();
 					providerBean.setName(resultSet.getString("name"));
 					providerBean.setPhone(resultSet.getString("phonenumber"));
@@ -104,10 +112,12 @@ public class ProviderDAO {
 					providerBean.setId(resultSet.getInt("pid"));
 					providerList.add(providerBean);
 				} while (resultSet.next());
+				//Close everything
 				resultSet.close();
-                con.commit();
+                connection.commit();
 				preparedStatement.close();
 			} else {
+				//If result set is empty then we have no matching 
 				providerList = null;
 			}
 			return providerList;
@@ -119,6 +129,7 @@ public class ProviderDAO {
 		return providerList;
 	}
 
+	//Works the same as the method above, but uses provider id instead of email and password to retrieve the provider
 	public List<ProviderBean> getProviders(int pid) {
 		Connection connection = null;
 		ProviderBean providerBean;
@@ -147,7 +158,7 @@ public class ProviderDAO {
 				} while (resultSet.next());
 				resultSet.close();
 				preparedStatement.close();
-                con.commit();
+                connection.commit();
 			} else {
 				providerList = null;
 			}
@@ -160,12 +171,15 @@ public class ProviderDAO {
 		return providerList;
 	}
 
+	//Works the same as the method above, but uses provider email only to retrieve the provider
 	public List<ProviderBean> getProviders(String email) {
 		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		ProviderBean providerBean;
 		List<ProviderBean> providerList = new ArrayList<ProviderBean>();
+		String fetchProviderCredentialsByEmail = "select * from provider where email = ?";
+
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
@@ -173,7 +187,7 @@ public class ProviderDAO {
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
 			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchProviderCredentialsByEmail);
+					.prepareStatement(fetchProviderCredentialsByEmail);
 			preparedStatement.setString(1, email);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
@@ -267,6 +281,7 @@ public class ProviderDAO {
 	}
 
 
+	//This method retrieves timeslots for a certain provider (band)
 	public List<TimeSlotBeanProvider> getTimeSlots(int id) {
 		Connection connection = null;
 		PreparedStatement preparedStatement;
@@ -275,7 +290,10 @@ public class ProviderDAO {
 		List<TimeSlotBeanProvider> timeslotList = new ArrayList<TimeSlotBeanProvider>();
 		try {
 			connection = PGUtils.createConnection();
+			//Begin transaction
 			connection.setAutoCommit(false);
+
+			// Fetch the timeslots using the provider id
 			String fetchTimeSlots = "select * from timeslot where pid = ?";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
@@ -283,7 +301,10 @@ public class ProviderDAO {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
+				//If the result set has content
+				//Then we have at least one assigned timeslot for the band
 				do {
+					//Prepare the bean by filling the attributes using the info retrieved from DB
 					timeslotBean = new TimeSlotBeanProvider();
 					timeslotBean.setId(resultSet.getInt("timeslotid"));
 					timeslotBean.setSectionid(resultSet.getInt("sectionid"));
@@ -295,6 +316,7 @@ public class ProviderDAO {
 							.getTimestamp("timefinish"));
 					timeslotBean
 							.setTimegone(resultSet.getTimestamp("timegone"));
+					//Timeslotbean also requires having information about the stage, this is retrieved from DB too
 					String getStage = "select * from section where sectionid = "
 							+ timeslotBean.getSectionid();
 					ResultSet rsGetStage;
@@ -302,6 +324,7 @@ public class ProviderDAO {
 					stmtGetStage = connection.createStatement();
 					rsGetStage = stmtGetStage.executeQuery(getStage);
 					if (rsGetStage.next()) {
+						//If the timeslot is assigned a stage, then we need to find its name using its id
 						timeslotBean.setStageName(rsGetStage.getString("name"));
 						int areaid = rsGetStage.getInt("areaid");
 						String getAddress = "select * from area where areaid = "
@@ -320,9 +343,11 @@ public class ProviderDAO {
 					}
 					timeslotList.add(timeslotBean);
 				} while (resultSet.next());
+				//close
 				resultSet.close();
 				preparedStatement.close();
 			} else {
+				//This means the band has no timeslots
 				timeslotList = null;
 			}
 			return timeslotList;
@@ -334,24 +359,29 @@ public class ProviderDAO {
 		return timeslotList;
 	}
 
+	//This method gets all the instructions submitted by a certain provider (band)
 	public List<InstructionBean> getInstructions(int id) {
 		Connection connection = null;
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		InstructionBean instructionBean;
 		List<InstructionBean> instructionsList = new ArrayList<InstructionBean>();
+		String fetchInstructions = "select * from instruction where pid = ?";
+
 		try {
 			connection = PGUtils.createConnection();
+			//Begin transaction
 			connection.setAutoCommit(false);
 
-			// Fetch supplier key from the supplier table using the supplier
-			// name that user provides as input
+			// Fetch the instructions submitted by the provider
 			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchInstructions);
+					.prepareStatement(fetchInstructions);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
+				//If the provider has submitted instructions, the result set has content
 				do {
+					//Prepare the instruction bean by filling the attributes using the info retrieved from DB
 					instructionBean = new InstructionBean();
 					instructionBean.setId(resultSet.getInt("instructionid"));
 					instructionBean.setPid(resultSet.getInt("pid"));
@@ -362,6 +392,7 @@ public class ProviderDAO {
 					instructionBean.setType(resultSet.getString("type"));
 					instructionBean.setCreationdate(resultSet
 							.getTimestamp("date"));
+					//We also need the instruction assignment date, which is stored in the assignment table
 					String getAssignment = "select * from assignment where instructionid = "
 							+ instructionBean.getId();
 					ResultSet rsGetAssignment;
@@ -370,9 +401,11 @@ public class ProviderDAO {
 					rsGetAssignment = stmtGetAssignment
 							.executeQuery(getAssignment);
 					if (rsGetAssignment.next()) {
+						//If the instruction is already assigned, then the resultset should have some content
 						instructionBean.setEmpid(rsGetAssignment.getInt("eid"));
 						instructionBean.setAssigneddate(rsGetAssignment
 								.getTimestamp("date"));
+						//We need the first and last name of the employee to which the instruction was assigned, we get this info uding the emplpyee retrieved earlier
 						String getName = "select * from employee where eid = "
 								+ instructionBean.getEmpid();
 						ResultSet rsGetName;
@@ -380,6 +413,7 @@ public class ProviderDAO {
 						stmtGetName = connection.createStatement();
 						rsGetName = stmtGetName.executeQuery(getName);
 						if (rsGetName.next()) {
+							//If we find the name of the employee, then set the relevant attributes in the instructionbean
 							String firstname = rsGetName.getString("firstname");
 							String lastname = rsGetName.getString("lastname");
 							instructionBean.setEmpfirstname(firstname);
@@ -390,6 +424,7 @@ public class ProviderDAO {
 					}
 					instructionsList.add(instructionBean);
 				} while (resultSet.next());
+				//close
 				resultSet.close();
 				preparedStatement.close();
 			} else {

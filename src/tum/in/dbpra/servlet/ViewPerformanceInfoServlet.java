@@ -49,14 +49,20 @@ public class ViewPerformanceInfoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
+			//Get session email
 			HttpSession session = request.getSession(false);
 			String email = (String) session.getAttribute("email");
 			ProviderDAO providerDAO = new ProviderDAO();
+			//Use providerDAO to get the provider id using the session email
 			List<ProviderBean> providerList = providerDAO.getProviders(email);
+			//Use TimeslotbeanProvider to get the timeslots using the provider id
 			List<TimeSlotBeanProvider> timeslots = providerDAO
 					.getTimeSlots(providerList.get(0).getId());
+			//If the provider has one or more timeslots
 			if (timeslots.size() > 0) {
+				//Set the timeslots attribute to the list of timeslots and pass it through the request
 				request.setAttribute("timeslots", timeslots);
+				//Dispatch to the view performance info jsp
 				RequestDispatcher dispatcher = request
 						.getRequestDispatcher("/view-performance-info.jsp");
 				dispatcher.forward(request, response);

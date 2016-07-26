@@ -45,7 +45,7 @@ public class BoothDAO extends DAO{
 		//close everything
 		rs.close();
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 		
 		return boothes;
 		
@@ -83,7 +83,7 @@ public class BoothDAO extends DAO{
 		
 		//close everything
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 		
 		if (affectedRowCount>0) return true;
 		return false;
@@ -121,7 +121,7 @@ public class BoothDAO extends DAO{
 		//close everything
 		rs.close();
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 		
 		return boothes;
 		

@@ -42,6 +42,7 @@ public class ProviderLogoutServlet extends HttpServlet {
 			response.setContentType("text/html");
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
+				//If we have cookies
 				for (Cookie cookie : cookies) {
 					if (cookie.getName().equals("JSESSIONID")) {
 						System.out.println("JSESSIONID=" + cookie.getValue());

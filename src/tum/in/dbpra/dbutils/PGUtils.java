@@ -9,18 +9,11 @@ public class PGUtils {
 	public static final String URL = "jdbc:postgresql:";
 	// TODO: change this value to the user id value of the particular database
 	// system that is currently working
-	public static final String database = "postgres";
-	public static final String user = "postgres";
+	public static final String database = "musical_festival";
+	public static final String user = "aisulu";
 	// TODO: change this value to the password value of the particular database
 	// system that is currently working
-	public static final String password = "pallabi09";
-
-	// queries from Provider
-	public static final String fetchProviderCredentials = "select * from provider where email = ? and password = ?";
-	public static final String fetchProviderCredentialsByEmail = "select * from provider where email = ?";
-	public static final String fetchTimeSlots = "select * from timeslot where pid = ?";
-	public static final String fetchInstructions = "select * from instruction where pid = ?";
-	public static final String insertInstructions = "insert into instruction values (?,?,?,?,?,?,?)";
+	public static final String password = "251244";
 
 	// shared methods
 	public static Connection createConnection() {

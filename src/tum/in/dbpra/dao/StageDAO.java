@@ -37,7 +37,7 @@ public class StageDAO extends DAO {
 
 		rs.close();
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 
 		return stages;
 

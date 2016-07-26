@@ -40,7 +40,7 @@ public class FestivalDAO extends DAO {
 		//close everything
 		rs.close();
 		pstmt.close();
-		con.close();
+		PGUtils.closeConnection(con);
 
 	}
 

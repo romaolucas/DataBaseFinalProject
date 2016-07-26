@@ -41,10 +41,6 @@ public class FinancesServlet extends HttpServlet {
 				request.setAttribute("allSponsor", allSponsor);
 			}
 
-			// List<OrdersBean> ordersWithStatusOk =
-			// ordersDAO.getOrdersByStatusOk();
-			// request.setAttribute("ordersWithStatusOk", ordersWithStatusOk);
-
 		} catch (Throwable e) {
 			e.printStackTrace();
 			request.setAttribute("error", e.toString() + e.getMessage());

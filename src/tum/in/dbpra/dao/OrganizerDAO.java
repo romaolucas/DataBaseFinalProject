@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
+import tum.in.dbpra.dbutils.PGUtils;
+
 public class OrganizerDAO extends DAO {
 
 	private StringBuffer getPasswordMD5(String password)
@@ -23,7 +25,7 @@ public class OrganizerDAO extends DAO {
 			NoSuchAlgorithmException {
 
 		String query = "SELECT * FROM organizer WHERE username= ? AND password= ?;";
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 

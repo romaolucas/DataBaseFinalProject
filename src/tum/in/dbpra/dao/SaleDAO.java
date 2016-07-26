@@ -9,7 +9,12 @@ import tum.in.dbpra.bean.SaleBean;
 import tum.in.dbpra.dbutils.PGUtils;
 
 public class SaleDAO {
-	public List<SaleBean> getSalesForProvider(int pid) {
+	
+    /* List<SaleBean> getSalesForProvider:
+     * returns a list containing all the sales of products that belong
+     * to certain provider
+    */
+    public List<SaleBean> getSalesForProvider(int pid) {
 		String query = "select p.name as pname, s.name as sname, soldquantity, soldquantity*price as income from sale, section as s, product as p "          
 				+ "where p.pid = ? and sale.sectionid = s.sectionid and p.productid = sale.productid";
 		List<SaleBean> sales = new ArrayList<SaleBean>();

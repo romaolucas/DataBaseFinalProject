@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import tum.in.dbpra.bean.SponsorBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 //import tum.in.dbpra.dbutils.PGUtils;
 
@@ -25,8 +26,8 @@ public class SponsorDAO extends DAO {
 		Statement stmt;
 		ResultSet rs;
 		try {
-			// con = PGUtils.createConnection();
-			con = getConnection();
+			//creates connection
+            con = PGUtils.createConnection();
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(getAppId);
@@ -35,12 +36,14 @@ public class SponsorDAO extends DAO {
 				applicationid = Integer.parseInt(rs.getString("max")) + 1;
 			rs.close();
 			stmt.close();
+            //inserts the sponsor
 			psSponsor = con.prepareStatement(insertSponsor);
 			psSponsor.setInt(1, sponsor.getId());
 			psSponsor.setString(2, sponsor.getType());
 			psSponsor.setDouble(3, sponsor.getAmount());
 			psSponsor.executeUpdate();
-			psApp = con.prepareStatement(insertApplication);
+			//inserts the application, by default its status is in process
+            psApp = con.prepareStatement(insertApplication);
 			psApp.setInt(1, applicationid);
 			psApp.setInt(2, sponsor.getId());
 			Date today = new Date();
@@ -75,8 +78,7 @@ public class SponsorDAO extends DAO {
 		String query = "SELECT * FROM Sponsor s,Provider p WHERE s.pID=p.pID;";
 
 		// set connection
-		// Connection con = PGUtils.createConnection();
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		// set PS
 		PreparedStatement pstmt = con.prepareStatement(query);

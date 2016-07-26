@@ -21,10 +21,10 @@ public class TicketDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchTicketByVisitor = "select t.ticketid,tc.name,t.purchasedate,tc.price,t.activationTime from ticketcategory as tc,ticket as t where t.visitorid=? and tc.categoryid=t.categoryid";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.fetchTicketByVisitor);
+			preparedStatement = connection.prepareStatement(fetchTicketByVisitor);
 			preparedStatement.setInt(1, visitorID);
 						
 			resultSet = preparedStatement.executeQuery();
@@ -62,13 +62,13 @@ public class TicketDAO {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
 			
-			
+			String insertIntoTicket = "insert into ticket(ticketid,visitorid,rfid,categoryid,purchasedate) values ((select max(ticketid) from ticket)+1,?,?,?,now())";
 			RFIDTicketDAO RFIDDAO=new RFIDTicketDAO();
 			List<RFIDTicketBean> rfList = RFIDDAO.getRFIDDetails(visitorID);
 			int rfid=rfList.get(0).getRfid();
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection.prepareStatement(PGUtils.insertIntoTicket);
+			preparedStatement = connection.prepareStatement(insertIntoTicket);
 			preparedStatement.setInt(1, visitorID);
 			preparedStatement.setInt(2, rfid);
 			preparedStatement.setInt(3, categoryID);

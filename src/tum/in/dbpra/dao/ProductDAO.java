@@ -45,6 +45,11 @@ public class ProductDAO {
 		}
 	}
 	
+    /*
+     * List<ProductBean> getProducts:
+     * get the products for a given provider, returns an
+     * array list with all those products
+    */
 	public List<ProductBean> getProducts(int pid) {
 		List<ProductBean> products = new ArrayList<ProductBean>();
 		String query = "select name, price, category, quantity from product where pid = ?";
@@ -53,7 +58,8 @@ public class ProductDAO {
 		ResultSet rs;
 		try {
 			con = PGUtils.createConnection();
-			pstm = con.prepareStatement(query);
+			con.setAutoCommit(false);
+            pstm = con.prepareStatement(query);
 			pstm.setInt(1, pid);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -66,6 +72,7 @@ public class ProductDAO {
 			}
 			rs.close();
 			pstm.close();
+            con.commit();
 			PGUtils.closeConnection(con);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,6 +80,12 @@ public class ProductDAO {
 		return products;
 	}
 	
+    /*
+     *boolean updateProduct:
+        updates the quantity of certain product by incrementing the argument
+        quantity to it
+        returns true case some product was altered and false otherwise
+     * */
 	public boolean updateProduct(String email, String name, int quantity) {
 		String updateQuery = "update product set quantity = quantity + ? where pid = ? and name = ?";
 		String getPid = "select pid from provider where email = ?";

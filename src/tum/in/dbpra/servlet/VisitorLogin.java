@@ -47,7 +47,6 @@ public class VisitorLogin extends HttpServlet {
 		try {
 			String username=request.getParameter("username");
 			String password=request.getParameter("password");
-			System.out.println("Password: "+password);
 			request.getParameterValues("loginkeeping");
 			VisitorDAO visitorDAO = new VisitorDAO();
 			List<VisitorBean> visitorList = visitorDAO.getVisitors(username,password);

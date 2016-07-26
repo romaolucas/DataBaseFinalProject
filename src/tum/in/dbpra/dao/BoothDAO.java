@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import tum.in.dbpra.bean.BoothBean;
 import tum.in.dbpra.bean.SponsorBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 public class BoothDAO extends DAO{
 	public ArrayList<BoothBean> getFreeBoothes() throws SQLException, ClassNotFoundException {
@@ -19,7 +20,7 @@ public class BoothDAO extends DAO{
 				"	WHERE a.pid is null;";
 		
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		
 		//set Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);
@@ -59,7 +60,7 @@ public class BoothDAO extends DAO{
 		String query = "INSERT INTO representation (pid, sectionid) VALUES (?, ?);";
 		
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		con.setAutoCommit(false);
 		
 		//set variables to Prepared Statement
@@ -94,7 +95,7 @@ public class BoothDAO extends DAO{
 		String query = "SELECT * FROM booth b INNER JOIN section s ON b.sectionID=s.sectionID FULL OUTER JOIN representation a ON b.sectionID = a.sectionID;";
 		
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 		
 		//set variables to Prepared Statement
 		PreparedStatement pstmt = con.prepareStatement(query);

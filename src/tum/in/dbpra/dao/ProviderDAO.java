@@ -17,7 +17,12 @@ import tum.in.dbpra.dbutils.PGUtils;
 
 public class ProviderDAO {
 
-	private StringBuffer getPasswordMD5(String password)
+	/* StringBuffer getPasswordMD5: 
+     *returns the MD5 code for a given string, it is used to
+     store the password in the database
+     * */
+
+    private StringBuffer getPasswordMD5(String password)
 			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		md.update(password.getBytes());
@@ -37,6 +42,9 @@ public class ProviderDAO {
 		Statement stmt;
 		PreparedStatement pstm;
 		try {
+            /*
+             * connects to the database
+             * */
 			con = PGUtils.createConnection();
 			con.setAutoCommit(false);
 			pstm = con.prepareStatement(registerClient);
@@ -45,7 +53,8 @@ public class ProviderDAO {
 			int id = 1;
 			if (rsSelect.next())
 				id = Integer.parseInt(rsSelect.getString("max")) + 1;
-			pstm.setInt(1, id);
+			//add values of the provider created
+            pstm.setInt(1, id);
 			pstm.setString(2, provider.getName());
 			pstm.setString(3, provider.getPhone());
 			pstm.setString(4, provider.getWebsite());
@@ -63,6 +72,9 @@ public class ProviderDAO {
 		}
 	}
 
+    /* List<ProviderBean> getProviders:
+     *  get the provider with the respective criterion
+     * */
 	public List<ProviderBean> getProviders(String email, String password) {
 		Connection connection = null;
 		ProviderBean providerBean;
@@ -93,6 +105,7 @@ public class ProviderDAO {
 					providerList.add(providerBean);
 				} while (resultSet.next());
 				resultSet.close();
+                con.commit();
 				preparedStatement.close();
 			} else {
 				providerList = null;
@@ -134,6 +147,7 @@ public class ProviderDAO {
 				} while (resultSet.next());
 				resultSet.close();
 				preparedStatement.close();
+                con.commit();
 			} else {
 				providerList = null;
 			}
@@ -172,7 +186,8 @@ public class ProviderDAO {
 					providerBean.setAddress(resultSet.getString("address"));
 					providerBean.setEmail(resultSet.getString("email"));
 					providerBean.setPassword(resultSet.getString("password"));
-					String getBand = "select * from band where pid = "
+					//decides whether it is a band or a sponsor
+                    String getBand = "select * from band where pid = "
 							+ Integer.toString(providerBean.getId());
 					ResultSet rsGetBand;
 					Statement stmtGetBand;
@@ -207,6 +222,13 @@ public class ProviderDAO {
 		return providerList;
 	}
 
+
+    /*
+     * boolean hasApplication:
+     * receives a provider and returns
+     * whether it has or not an application and the status
+     * of it
+     * */
 	public boolean hasApplication(ProviderBean provider) {
 		Connection con;
 		String query = "select pid, status, category from application where pid = "
@@ -244,6 +266,7 @@ public class ProviderDAO {
 		return hasApplication;
 	}
 
+
 	public List<TimeSlotBeanProvider> getTimeSlots(int id) {
 		Connection connection = null;
 		PreparedStatement preparedStatement;
@@ -253,11 +276,10 @@ public class ProviderDAO {
 		try {
 			connection = PGUtils.createConnection();
 			connection.setAutoCommit(false);
-
+			String fetchTimeSlots = "select * from timeslot where pid = ?";
 			// Fetch supplier key from the supplier table using the supplier
 			// name that user provides as input
-			preparedStatement = connection
-					.prepareStatement(PGUtils.fetchTimeSlots);
+			preparedStatement = connection.prepareStatement(fetchTimeSlots);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

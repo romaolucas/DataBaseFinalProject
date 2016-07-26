@@ -35,13 +35,10 @@ public class SalesManagement extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Logger log = Logger.getLogger(SalesManagement.class);
 		HttpSession session = request.getSession(false);
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		log.info("here in sales management");
 		SaleDAO dao = new SaleDAO();
 		List<SaleBean> sales = dao.getSalesForProvider(pid);
-		log.info("Size: " + Integer.toString(sales.size()));
 		request.setAttribute("pid", pid);
 		request.setAttribute("sales", sales);
 		RequestDispatcher dispatcher = request
@@ -54,8 +51,6 @@ public class SalesManagement extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Logger log = Logger.getLogger(SalesManagement.class);
-		log.info("i shouldn't be here");
 	}
 
 }

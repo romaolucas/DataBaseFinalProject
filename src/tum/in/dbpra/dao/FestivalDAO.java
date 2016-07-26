@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import tum.in.dbpra.bean.FestivalBean;
+import tum.in.dbpra.dbutils.PGUtils;
 
 
 public class FestivalDAO extends DAO {
@@ -17,7 +18,7 @@ public class FestivalDAO extends DAO {
 		String query = "SELECT * FROM festival;";
 
 		//set connection
-		Connection con = getConnection();
+		Connection con = PGUtils.createConnection();
 
 		//set PS
 		PreparedStatement pstmt = con.prepareStatement(query);

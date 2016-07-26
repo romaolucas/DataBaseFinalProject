@@ -15,7 +15,7 @@ public class VisitorDAO {
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
 	VisitorBean visitorBean;
-
+       //fetch and auth visitor basedd on username and password
 	public List<VisitorBean> getVisitors(String username, String password) {
 		List<VisitorBean> visitorList = new ArrayList<VisitorBean>();
 		
